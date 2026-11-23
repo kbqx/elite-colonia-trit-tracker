@@ -210,10 +210,13 @@ function timeGrid(days: number, clip = true): number[] {
   const end = historyEnd();
   const stepH = days <= 1 ? 0.5 : days <= 7 ? 2 : days <= 14 ? 3 : 6;
   const step = stepH * 3_600_000;
-  let n = Math.round((days * 86_400_000) / step);
   const started = clip && hist?.startedAt ? Date.parse(hist.startedAt) : -Infinity;
-  while (n > 0 && end - n * step < started) n--;
-  return Array.from({ length: n + 1 }, (_, i) => end - (n - i) * step);
+  const start = Math.max(end - days * 86_400_000, started);
+  if (end - start < 60_000) return [end]; // weniger als 1 min Verlauf → nichts zu zeichnen
+  // Junger Verlauf: feineres Raster, damit trotzdem mind. ~24 Punkte entstehen.
+  const stepMs = Math.min(step, (end - start) / 24);
+  const n = Math.floor((end - start) / stepMs);
+  return Array.from({ length: n + 1 }, (_, i) => end - (n - i) * stepMs);
 }
 
 /** Preis pro Markt-ID vor `hours` Stunden (für Δ-Spalte und Laufband). */
@@ -573,7 +576,7 @@ function renderHistory(): void {
   }
 
   const empty = times.length < 2 && hist.startedAt
-    ? `Der Gesamtverlauf startet mit dem ersten Snapshot (${fmtDateTime(hist.startedAt)}) und erscheint nach ein bis zwei Läufen. Einzelne Märkte kannst du schon jetzt per Klick in der Tabelle ansehen.`
+    ? `Der Gesamtverlauf startet mit dem ersten Snapshot (${fmtDateTime(hist.startedAt)}) und erscheint ab dem nächsten Lauf. Einzelne Märkte kannst du schon jetzt per Klick in der Tabelle ansehen.`
     : undefined;
   renderCharts(host, times, panels, $("#tooltip"), empty);
   document.querySelector("#clear-sel")?.addEventListener("click", (e) => {

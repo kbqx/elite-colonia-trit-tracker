@@ -96,14 +96,18 @@ export function renderCharts(host: HTMLElement, times: number[], panels: Panel[]
 
   // X-Ticks: Stunden bei ≤ 36 h, sonst Tage.
   const xTicks: Array<{ t: number; label: string }> = [];
-  const stepMs = spanH <= 36 ? 6 * 3_600_000 : (spanH <= 24 * 8 ? 1 : spanH <= 24 * 16 ? 2 : 5) * 86_400_000;
-  const startTick = Math.ceil(t0 / stepMs) * stepMs;
+  // Tick-Abstand passend zur Spanne (auch für sehr junge Verläufe von Minuten).
+  const H = 3_600_000;
+  const stepMs = spanH <= 2 ? 15 * 60_000 : spanH <= 6 ? H : spanH <= 36 ? 6 * H : (spanH <= 24 * 8 ? 1 : spanH <= 24 * 16 ? 2 : 5) * 24 * H;
+  // Ticks an lokalen Stunden/Mitternacht ausrichten
+  const tzOff = new Date(t0).getTimezoneOffset() * 60_000;
+  const startTick = Math.ceil((t0 - tzOff) / stepMs) * stepMs + tzOff;
   for (let t = startTick; t <= t1; t += stepMs) {
     const d = new Date(t);
     xTicks.push({
       t,
       label: spanH <= 36
-        ? `${String(d.getHours()).padStart(2, "0")}:00`
+        ? `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`
         : `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.`,
     });
   }
