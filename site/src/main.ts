@@ -15,7 +15,10 @@ type SortKey = "station" | "system" | "kind" | "pad" | "dist" | "price" | "qty" 
 
 interface State {
   mode: Mode;
-  min: number;
+  /** Mindest-Supply (Kaufen-Modus) in t. */
+  minBuy: number;
+  /** Mindest-Demand (Verkaufen-Modus) in t. */
+  minSell: number;
   age: number; // Stunden, 0 = egal
   dist: number; // ly, 0 = egal
   pad: "any" | "L";
@@ -33,7 +36,12 @@ interface State {
 const ALL_KINDS: StationKind[] = ["carrier", "orbital", "planetary", "settlement", "other"];
 // Standard: nur Marktdaten ≤ 7 Tage und öffentlich andockbar – ältere/gesperrte
 // Einträge verzerren sonst die Preise massiv (siehe echter Snapshot 23.11.).
-const DEFAULTS: State = { mode: "buy", min: 0, age: 168, dist: 0, pad: "any", dock: "public", kinds: [...ALL_KINDS], q: "", sort: "qty", dir: "desc", sel: null, days: 7 };
+// Mindestmengen: Kleinstbestände (z. B. 29 t zu 53k Cr) sind keine ernstzunehmenden
+// Märkte und würden "günstigster Preis", Summen und Charts verzerren.
+// Demand ist in Colonia typischerweise kleiner (meist < 5.000 t), daher eigener Wert.
+const DEFAULT_MIN_BUY = 5000;
+const DEFAULT_MIN_SELL = 1000;
+const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT_MIN_SELL, age: 168, dist: 0, pad: "any", dock: "public", kinds: [...ALL_KINDS], q: "", sort: "qty", dir: "desc", sel: null, days: 7 };
 
 const KIND_LABEL: Record<StationKind, string> = {
   orbital: "Orbital",
@@ -67,7 +75,8 @@ function readStateFromUrl(): State {
   const s: State = { ...DEFAULTS, kinds: [...DEFAULTS.kinds] };
   const n = (k: string, d: number) => (p.has(k) && Number.isFinite(Number(p.get(k))) ? Number(p.get(k)) : d);
   if (p.get("mode") === "sell") s.mode = "sell";
-  s.min = n("min", s.min);
+  s.minBuy = n("min", s.minBuy);
+  s.minSell = n("dmin", s.minSell);
   s.age = n("age", s.age);
   s.dist = n("dist", s.dist);
   if (p.get("pad") === "L") s.pad = "L";
@@ -86,7 +95,8 @@ function writeStateToUrl(): void {
   const p = new URLSearchParams();
   const d = DEFAULTS;
   if (state.mode !== d.mode) p.set("mode", state.mode);
-  if (state.min !== d.min) p.set("min", String(state.min));
+  if (state.minBuy !== d.minBuy) p.set("min", String(state.minBuy));
+  if (state.minSell !== d.minSell) p.set("dmin", String(state.minSell));
   if (state.age !== d.age) p.set("age", String(state.age));
   if (state.dist !== d.dist) p.set("dist", String(state.dist));
   if (state.pad !== d.pad) p.set("pad", state.pad);
@@ -148,11 +158,14 @@ function passesStatic(m: { kind: StationKind; station: string; system: string; c
   return true;
 }
 
+/** Mindestmenge für den jeweiligen Modus. */
+const minFor = (mode: Mode) => (mode === "buy" ? state.minBuy : state.minSell);
+
 function filtered(mode: Mode = state.mode): MarketEntry[] {
   return snap.markets.filter((m) => {
     const price = priceOf(m, mode);
     const qty = qtyOf(m, mode);
-    if (price == null || qty <= 0 || qty < state.min) return false;
+    if (price == null || qty <= 0 || qty < minFor(mode)) return false;
     if (state.age > 0) {
       if (!m.marketUpdatedAt || now - Date.parse(m.marketUpdatedAt) > state.age * 3_600_000) return false;
     }
@@ -237,7 +250,8 @@ function renderHeader(): void {
   const totalSupply = sellers.reduce((s, m) => s + m.supply, 0);
   $("#hero-supply").innerHTML = `${fmtInt(totalSupply)}<small>t</small>`;
   const ageTxt = state.age > 0 ? ` · Update ≤ ${state.age >= 48 ? `${state.age / 24} T` : `${state.age} h`}` : "";
-  $("#hero-supply-label").textContent = `Tonnen Tritium im Angebot bei ${sellers.length} Märkten im Umkreis von ${fmtInt(snap.radiusLy)} ly um ${snap.referenceSystem}${ageTxt}${state.dock === "public" ? " · öffentlich andockbar" : ""}`;
+  const minTxt = state.minBuy > 0 ? ` · ab ${fmtInt(state.minBuy)} t` : "";
+  $("#hero-supply-label").textContent = `Tonnen Tritium im Angebot bei ${sellers.length} Märkten im Umkreis von ${fmtInt(snap.radiusLy)} ly um ${snap.referenceSystem}${minTxt}${ageTxt}${state.dock === "public" ? " · öffentlich andockbar" : ""}`;
 }
 
 /** Anzeigename + Zusatzzeile (Rufzeichen bei Carriern). */
@@ -465,7 +479,7 @@ function renderHistory(): void {
       const meta = hist!.stations[id];
       return meta ? passesStatic(meta, current.get(id)) : false;
     });
-    const minQty = Math.max(1, state.min);
+    const minQty = Math.max(1, minFor(state.mode));
     const maxAge = state.age > 0 ? state.age * 3_600 : Infinity;
     price = [];
     qty = [];
@@ -513,7 +527,7 @@ function syncControls(): void {
   document.querySelectorAll<HTMLButtonElement>("#f-kinds button").forEach((b) => b.setAttribute("aria-pressed", String(state.kinds.includes(b.dataset.kind as StationKind))));
   const onlyCarrier = state.kinds.length === 1 && state.kinds[0] === "carrier";
   document.querySelector("#f-only-carrier")?.setAttribute("aria-pressed", String(onlyCarrier));
-  $<HTMLInputElement>("#f-min").value = String(state.min);
+  $<HTMLInputElement>("#f-min").value = String(minFor(state.mode));
   $("#f-min-label").textContent = state.mode === "buy" ? "Min. Supply (t)" : "Min. Demand (t)";
   $<HTMLSelectElement>("#f-age").value = String(state.age);
   $<HTMLSelectElement>("#f-dist").value = String(state.dist);
@@ -577,10 +591,11 @@ function bindEvents(): void {
     else kinds = kinds.filter((k) => k !== "other");
     update({ kinds });
   });
-  $("#f-min").addEventListener("change", (e) => update({ min: Math.max(0, Number((e.target as HTMLInputElement).value) || 0) }));
+  const setMin = (v: number) => update(state.mode === "buy" ? { minBuy: v } : { minSell: v });
+  $("#f-min").addEventListener("change", (e) => setMin(Math.max(0, Number((e.target as HTMLInputElement).value) || 0)));
   $("#f-min-presets").addEventListener("click", (e) => {
     const v = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.v;
-    if (v !== undefined) update({ min: Number(v) });
+    if (v !== undefined) setMin(Number(v));
   });
   $("#f-age").addEventListener("change", (e) => update({ age: Number((e.target as HTMLSelectElement).value) }));
   $("#f-dist").addEventListener("change", (e) => update({ dist: Number((e.target as HTMLSelectElement).value) }));
