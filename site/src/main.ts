@@ -161,11 +161,16 @@ function passesStatic(m: { kind: StationKind; station: string; system: string; c
 /** Mindestmenge für den jeweiligen Modus. */
 const minFor = (mode: Mode) => (mode === "buy" ? state.minBuy : state.minSell);
 
-function filtered(mode: Mode = state.mode): MarketEntry[] {
+/**
+ * Märkte, die alle Filter erfüllen. ignoreMin = true lässt die Mindestmenge weg:
+ * Für den effektiven Preis und den besten Einzelpreis zählen auch Kleinstbestände
+ * (mit ihrer echten Menge) – genau dafür ist der effektive Preis da.
+ */
+function filtered(mode: Mode = state.mode, ignoreMin = false): MarketEntry[] {
   return snap.markets.filter((m) => {
     const price = priceOf(m, mode);
     const qty = qtyOf(m, mode);
-    if (price == null || qty <= 0 || qty < minFor(mode)) return false;
+    if (price == null || qty <= 0 || (!ignoreMin && qty < minFor(mode))) return false;
     if (state.age > 0) {
       if (!m.marketUpdatedAt || now - Date.parse(m.marketUpdatedAt) > state.age * 3_600_000) return false;
     }
@@ -318,9 +323,13 @@ function renderTicker(): void {
   }
 }
 
-function renderKpis(rows: MarketEntry[]): void {
+/**
+ * rows: Märkte nach allen Tabellen-Filtern (inkl. Mindestmenge).
+ * anyQty: dieselben Märkte, aber ohne Mindestmenge – Grundlage für den effektiven Preis.
+ */
+function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
   const buy = state.mode === "buy";
-  const pairs = rows.map((m) => pairOf(m));
+  const pairs = anyQty.map((m) => pairOf(m));
   const best = [...rows].sort((a, b) => (buy ? (a.buyPrice ?? 0) - (b.buyPrice ?? 0) : (b.sellPrice ?? 0) - (a.sellPrice ?? 0)))[0];
   const qtySum = rows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
   const carrierRows = rows.filter((m) => m.kind === "carrier");
@@ -336,9 +345,9 @@ function renderKpis(rows: MarketEntry[]): void {
   // damals nur lückenhaft bekannt und der Vergleich wäre verzerrt.
   const t24 = historyEnd() - 86_400_000;
   const known = !!hist?.startedAt && Date.parse(hist.startedAt) <= t24;
-  const prevAll = known ? pairsAt(rows.map((m) => m.id), Math.floor(t24 / 1000), state.mode) : [];
+  const prevAll = known ? pairsAt(anyQty.map((m) => m.id), Math.floor(t24 / 1000), state.mode) : [];
   const prevCap = state.outl === "hide" ? (weightedMedian(prevAll) ?? Infinity) * OUTLIER_FACTOR : Infinity;
-  const prevEff = effectivePrice(prevAll.filter(([p, q]) => p <= prevCap && q >= minFor(state.mode)), vMid, state.mode);
+  const prevEff = effectivePrice(prevAll.filter(([p]) => p <= prevCap), vMid, state.mode);
   const dE = known && eff != null && prevEff ? ((eff - prevEff) / prevEff) * 100 : null;
   const dCls = (p: number | null) => (p == null ? "" : p > 0 ? "delta-up" : p < 0 ? "delta-down" : "");
   const others = vols.filter((v) => v !== vMid).map((v) => `${volLabel(v)}: ${fmtInt(effectivePrice(pairs, v, state.mode))}`).join(" · ");
@@ -529,6 +538,8 @@ function renderHistory(): void {
 
     for (const t of times) {
       const tSec = Math.floor(t / 1000);
+      // Alle Märkte (jede Menge) für effektive Preise + besten Einzelpreis;
+      // die Gesamtmenge folgt dagegen der Mindestmenge wie Tabelle und Kennzahlen.
       let pairs: Pair[] = [];
       let any = false;
       for (const [, rows] of markets) {
@@ -537,7 +548,7 @@ function renderHistory(): void {
         any = true;
         if (tSec - r[0] > maxAge) continue;
         const pr = rowPrice(r, state.mode), q = rowQty(r, state.mode);
-        if (pr == null || q < minQty) continue;
+        if (pr == null || q <= 0) continue;
         pairs.push([pr, q]);
       }
       if (state.outl === "hide") {
@@ -546,7 +557,7 @@ function renderHistory(): void {
       }
       best.push(bestPrice(pairs, state.mode));
       vols.forEach((v, k) => (effs[k] as Array<number | null>).push(effectivePrice(pairs, v, state.mode)));
-      total.push(any ? pairs.reduce((s, [, q]) => s + q, 0) : null);
+      total.push(any ? pairs.reduce((s, [, q]) => s + (q >= minQty ? q : 0), 0) : null);
     }
 
     panels = [
@@ -606,7 +617,7 @@ function renderAll(): void {
   syncControls();
   renderHeader();
   renderTicker();
-  renderKpis(a.ok);
+  renderKpis(a.ok, analyze(filtered(state.mode, true)).ok);
   renderTable(rows, new Set(a.flagged.map((m) => m.id)), a.cap);
   renderLeader(a.ok);
   renderHistory();
