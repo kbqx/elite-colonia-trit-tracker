@@ -59,9 +59,9 @@ Der Workflow committet nur, wenn `history.json` sich geändert hat; deployed wir
 
 Die Seite ist zweisprachig: **Englisch** (Standard) und **Deutsch**, umschaltbar über `EN | DE` in der Navigationsleiste. Die Wahl wird im Browser gespeichert; `?lang=de` in der URL öffnet die Seite direkt auf Deutsch. Alle Texte stehen in `site/src/i18n.ts`, statische HTML-Texte sind über `data-i18n`-Attribute verknüpft.
 
-## Video-Platzhalter
+## Panorama-Hintergründe
 
-Zwei Stellen sind markiert (`data-video-slot="hero"` und `"info"` in `index.html`). Zum Austauschen das `<img>` durch das auskommentierte `<video>` ersetzen und `data-placeholder` + das Badge entfernen. Die Bilder in `site/assets/` sind prozedural erzeugte Platzhalter.
+Hero und Info-Bereich zeigen ein horizontal nahtloses 360°-Panorama, das langsam durchrotiert (zwei Kopien nebeneinander, CSS-Animation; steht still bei „reduzierte Bewegung“). Austauschen: `site/assets/pano-hero.webp` bzw. `pano-info.webp` ersetzen – linker und rechter Rand müssen nahtlos ineinander übergehen, ca. 4096×1152 px, WebP ~80 % Qualität. Danach in `index.html` `data-placeholder` und das Badge entfernen. Die aktuellen Bilder sind prozedural erzeugte Platzhalter.
 
 ## Datenformat
 
