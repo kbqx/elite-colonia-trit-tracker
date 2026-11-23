@@ -7,7 +7,7 @@ name: Snapshot & Deploy
 on:
   schedule:
     # Alle 30 Minuten (UTC). GitHub kann Cron-Läufe um einige Minuten verzögern.
-    - cron: "7,37 * * * *"
+    - cron: "13,43 * * * *"
   workflow_dispatch: # manuell über den "Run workflow"-Button
   push:
     branches: [main]
