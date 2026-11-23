@@ -6,7 +6,8 @@
 import { isGoneRow, type HistoryFile, type HistoryRow, type MarketEntry, type Snapshot, type StationKind } from "./types.js";
 import { renderCharts, sparkline, type Panel, type Series } from "./chart.js";
 import { OUTLIER_FACTOR, VOLUMES, bestPrice, effectivePrice, splitOutliers, weightedMedian, type Mode, type Pair } from "./market.js";
-import { ageClass, esc, fmtCompact, fmtDateTime, fmtInt, fmtPct, relTime } from "./format.js";
+import { ageClass, esc, fmtCompact, fmtDateTime, fmtInt, fmtNum1, fmtPct, relTime } from "./format.js";
+import { getLang, initialLang, setLang, t, type Lang } from "./i18n.js";
 
 // ---------------------------------------------------------------------------
 // Typen & Zustand
@@ -45,13 +46,8 @@ const DEFAULT_MIN_BUY = 5000;
 const DEFAULT_MIN_SELL = 1000;
 const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT_MIN_SELL, age: 168, dist: 0, pad: "any", dock: "public", outl: "hide", kinds: [...ALL_KINDS], q: "", sort: "qty", dir: "desc", sel: null, days: 7 };
 
-const KIND_LABEL: Record<StationKind, string> = {
-  orbital: "Orbital",
-  planetary: "Planetar",
-  settlement: "Settlement",
-  carrier: "Fleet Carrier",
-  other: "Sonstige",
-};
+/** Anzeigename einer Stationsart in der aktuellen Sprache. */
+const kindLabel = (k: StationKind) => t(`kind.${k}`);
 const KIND_ICON: Record<StationKind, string> = {
   orbital: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-25 12 12)"/></svg>`,
   planetary: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 18c4-5 16-5 20 0"/><path d="M8 14V9h8v5"/><path d="M12 9V5"/></svg>`,
@@ -248,7 +244,7 @@ function seriesFor(id: string, days: number): Array<number | null> {
 // ---------------------------------------------------------------------------
 function renderHeader(): void {
   $("#status-age").textContent = relTime(snap.generatedAt, now);
-  $("#status-pill").title = `Letzter Snapshot: ${fmtDateTime(snap.generatedAt)}`;
+  $("#status-pill").title = t("status.title", { time: fmtDateTime(snap.generatedAt) });
   $("#source-pill").hidden = snap.source !== "mock";
   $("#footer-stamp").textContent = fmtDateTime(snap.generatedAt);
 
@@ -256,16 +252,20 @@ function renderHeader(): void {
   const sellers = analyze(filtered("buy"), "buy").ok;
   const totalSupply = sellers.reduce((s, m) => s + m.supply, 0);
   $("#hero-supply").innerHTML = `${fmtInt(totalSupply)}<small>t</small>`;
-  const ageTxt = state.age > 0 ? ` · Update ≤ ${state.age >= 48 ? `${state.age / 24} T` : `${state.age} h`}` : "";
-  const minTxt = state.minBuy > 0 ? ` · ab ${fmtInt(state.minBuy)} t` : "";
-  $("#hero-supply-label").textContent = `Tonnen Tritium im Angebot bei ${sellers.length} Märkten im Umkreis von ${fmtInt(snap.radiusLy)} ly um ${snap.referenceSystem}${minTxt}${ageTxt}${state.dock === "public" ? " · öffentlich andockbar" : ""}`;
+  const ageTxt = state.age > 0 ? t("hero.age", { age: state.age >= 48 ? t("unit.days", { n: state.age / 24 }) : `${state.age} h` }) : "";
+  const minTxt = state.minBuy > 0 ? t("hero.min", { min: fmtInt(state.minBuy) }) : "";
+  $("#hero-supply-label").textContent = t("hero.label", {
+    n: sellers.length,
+    radius: fmtInt(snap.radiusLy),
+    ref: snap.referenceSystem,
+    extra: `${minTxt}${ageTxt}${state.dock === "public" ? t("hero.public") : ""}`,
+  });
 }
 
 /** Anzeigename + Zusatzzeile (Rufzeichen bei Carriern). */
 function displayName(m: MarketEntry): { name: string; sub: string } {
   const cs = m.callsign && m.callsign !== m.station ? m.callsign : "";
-  const ACCESS: Record<string, string> = { Squadron: "nur Squadron", Friends: "nur Freunde", "Squadron Friends": "nur Squadron & Freunde", None: "gesperrt" };
-  const access = m.kind === "carrier" && m.dockingAccess && m.dockingAccess !== "All" ? ` · ${ACCESS[m.dockingAccess] ?? m.dockingAccess}` : "";
+  const access = m.kind === "carrier" && m.dockingAccess && m.dockingAccess !== "All" ? ` · ${t(`access.${m.dockingAccess}`)}` : "";
   return { name: m.station, sub: [cs, m.typeLabel || "–"].filter(Boolean).join(" · ") + access };
 }
 
@@ -348,23 +348,21 @@ function renderKpis(rows: MarketEntry[]): void {
 
   $("#kpis").innerHTML = [
     card(
-      buy ? "Günstigster Kaufpreis" : "Höchster Ankaufspreis",
+      buy ? t("kpi.bestBuy") : t("kpi.bestSell"),
       `${fmtInt(best ? priceOf(best, state.mode) : null)} <small>Cr/t</small>`,
-      best ? `${esc(best.station)} · ${esc(best.system)} · ${fmtInt(qtyOf(best, state.mode))} t` : "keine Treffer",
+      best ? `${esc(best.station)} · ${esc(best.system)} · ${fmtInt(qtyOf(best, state.mode))} t` : t("kpi.noResults"),
     ),
     card(
-      buy ? `Effektiver Preis für ${volLabel(vMid)}` : `Effektiver Erlös für ${volLabel(vMid)}`,
-      eff == null ? `– <small>Menge nicht verfügbar</small>` : `${fmtInt(eff)} <small>Cr/t</small>`,
-      `${known ? `<span class="${dCls(dE)}">${fmtPct(dE)}</span> ggü. 24 h · ` : ""}${others}`,
-      buy
-        ? `Durchschnittspreis, wenn du ${fmtInt(vMid)} t nacheinander bei den günstigsten Anbietern kaufst. Kleine Bestände zählen nur mit ihrer echten Menge.`
-        : `Durchschnittserlös, wenn du ${fmtInt(vMid)} t nacheinander an die besten Abnehmer verkaufst.`,
+      t(buy ? "kpi.effBuy" : "kpi.effSell", { v: volLabel(vMid) }),
+      eff == null ? `– <small>${t("kpi.effNA")}</small>` : `${fmtInt(eff)} <small>Cr/t</small>`,
+      `${known ? `<span class="${dCls(dE)}">${fmtPct(dE)}</span> ${t("kpi.vs24h")} · ` : ""}${others}`,
+      t(buy ? "kpi.effBuyTitle" : "kpi.effSellTitle", { v: fmtInt(vMid) }),
     ),
-    card(buy ? "Supply (gefiltert)" : "Demand (gefiltert)", `${fmtInt(qtySum)} <small>t</small>`, `über ${rows.length} Märkte`),
+    card(buy ? t("kpi.supply") : t("kpi.demand"), `${fmtInt(qtySum)} <small>t</small>`, t("kpi.overMarkets", { n: rows.length })),
     card(
-      buy ? "Fleet-Carrier-Anteil am Supply" : "Fleet-Carrier-Anteil an Demand",
+      buy ? t("kpi.carrierSupply") : t("kpi.carrierDemand"),
       `${carrierShare == null ? "–" : Math.round(carrierShare)} <small>%</small>`,
-      `${carrierRows.length} Carrier · ${rows.length} von ${snap.markets.length} Märkten`,
+      t("kpi.carrierSub", { c: carrierRows.length, n: rows.length, total: snap.markets.length }),
     ),
   ].join("");
 }
@@ -380,16 +378,16 @@ interface Column {
 function columns(): Column[] {
   const buy = state.mode === "buy";
   return [
-    { key: "station", label: "Station", sortable: true },
-    { key: "system", label: "System", sortable: true },
-    { key: "kind", label: "Typ", sortable: true },
-    { key: "pad", label: "Pad", sortable: true },
-    { key: "dist", label: "Distanz", right: true, sortable: true, title: "Entfernung zu Colonia / Anflug vom Hauptstern" },
-    { key: "price", label: buy ? "Kaufpreis" : "Ankauf", right: true, sortable: true },
-    { key: "qty", label: buy ? "Supply" : "Demand", right: true, sortable: true },
-    { key: "delta", label: "Δ 24 h", right: true, sortable: true },
-    { key: "trend", label: "7 Tage" },
-    { key: "age", label: "Update", sortable: true },
+    { key: "station", label: t("col.station"), sortable: true },
+    { key: "system", label: t("col.system"), sortable: true },
+    { key: "kind", label: t("col.type"), sortable: true },
+    { key: "pad", label: t("col.pad"), sortable: true },
+    { key: "dist", label: t("col.dist"), right: true, sortable: true, title: t("col.distTitle") },
+    { key: "price", label: buy ? t("col.buyPrice") : t("col.sellPrice"), right: true, sortable: true },
+    { key: "qty", label: buy ? t("col.supply") : t("col.demand"), right: true, sortable: true },
+    { key: "delta", label: t("col.delta"), right: true, sortable: true },
+    { key: "trend", label: t("col.trend") },
+    { key: "age", label: t("col.age"), sortable: true },
   ];
 }
 
@@ -397,7 +395,7 @@ function sortValue(m: MarketEntry, key: SortKey, deltas: Map<string, number | nu
   switch (key) {
     case "station": return m.station.toLowerCase();
     case "system": return m.system.toLowerCase();
-    case "kind": return KIND_LABEL[m.kind];
+    case "kind": return kindLabel(m.kind);
     case "pad": return m.maxPad === "L" ? 3 : m.maxPad === "M" ? 2 : m.maxPad === "S" ? 1 : 0;
     case "dist": return m.distanceLy ?? Infinity;
     case "price": return priceOf(m, state.mode) ?? -Infinity;
@@ -433,12 +431,12 @@ function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | nu
   const maxQty = Math.max(1, ...rows.map((m) => qtyOf(m, state.mode)));
   const nOut = rows.filter((m) => flagged.has(m.id)).length;
   $("#result-count").textContent =
-    `${rows.length} von ${snap.markets.length} Märkten` +
-    (nOut ? ` · ${nOut} Preis-Ausreißer${state.outl === "hide" ? " (nicht in Kennzahlen)" : ""}` : "");
-  $("#market-title").textContent = state.mode === "buy" ? "Größte Verkäufer" : "Beste Abnehmer";
+    t("count.markets", { n: rows.length, total: snap.markets.length }) +
+    (nOut ? t("count.outliers", { n: nOut }) + (state.outl === "hide" ? t("count.notInKpis") : "") : "");
+  $("#market-title").textContent = state.mode === "buy" ? t("market.titleBuy") : t("market.titleSell");
 
   if (sorted.length === 0) {
-    $("#tbody").innerHTML = `<tr><td colspan="${cols.length}" class="empty">Keine Station passt zu den Filtern.</td></tr>`;
+    $("#tbody").innerHTML = `<tr><td colspan="${cols.length}" class="empty">${t("table.empty")}</td></tr>`;
     return;
   }
 
@@ -450,14 +448,14 @@ function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | nu
       const dn = displayName(m);
       const out = flagged.has(m.id);
       const outTag = out
-        ? `<span class="tag-out" title="Preis über ${OUTLIER_FACTOR}× dem gewichteten Median (Grenze ${fmtInt(cap)} Cr/t)">Ausreißer</span>`
+        ? `<span class="tag-out" title="${esc(t("table.outlierTitle", { f: OUTLIER_FACTOR, cap: fmtInt(cap) }))}">${t("table.outlier")}</span>`
         : "";
       return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}${ac === "stale" || (out && state.outl === "hide") ? " dim" : ""}">
         <td><span class="st-name">${esc(dn.name)}</span><span class="st-type">${esc(dn.sub)}</span></td>
         <td>${esc(m.system)}</td>
-        <td><span class="kind ${m.kind}">${KIND_ICON[m.kind]}${KIND_LABEL[m.kind]}</span></td>
+        <td><span class="kind ${m.kind}">${KIND_ICON[m.kind]}${kindLabel(m.kind)}</span></td>
         <td><span class="pad ${m.maxPad ?? ""}">${m.maxPad ?? "?"}</span></td>
-        <td class="r num">${m.distanceLy == null ? "–" : `${m.distanceLy.toLocaleString("de-DE", { maximumFractionDigits: 1 })} ly`}<span class="st-type">${m.arrivalLs == null ? "" : `${fmtInt(m.arrivalLs)} ls`}</span></td>
+        <td class="r num">${m.distanceLy == null ? "–" : `${fmtNum1(m.distanceLy)} ly`}<span class="st-type">${m.arrivalLs == null ? "" : `${fmtInt(m.arrivalLs)} ls`}</span></td>
         <td class="r num price">${outTag}${fmtInt(priceOf(m, state.mode))}</td>
         <td class="r num"><div class="bar-cell">${fmtInt(qty)}<span class="qty-bar"><i style="width:${((qty / maxQty) * 100).toFixed(1)}%"></i></span></div></td>
         <td class="r num ${d == null ? "faint" : d > 0 ? "delta-up" : d < 0 ? "delta-down" : ""}">${fmtPct(d)}</td>
@@ -471,18 +469,18 @@ function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | nu
 function renderLeader(rows: MarketEntry[]): void {
   const top = [...rows].sort((a, b) => qtyOf(b, state.mode) - qtyOf(a, state.mode)).slice(0, 5);
   const max = Math.max(1, ...top.map((m) => qtyOf(m, state.mode)));
-  $("#leader-title").textContent = state.mode === "buy" ? "Top 5 nach Supply" : "Top 5 nach Demand";
+  $("#leader-title").textContent = state.mode === "buy" ? t("leader.buy") : t("leader.sell");
   $("#leader").innerHTML = top.length
     ? top
         .map(
           (m) => `<li data-id="${esc(m.id)}">
           <div class="l-top"><span class="l-name">${esc(m.station)}</span><span class="l-val">${fmtInt(qtyOf(m, state.mode))} t</span></div>
-          <div class="l-sub">${esc(m.system)} · ${fmtInt(priceOf(m, state.mode))} Cr/t · ${KIND_LABEL[m.kind]}</div>
+          <div class="l-sub">${esc(m.system)} · ${fmtInt(priceOf(m, state.mode))} Cr/t · ${kindLabel(m.kind)}</div>
           <div class="l-bar"><i style="width:${((qtyOf(m, state.mode) / max) * 100).toFixed(1)}%"></i></div>
         </li>`,
         )
         .join("")
-    : `<li class="muted">Keine Treffer.</li>`;
+    : `<li class="muted">${t("kpi.noResults")}</li>`;
 }
 
 // Kurvenfarben: validierte Kategorie-Palette (blau, orange, aqua) auf dunklem Grund;
@@ -509,11 +507,11 @@ function renderHistory(): void {
     const rows = hist.series[state.sel];
     const at = times.map((t) => rowAt(rows, Math.floor(t / 1000)));
     panels = [
-      { title: buy ? "Kaufpreis (Cr/t)" : "Ankaufspreis (Cr/t)", series: [{ label: "Preis", color: COLOR_PRICE, values: at.map((r) => (r ? rowPrice(r, state.mode) : null)), format: fmtCr, step: true }] },
-      { title: buy ? "Supply (t)" : "Demand (t)", height: 130, series: [{ label: buy ? "Supply" : "Demand", color: COLOR_QTY, values: at.map((r) => (r ? rowQty(r, state.mode) : null)), format: fmtCompact, area: true, step: true }] },
+      { title: buy ? t("chart.buyPrice") : t("chart.sellPrice"), series: [{ label: t("chart.price"), color: COLOR_PRICE, values: at.map((r) => (r ? rowPrice(r, state.mode) : null)), format: fmtCr, step: true }] },
+      { title: buy ? t("chart.supplyT") : t("chart.demandT"), height: 130, series: [{ label: buy ? t("col.supply") : t("col.demand"), color: COLOR_QTY, values: at.map((r) => (r ? rowQty(r, state.mode) : null)), format: fmtCompact, area: true, step: true }] },
     ];
-    $("#chart-title").innerHTML = `${esc(selMeta.station)} <a href="#" class="clear" id="clear-sel">× Gesamtmarkt anzeigen</a>`;
-    $("#chart-sub").textContent = [selMeta.callsign && selMeta.callsign !== selMeta.station ? selMeta.callsign : "", selMeta.system, KIND_LABEL[selMeta.kind]].filter(Boolean).join(" · ");
+    $("#chart-title").innerHTML = `${esc(selMeta.station)} <a href="#" class="clear" id="clear-sel">${t("chart.showMarket")}</a>`;
+    $("#chart-sub").textContent = [selMeta.callsign && selMeta.callsign !== selMeta.station ? selMeta.callsign : "", selMeta.system, kindLabel(selMeta.kind)].filter(Boolean).join(" · ");
   } else {
     // Gesamtmarkt zu jedem Zeitpunkt T: alle Märkte, die die Filter erfüllen
     // (Market-Update-Alter relativ zu T), Ausreißer per Median entfernt, dann
@@ -553,30 +551,28 @@ function renderHistory(): void {
 
     panels = [
       {
-        title: buy
-          ? "Kaufpreis in Cr/t – „Ø für X t“ = Durchschnitt beim Kauf von X t bei den günstigsten Anbietern"
-          : "Ankaufspreis in Cr/t – „Ø für X t“ = Durchschnitt beim Verkauf von X t an die besten Abnehmer",
+        title: buy ? t("chart.effBuyTitle") : t("chart.effSellTitle"),
         height: 210,
         series: [
           ...vols.map((v, k): Series => ({
-            label: `Ø für ${volLabel(v)}`,
+            label: t("chart.avgFor", { v: volLabel(v) }),
             color: VOLUME_COLORS[k] as string,
             dash: VOLUME_DASH[k] as string,
             values: effs[k] as Array<number | null>,
             format: fmtCr,
             step: true,
           })),
-          { label: "Bester Einzelpreis", color: COLOR_BEST, dash: "1 4", values: best, format: fmtCr, step: true },
+          { label: t("chart.best"), color: COLOR_BEST, dash: "1 4", values: best, format: fmtCr, step: true },
         ],
       },
-      { title: buy ? "Gesamt-Supply (t)" : "Gesamt-Demand (t)", height: 130, series: [{ label: buy ? "Supply" : "Demand", color: COLOR_TOTAL, values: total, format: fmtCompact, area: true, step: true }] },
+      { title: buy ? t("chart.totalSupply") : t("chart.totalDemand"), height: 130, series: [{ label: buy ? t("col.supply") : t("col.demand"), color: COLOR_TOTAL, values: total, format: fmtCompact, area: true, step: true }] },
     ];
-    $("#chart-title").textContent = "Gesamter Markt";
-    $("#chart-sub").textContent = `gefiltert wie die Tabelle${state.outl === "hide" ? ` · ohne Preis-Ausreißer (> ${OUTLIER_FACTOR}× Median)` : ""}`;
+    $("#chart-title").textContent = t("chart.market");
+    $("#chart-sub").textContent = t("chart.sub") + (state.outl === "hide" ? t("chart.subOutl", { f: OUTLIER_FACTOR }) : "");
   }
 
   const empty = times.length < 2 && hist.startedAt
-    ? `Der Gesamtverlauf startet mit dem ersten Snapshot (${fmtDateTime(hist.startedAt)}) und erscheint ab dem nächsten Lauf. Einzelne Märkte kannst du schon jetzt per Klick in der Tabelle ansehen.`
+    ? t("chart.startsAt", { time: fmtDateTime(hist.startedAt) })
     : undefined;
   renderCharts(host, times, panels, $("#tooltip"), empty);
   document.querySelector("#clear-sel")?.addEventListener("click", (e) => {
@@ -595,7 +591,8 @@ function syncControls(): void {
   const onlyCarrier = state.kinds.length === 1 && state.kinds[0] === "carrier";
   document.querySelector("#f-only-carrier")?.setAttribute("aria-pressed", String(onlyCarrier));
   $<HTMLInputElement>("#f-min").value = String(minFor(state.mode));
-  $("#f-min-label").textContent = state.mode === "buy" ? "Min. Supply (t)" : "Min. Demand (t)";
+  $("#f-min-label").textContent = state.mode === "buy" ? t("filter.minSupply") : t("filter.minDemand");
+  document.querySelectorAll<HTMLButtonElement>("#lang-switch button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === getLang())));
   $<HTMLSelectElement>("#f-age").value = String(state.age);
   $<HTMLSelectElement>("#f-dist").value = String(state.dist);
   const q = $<HTMLInputElement>("#f-q");
@@ -624,10 +621,23 @@ function update(patch: Partial<State>): void {
 // ---------------------------------------------------------------------------
 // Events
 // ---------------------------------------------------------------------------
-function bindEvents(): void {
+/** Stationstyp-Chips (beschriftet in der aktuellen Sprache). */
+function renderKindChips(): void {
   $("#f-kinds").innerHTML = ALL_KINDS.filter((k) => k !== "other")
-    .map((k) => `<button type="button" class="chip" data-kind="${k}" aria-pressed="true">${KIND_ICON[k]}${KIND_LABEL[k]}</button>`)
-    .join("") + `<button type="button" class="btn btn-sm" id="f-only-carrier">nur Carrier</button>`;
+    .map((k) => `<button type="button" class="chip" data-kind="${k}" aria-pressed="true">${KIND_ICON[k]}${kindLabel(k)}</button>`)
+    .join("") + `<button type="button" class="btn btn-sm" id="f-only-carrier">${t("filter.onlyCarrier")}</button>`;
+  syncControls();
+}
+
+function bindEvents(): void {
+  renderKindChips();
+  $("#lang-switch").addEventListener("click", (e) => {
+    const l = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.lang as Lang | undefined;
+    if (!l || l === getLang()) return;
+    setLang(l);
+    renderKindChips();
+    renderAll();
+  });
 
   $("#f-mode").addEventListener("click", (e) => {
     const mode = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.mode as Mode | undefined;
@@ -713,10 +723,11 @@ function bindEvents(): void {
 
 // ---------------------------------------------------------------------------
 async function main(): Promise<void> {
+  setLang(initialLang(), false);
   try {
     await loadData();
   } catch (err) {
-    $("#tbody").innerHTML = `<tr><td class="empty">Daten konnten nicht geladen werden: ${esc((err as Error).message)}</td></tr>`;
+    $("#tbody").innerHTML = `<tr><td class="empty">${esc(t("load.error", { msg: (err as Error).message }))}</td></tr>`;
     return;
   }
   bindEvents();

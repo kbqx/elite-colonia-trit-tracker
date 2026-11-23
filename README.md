@@ -55,6 +55,10 @@ Der Workflow committet nur `site/data/`. Ein Push vom `GITHUB_TOKEN` löst keine
 
 Der Workflow committet nur, wenn `history.json` sich geändert hat; deployed wird bei jedem Lauf (mit frischem `latest.json`). Einträge älter als `HISTORY_RETENTION_DAYS` (Standard 30) werden entfernt.
 
+## Sprachen
+
+Die Seite ist zweisprachig: **Englisch** (Standard) und **Deutsch**, umschaltbar über `EN | DE` in der Navigationsleiste. Die Wahl wird im Browser gespeichert; `?lang=de` in der URL öffnet die Seite direkt auf Deutsch. Alle Texte stehen in `site/src/i18n.ts`, statische HTML-Texte sind über `data-i18n`-Attribute verknüpft.
+
 ## Video-Platzhalter
 
 Zwei Stellen sind markiert (`data-video-slot="hero"` und `"info"` in `index.html`). Zum Austauschen das `<img>` durch das auskommentierte `<video>` ersetzen und `data-placeholder` + das Badge entfernen. Die Bilder in `site/assets/` sind prozedural erzeugte Platzhalter.

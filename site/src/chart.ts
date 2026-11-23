@@ -5,6 +5,7 @@
  * ein Fadenkreuz + Tooltip.
  */
 import { esc, fmtDateTime } from "./format.js";
+import { t } from "./i18n.js";
 
 export interface Series {
   label: string;
@@ -84,7 +85,7 @@ export function renderCharts(host: HTMLElement, times: number[], panels: Panel[]
   host.innerHTML = "";
   const all = panels.flatMap((p) => p.series);
   if (times.length < 2 || all.every((s) => s.values.every((v) => v == null))) {
-    host.innerHTML = `<div class="empty">${esc(emptyText ?? "Für diesen Zeitraum und diese Filter gibt es noch keine Marktdaten. Der Verlauf füllt sich mit jedem neuen Marktupdate.")}</div>`;
+    host.innerHTML = `<div class="empty">${esc(emptyText ?? t("chart.empty"))}</div>`;
     return;
   }
 

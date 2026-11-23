@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Colonia Tritium Ticker</title>
-  <meta name="description" content="Live-Tritium-Markt in Colonia (Elite Dangerous): Preise, Supply, Verlauf und die größten Verkäufer – automatisch aus Spansh-Daten." />
+  <meta name="description" content="Live Tritium market in Colonia (Elite Dangerous): prices, supply, history and the largest sellers – automatically from Spansh data." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -13,7 +13,7 @@
 </head>
 <body>
   <!-- ============ Gläserne Navigationsleiste ============ -->
-  <nav class="nav" aria-label="Hauptnavigation">
+  <nav class="nav" aria-label="Main navigation">
     <div class="container">
       <a class="brand" href="#top">
         <svg viewBox="0 0 32 32" aria-hidden="true">
@@ -24,14 +24,18 @@
         <span>COLONIA<small>·TRIT</small></span>
       </a>
       <div class="nav-links">
-        <a href="#markt">Markt</a>
-        <a href="#verlauf">Verlauf</a>
-        <a href="#info">Info</a>
-        <a href="https://spansh.co.uk/" target="_blank" rel="noopener">Datenquelle</a>
+        <a href="#markt" data-i18n="nav.market">Market</a>
+        <a href="#verlauf" data-i18n="nav.history">History</a>
+        <a href="#info" data-i18n="nav.about">About</a>
+        <a href="https://spansh.co.uk/" target="_blank" rel="noopener" data-i18n="nav.source">Data source</a>
       </div>
       <div class="nav-right">
-        <span class="pill mock" id="source-pill" hidden><span class="dot"></span><span>Demo<span class="mock-long">-Daten</span></span></span>
-        <span class="pill" id="status-pill"><span class="dot"></span><span class="label-long">Snapshot&nbsp;</span><span id="status-age">–</span></span>
+        <span class="pill mock" id="source-pill" hidden><span class="dot"></span><span><span data-i18n="pill.demo">Demo</span><span class="mock-long" data-i18n="pill.demoLong"> data</span></span></span>
+        <div class="seg seg-sm" id="lang-switch" role="group" aria-label="Language / Sprache">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="de" aria-pressed="false">DE</button>
+        </div>
+        <span class="pill" id="status-pill"><span class="dot"></span><span class="label-long"><span data-i18n="pill.snapshot">Snapshot</span>&nbsp;</span><span id="status-age">–</span></span>
       </div>
     </div>
   </nav>
@@ -51,23 +55,23 @@
         <img src="assets/hero-colonia.jpg" alt="" />
         <figcaption class="slot-badge">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-          Video-Platzhalter <span>hero · 2400×760 · Loop</span>
+          <span class="sb-main" data-i18n="video.placeholder">Video placeholder</span> <span>hero · 2400×760 · Loop</span>
         </figcaption>
       </figure>
 
       <div class="hero-text">
-        <div class="eyebrow">Elite Dangerous · Colonia-Region</div>
+        <div class="eyebrow" data-i18n="hero.eyebrow">Elite Dangerous · Colonia region</div>
         <h1>Colonia Tritium Ticker</h1>
-        <p class="lead">Wo gibt es gerade Tritium, zu welchem Preis und in welcher Menge? Automatische Markt-Snapshots aller Stationen und Fleet Carrier rund um Colonia.</p>
+        <p class="lead" data-i18n="hero.lead">Where can you get Tritium right now, at what price and in what quantity? Automatic market snapshots of every station and fleet carrier around Colonia.</p>
       </div>
 
       <div class="headline-number">
         <div class="big" id="hero-supply">–<small>t</small></div>
-        <div class="label" id="hero-supply-label">Tritium aktuell im Angebot</div>
+        <div class="label" id="hero-supply-label">Tritium currently on offer</div>
       </div>
     </div>
 
-    <div class="ticker" aria-label="Laufband mit aktuellen Preisen">
+    <div class="ticker" aria-label="Ticker with current prices" data-i18n-aria="ticker.aria">
       <div class="ticker-track" id="ticker"></div>
     </div>
   </header>
@@ -83,80 +87,80 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Markt</div>
-            <h2 id="market-title">Größte Verkäufer</h2>
+            <div class="eyebrow" data-i18n="market.eyebrow">Market</div>
+            <h2 id="market-title">Largest sellers</h2>
           </div>
         </div>
 
-        <div class="card filters" role="group" aria-label="Filter">
+        <div class="card filters" role="group" aria-label="Filters">
           <div class="field">
-            <span class="flabel">Ich will …</span>
+            <span class="flabel" data-i18n="filter.iwant">I want to …</span>
             <div class="seg" id="f-mode">
-              <button type="button" data-mode="buy" aria-pressed="true">kaufen</button>
-              <button type="button" data-mode="sell" aria-pressed="false">verkaufen</button>
+              <button type="button" data-mode="buy" aria-pressed="true" data-i18n="mode.buy">buy</button>
+              <button type="button" data-mode="sell" aria-pressed="false" data-i18n="mode.sell">sell</button>
             </div>
           </div>
           <div class="field">
-            <label for="f-min" id="f-min-label">Min. Supply (t)</label>
+            <label for="f-min" id="f-min-label">Min. supply (t)</label>
             <input type="number" id="f-min" min="0" step="500" value="5000" />
             <div class="qty-presets" id="f-min-presets">
               <button type="button" data-v="0">0</button><button type="button" data-v="1000">1k</button><button type="button" data-v="5000">5k</button><button type="button" data-v="10000">10k</button><button type="button" data-v="25000">25k</button>
             </div>
           </div>
           <div class="field">
-            <label for="f-age">Market-Update</label>
+            <label for="f-age" data-i18n="filter.update">Market update</label>
             <select id="f-age">
-              <option value="1">≤ 1 Stunde</option>
-              <option value="6">≤ 6 Stunden</option>
-              <option value="24">≤ 24 Stunden</option>
-              <option value="72">≤ 3 Tage</option>
-              <option value="168" selected>≤ 7 Tage</option>
-              <option value="720">≤ 30 Tage</option>
-              <option value="0">beliebig</option>
+              <option value="1" data-i18n="age.1">≤ 1 hour</option>
+              <option value="6" data-i18n="age.6">≤ 6 hours</option>
+              <option value="24" data-i18n="age.24">≤ 24 hours</option>
+              <option value="72" data-i18n="age.72">≤ 3 days</option>
+              <option value="168" selected data-i18n="age.168">≤ 7 days</option>
+              <option value="720" data-i18n="age.720">≤ 30 days</option>
+              <option value="0" data-i18n="any">any</option>
             </select>
           </div>
           <div class="field">
-            <label for="f-dist">Max. Distanz zu Colonia</label>
+            <label for="f-dist" data-i18n="filter.dist">Max. distance to Colonia</label>
             <select id="f-dist">
               <option value="25">25 ly</option>
               <option value="50">50 ly</option>
               <option value="100">100 ly</option>
               <option value="250">250 ly</option>
-              <option value="0" selected>beliebig</option>
+              <option value="0" selected data-i18n="any">any</option>
             </select>
           </div>
           <div class="field">
-            <span class="flabel">Landepad</span>
+            <span class="flabel" data-i18n="filter.pad">Landing pad</span>
             <div class="seg" id="f-pad">
-              <button type="button" data-pad="any" aria-pressed="true">alle</button>
-              <button type="button" data-pad="L" aria-pressed="false">nur Large</button>
+              <button type="button" data-pad="any" aria-pressed="true" data-i18n="pad.all">all</button>
+              <button type="button" data-pad="L" aria-pressed="false" data-i18n="pad.large">Large only</button>
             </div>
           </div>
           <div class="field">
-            <span class="flabel">Andocken</span>
+            <span class="flabel" data-i18n="filter.dock">Docking</span>
             <div class="seg" id="f-dock">
-              <button type="button" data-dock="public" aria-pressed="true">öffentlich</button>
-              <button type="button" data-dock="any" aria-pressed="false">alle</button>
+              <button type="button" data-dock="public" aria-pressed="true" data-i18n="dock.public">public</button>
+              <button type="button" data-dock="any" aria-pressed="false" data-i18n="dock.all">all</button>
             </div>
           </div>
           <div class="field">
-            <span class="flabel" title="Preise über dem Doppelten des nach Menge gewichteten Medians (z. B. 5.129.400 Cr als „verkaufe nicht“-Signal)">Preis-Ausreißer</span>
+            <span class="flabel" data-i18n="filter.outl" data-i18n-title="filter.outlTitle">Price outliers</span>
             <div class="seg" id="f-outl">
-              <button type="button" data-outl="hide" aria-pressed="true">ignorieren</button>
-              <button type="button" data-outl="show" aria-pressed="false">einbeziehen</button>
+              <button type="button" data-outl="hide" aria-pressed="true" data-i18n="outl.ignore">ignore</button>
+              <button type="button" data-outl="show" aria-pressed="false" data-i18n="outl.include">include</button>
             </div>
           </div>
           <div class="field">
-            <span class="flabel">Stationstyp</span>
+            <span class="flabel" data-i18n="filter.kind">Station type</span>
             <div class="chips" id="f-kinds"></div>
           </div>
           <div class="field">
-            <label for="f-q">Suche</label>
-            <input type="search" id="f-q" placeholder="Station oder System" />
+            <label for="f-q" data-i18n="filter.search">Search</label>
+            <input type="search" id="f-q" placeholder="Station or system" data-i18n-placeholder="filter.searchPh" />
           </div>
           <span class="spacer"></span>
           <span class="result-count" id="result-count"></span>
-          <button type="button" class="btn" id="f-reset">Zurücksetzen</button>
+          <button type="button" class="btn" id="f-reset" data-i18n="filter.reset">Reset</button>
         </div>
 
         <div class="card table-wrap">
@@ -173,29 +177,29 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Verlauf</div>
-            <h2>Marktpreis &amp; Menge über Zeit</h2>
+            <div class="eyebrow" data-i18n="history.eyebrow">History</div>
+            <h2 data-i18n="history.h2">Market price &amp; volume over time</h2>
           </div>
         </div>
         <div class="history-grid">
           <div class="card chart-card">
             <div class="chart-head">
               <div class="chart-title">
-                <h3 id="chart-title">Gesamter Markt</h3>
+                <h3 id="chart-title">Whole market</h3>
                 <div class="sub" id="chart-sub"></div>
               </div>
               <div class="seg" id="f-range">
-                <button type="button" data-days="1" aria-pressed="false">24 h</button>
-                <button type="button" data-days="7" aria-pressed="true">7 T</button>
-                <button type="button" data-days="14" aria-pressed="false">14 T</button>
-                <button type="button" data-days="30" aria-pressed="false">30 T</button>
+                <button type="button" data-days="1" aria-pressed="false" data-i18n="range.1">24 h</button>
+                <button type="button" data-days="7" aria-pressed="true" data-i18n="range.7">7 d</button>
+                <button type="button" data-days="14" aria-pressed="false" data-i18n="range.14">14 d</button>
+                <button type="button" data-days="30" aria-pressed="false" data-i18n="range.30">30 d</button>
               </div>
             </div>
             <div id="charts"></div>
           </div>
           <aside class="card leader">
-            <h3 id="leader-title">Top 5 nach Supply</h3>
-            <div class="sub muted" style="font-size:13px">gefiltert wie die Tabelle · Klick wählt Station</div>
+            <h3 id="leader-title">Top 5 by supply</h3>
+            <div class="sub muted" style="font-size:13px" data-i18n="leader.sub">filtered like the table · click to select a station</div>
             <ol id="leader"></ol>
           </aside>
         </div>
@@ -210,17 +214,17 @@
           <img src="assets/panorama-nebula.jpg" alt="" />
           <figcaption class="slot-badge">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-            Video-Platzhalter <span>info · 1800×820</span>
+            <span class="sb-main" data-i18n="video.placeholder">Video placeholder</span> <span>info · 1800×820</span>
           </figcaption>
         </figure>
         <div>
-          <div class="eyebrow">Wie das funktioniert</div>
-          <h2>Snapshots statt Bauchgefühl</h2>
-          <p>Ein Script fragt in festen Abständen die Stationssuche von Spansh ab, speichert den aktuellen Tritium-Markt aller Stationen im Umkreis von Colonia und hängt ihn an den Verlauf an. GitHub Actions baut daraus diese Seite neu.</p>
+          <div class="eyebrow" data-i18n="info.eyebrow">How it works</div>
+          <h2 data-i18n="info.h2">Snapshots instead of gut feeling</h2>
+          <p data-i18n="info.p">A script regularly queries Spansh's station search, stores the current Tritium market of every station around Colonia and adds new market updates to the history. GitHub Actions then rebuilds this page.</p>
           <ul class="feature-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Daten stammen von Spieler-Uploads (EDDN) – <b>Market-Update</b> zeigt, wie alt ein Eintrag wirklich ist.</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Fleet Carrier springen – ihr System kann sich zwischen zwei Snapshots ändern.</span></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span>Filter landen in der URL – Ansichten lassen sich als Link teilen.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n-html="info.li1">Data comes from player uploads (EDDN) – <b>Market update</b> shows how old an entry really is.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="info.li2">Fleet carriers jump – their system can change between two snapshots.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="info.li3">Filters are stored in the URL – views can be shared as a link.</span></li>
           </ul>
         </div>
       </div>
@@ -229,8 +233,8 @@
 
   <footer>
     <div class="container">
-      <span>Daten: <a href="https://spansh.co.uk/" target="_blank" rel="noopener">Spansh</a> / EDDN · Stand <span id="footer-stamp">–</span></span>
-      <span>Fan-Projekt, nicht mit Frontier Developments verbunden. Elite Dangerous ist eine Marke von Frontier.</span>
+      <span><span data-i18n="footer.data">Data:</span> <a href="https://spansh.co.uk/" target="_blank" rel="noopener">Spansh</a> / EDDN · <span data-i18n="footer.asOf">as of</span> <span id="footer-stamp">–</span></span>
+      <span data-i18n="footer.disclaimer">Fan project, not affiliated with Frontier Developments. Elite Dangerous is a trademark of Frontier.</span>
     </div>
   </footer>
 
