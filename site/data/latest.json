@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-23T22:45:00.000Z",
+  "generatedAt": "2026-11-23T23:18:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -1522,24 +1522,6 @@
       "marketUpdatedAt": "2026-03-04T16:38:07.000Z"
     },
     {
-      "id": "3705753344",
-      "station": "H5Y-09Z",
-      "callsign": "H5Y-09Z",
-      "dockingAccess": null,
-      "carrierClass": "drake",
-      "system": "Eol Prou LW-L c8-127",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 3.60094388667749,
-      "arrivalLs": 0,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 103907,
-      "demand": 2000,
-      "marketUpdatedAt": "2024-08-24T15:28:58.000Z"
-    },
-    {
       "id": "3706889984",
       "station": "W0L-W3X",
       "callsign": "W0L-W3X",
@@ -1556,6 +1538,24 @@
       "sellPrice": 2586,
       "demand": 456,
       "marketUpdatedAt": "2024-10-27T19:18:36.000Z"
+    },
+    {
+      "id": "3705753344",
+      "station": "H5Y-09Z",
+      "callsign": "H5Y-09Z",
+      "dockingAccess": null,
+      "carrierClass": "drake",
+      "system": "Eol Prou LW-L c8-127",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 3.60094388667749,
+      "arrivalLs": 0,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 103907,
+      "demand": 2000,
+      "marketUpdatedAt": "2024-08-24T15:28:58.000Z"
     },
     {
       "id": "3704938240",
@@ -2623,21 +2623,6 @@
       "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
     },
     {
-      "id": "3920541440",
-      "station": "Wallis Munitions Complex",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 898.661578,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
-    },
-    {
       "id": "3920541952",
       "station": "Cukkemane Honour",
       "system": "Ratraii",
@@ -2861,6 +2846,21 @@
       "sellPrice": 80990,
       "demand": 800,
       "marketUpdatedAt": "2026-05-03T23:57:56.000Z"
+    },
+    {
+      "id": "3920541440",
+      "station": "Wallis Munitions Complex",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 898.661578,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
     },
     {
       "id": "3920542464",
@@ -4082,7 +4082,7 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 13.9295450953181,
-      "arrivalLs": 2138.694089,
+      "arrivalLs": 2137.787801,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 51717,
@@ -4778,7 +4778,7 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 16.298635151831,
-      "arrivalLs": 3664.495822,
+      "arrivalLs": 3664.506193,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53481,
@@ -5083,6 +5083,21 @@
       "marketUpdatedAt": "2021-07-29T11:14:09.000Z"
     },
     {
+      "id": "128771628",
+      "station": "TolaGarf's Junkyard",
+      "system": "Kojeara",
+      "kind": "orbital",
+      "typeLabel": "Asteroid base",
+      "maxPad": "L",
+      "distanceLy": 18.5187299611771,
+      "arrivalLs": 224.490906,
+      "buyPrice": 56624,
+      "supply": 98,
+      "sellPrice": 55878,
+      "demand": 1,
+      "marketUpdatedAt": "2026-11-23T17:50:00.000Z"
+    },
+    {
       "id": "3703429120",
       "station": "K2J-5HM",
       "callsign": "K2J-5HM",
@@ -5153,21 +5168,6 @@
       "sellPrice": 65372,
       "demand": 1980,
       "marketUpdatedAt": "2021-01-08T23:13:06.000Z"
-    },
-    {
-      "id": "128771628",
-      "station": "TolaGarf's Junkyard",
-      "system": "Kojeara",
-      "kind": "orbital",
-      "typeLabel": "Asteroid base",
-      "maxPad": "L",
-      "distanceLy": 18.5187299611771,
-      "arrivalLs": 224.49442,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 55878,
-      "demand": 1,
-      "marketUpdatedAt": "2026-11-23T06:53:47.000Z"
     },
     {
       "id": "3703817728",
@@ -7097,12 +7097,12 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 36.3891322418177,
-      "arrivalLs": 1781.975668,
+      "arrivalLs": 1787.693664,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 57626,
-      "demand": 691,
-      "marketUpdatedAt": "2026-11-10T03:11:12.000Z"
+      "sellPrice": 53892,
+      "demand": 715,
+      "marketUpdatedAt": "2026-11-23T18:32:55.000Z"
     },
     {
       "id": "3920839168",
