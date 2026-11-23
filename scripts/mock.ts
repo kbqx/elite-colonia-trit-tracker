@@ -56,8 +56,8 @@ const fixed: Seed[] = [
   { station: "Vonarburg Co-operative", system: "Kojeara", kind: "orbital", typeLabel: "Outpost", maxPad: "M", distanceLy: 21.6, arrivalLs: 88, sells: true, buys: false, baseSupply: 6_500 },
   { station: "Bento Landing", system: "Los", kind: "planetary", typeLabel: "Planetary Port", maxPad: "L", distanceLy: 26.2, arrivalLs: 940, sells: true, buys: true, baseSupply: 18_000 },
   { station: "Huxley Refinery", system: "Desy", kind: "planetary", typeLabel: "Planetary Outpost", maxPad: "L", distanceLy: 31.8, arrivalLs: 3120, sells: true, buys: false, baseSupply: 12_500 },
-  { station: "Prou Survey Camp", system: "Eol Prou RS-T d3-94", kind: "settlement", typeLabel: "Odyssey Settlement", maxPad: "M", distanceLy: 8.6, arrivalLs: 410, sells: true, buys: false, baseSupply: 1_800 },
-  { station: "Mobia Extraction Site", system: "Mobia", kind: "settlement", typeLabel: "Odyssey Settlement", maxPad: "L", distanceLy: 38.5, arrivalLs: 1675, sells: true, buys: false, baseSupply: 3_200 },
+  { station: "Prou Survey Camp", system: "Eol Prou RS-T d3-94", kind: "planetary", typeLabel: "Settlement", maxPad: "M", distanceLy: 8.6, arrivalLs: 410, sells: true, buys: false, baseSupply: 1_800 },
+  { station: "Mobia Extraction Site", system: "Mobia", kind: "planetary", typeLabel: "Settlement", maxPad: "L", distanceLy: 38.5, arrivalLs: 1675, sells: true, buys: false, baseSupply: 3_200 },
   { station: "Carlota Depot", system: "Carlota", kind: "orbital", typeLabel: "Asteroid base", maxPad: "L", distanceLy: 44.1, arrivalLs: 770, sells: false, buys: true, baseSupply: 0 },
   { station: "Kinesi Gateway", system: "Kinesi", kind: "orbital", typeLabel: "Coriolis Starport", maxPad: "L", distanceLy: 61.3, arrivalLs: 205, sells: false, buys: true, baseSupply: 0 },
 ];

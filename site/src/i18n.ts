@@ -32,8 +32,8 @@ const en: Record<string, Entry> = {
 
   // Markt & Filter
   "market.eyebrow": "Market",
-  "market.titleBuy": "Largest sellers",
-  "market.titleSell": "Best buyers",
+  "market.titleBuy": "Sellers",
+  "market.titleSell": "Buyers",
   "filter.iwant": "I want to …",
   "mode.buy": "buy",
   "mode.sell": "sell",
@@ -65,11 +65,11 @@ const en: Record<string, Entry> = {
   "filter.reset": "Reset",
   "count.markets": (p) => `${p.n} of ${p.total} markets`,
   "count.outliers": (p) => ` · ${p.n} price outlier${p.n === 1 ? "" : "s"}`,
-  "count.notInKpis": " (excluded from figures)",
+  "count.notInKpis": " (not included in calculations)",
 
   // Stationsarten & Zugang
   "kind.orbital": "Orbital",
-  "kind.planetary": "Planetary",
+  "kind.planetary": "Planetary (landing)",
   "kind.settlement": "Settlement",
   "kind.carrier": "Fleet Carrier",
   "kind.squadron": "Squadron Carrier",
@@ -95,7 +95,7 @@ const en: Record<string, Entry> = {
   "col.age": "Updated",
   "table.empty": "No station matches the filters.",
   "table.outlier": "Outlier",
-  "table.outlierTitle": (p) => `Price above ${p.f}× the weighted median (limit ${p.cap} Cr/t)`,
+  "table.outlierTitle": (p) => `Not included in any calculation: price above ${p.f}× the weighted median (limit ${p.cap} Cr/t)`,
   "load.error": (p) => `Could not load data: ${p.msg}`,
 
   // Kennzahlen
@@ -183,8 +183,8 @@ const de: Record<string, Entry> = {
   "ticker.aria": "Laufband mit aktuellen Preisen",
 
   "market.eyebrow": "Markt",
-  "market.titleBuy": "Größte Verkäufer",
-  "market.titleSell": "Beste Abnehmer",
+  "market.titleBuy": "Verkäufer",
+  "market.titleSell": "Abnehmer",
   "filter.iwant": "Ich will …",
   "mode.buy": "kaufen",
   "mode.sell": "verkaufen",
@@ -219,7 +219,7 @@ const de: Record<string, Entry> = {
   "count.notInKpis": " (nicht in Kennzahlen)",
 
   "kind.orbital": "Orbital",
-  "kind.planetary": "Planetar",
+  "kind.planetary": "Planetar (Landung)",
   "kind.settlement": "Settlement",
   "kind.carrier": "Fleet Carrier",
   "kind.squadron": "Squadron Carrier",
@@ -244,7 +244,7 @@ const de: Record<string, Entry> = {
   "col.age": "Update",
   "table.empty": "Keine Station passt zu den Filtern.",
   "table.outlier": "Ausreißer",
-  "table.outlierTitle": (p) => `Preis über ${p.f}× dem gewichteten Median (Grenze ${p.cap} Cr/t)`,
+  "table.outlierTitle": (p) => `Fließt in keine Berechnung ein: Preis über ${p.f}× dem gewichteten Median (Grenze ${p.cap} Cr/t)`,
   "load.error": (p) => `Daten konnten nicht geladen werden: ${p.msg}`,
 
   "kpi.bestBuy": "Günstigster Kaufpreis",

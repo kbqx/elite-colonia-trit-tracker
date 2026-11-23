@@ -36,15 +36,20 @@ interface State {
 }
 
 // Fleet Carrier zuerst – sie sind der Kern des Trackers.
-const ALL_KINDS: StationKind[] = ["carrier", "orbital", "planetary", "settlement", "other"];
+const ALL_KINDS: StationKind[] = ["carrier", "orbital", "planetary", "other"];
 // Standard: nur Marktdaten ≤ 7 Tage und öffentlich andockbar – ältere/gesperrte
 // Einträge verzerren sonst die Preise massiv (siehe echter Snapshot 23.11.).
 // Mindestmengen: Kleinstbestände (z. B. 29 t zu 53k Cr) sind keine ernstzunehmenden
 // Märkte und würden "günstigster Preis", Summen und Charts verzerren.
 // Demand ist in Colonia typischerweise kleiner (meist < 5.000 t), daher eigener Wert.
-const DEFAULT_MIN_BUY = 5000;
-const DEFAULT_MIN_SELL = 1000;
-const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT_MIN_SELL, age: 168, dist: 0, pad: "any", dock: "public", outl: "hide", kinds: [...ALL_KINDS], q: "", sort: "qty", dir: "desc", sel: null, days: 7 };
+// Standard 0: der effektive Preis ("Ø für X t") gewichtet Kleinstbestände ohnehin
+// nur mit ihrer echten Menge; die Mindestmenge ist ein optionaler Tabellenfilter.
+const DEFAULT_MIN_BUY = 0;
+const DEFAULT_MIN_SELL = 0;
+const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT_MIN_SELL, age: 168, dist: 0, pad: "any", dock: "public", outl: "hide", kinds: [...ALL_KINDS], q: "", sort: "price", dir: "asc", sel: null, days: 7 };
+// Standard-Sortierung: bester Preis zuerst (Kaufen: niedrigster, Verkaufen: höchster).
+const defaultSort = (_mode: Mode): SortKey => "price";
+const defaultDir = (mode: Mode): State["dir"] => (mode === "buy" ? "asc" : "desc");
 
 /** Anzeigename einer Stationsart in der aktuellen Sprache. */
 const kindLabel = (k: StationKind) => t(`kind.${k}`);
@@ -85,9 +90,11 @@ function readStateFromUrl(): State {
   if (p.get("outl") === "show") s.outl = "show";
   if (p.has("kinds")) s.kinds = (p.get("kinds") ?? "").split(",").filter((k): k is StationKind => (ALL_KINDS as string[]).includes(k));
   s.q = p.get("q") ?? "";
+  s.sort = defaultSort(s.mode);
+  s.dir = defaultDir(s.mode);
   const sort = p.get("sort");
   if (sort) s.sort = sort as SortKey;
-  if (p.get("dir") === "asc") s.dir = "asc";
+  if (p.get("dir") === "asc" || p.get("dir") === "desc") s.dir = p.get("dir") as State["dir"];
   s.sel = p.get("sel");
   s.days = n("days", s.days);
   return s;
@@ -107,14 +114,13 @@ function writeStateToUrl(): void {
   if (state.kinds.length !== ALL_KINDS.length) p.set("kinds", state.kinds.join(","));
   if (state.q) p.set("q", state.q);
   if (state.sort !== defaultSort(state.mode)) p.set("sort", state.sort);
-  if (state.dir !== "desc") p.set("dir", state.dir);
+  if (state.dir !== defaultDir(state.mode)) p.set("dir", state.dir);
   if (state.sel) p.set("sel", state.sel);
   if (state.days !== d.days) p.set("days", String(state.days));
   const hash = p.toString();
   history.replaceState(null, "", hash ? `#${hash}` : location.pathname + location.search);
 }
 
-const defaultSort = (mode: Mode): SortKey => (mode === "buy" ? "qty" : "price");
 
 // ---------------------------------------------------------------------------
 // Daten
@@ -333,7 +339,8 @@ function renderTicker(): void {
 function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
   const buy = state.mode === "buy";
   const pairs = anyQty.map((m) => pairOf(m));
-  const best = [...rows].sort((a, b) => (buy ? (a.buyPrice ?? 0) - (b.buyPrice ?? 0) : (b.sellPrice ?? 0) - (a.sellPrice ?? 0)))[0];
+  // Bester Preis: unabhängig von der Mindestmenge, aber mit Alters-/Typ-Filtern und ohne Ausreißer.
+  const best = [...anyQty].sort((a, b) => (buy ? (a.buyPrice ?? 0) - (b.buyPrice ?? 0) : (b.sellPrice ?? 0) - (a.sellPrice ?? 0)))[0];
   const qtySum = rows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
   const carrierRows = rows.filter((m) => m.kind === "carrier");
   const carrierQty = carrierRows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
@@ -462,7 +469,7 @@ function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | nu
       const outTag = out
         ? `<span class="tag-out" title="${esc(t("table.outlierTitle", { f: OUTLIER_FACTOR, cap: fmtInt(cap) }))}">${t("table.outlier")}</span>`
         : "";
-      return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}${ac === "stale" || (out && state.outl === "hide") ? " dim" : ""}">
+      return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}${ac === "stale" ? " dim" : ""}">
         <td><span class="st-name">${esc(dn.name)}</span><span class="st-type">${esc(dn.sub)}</span></td>
         <td>${esc(m.system)}</td>
         <td><span class="kind ${m.kind}">${KIND_ICON[m.kind]}${typeName(m)}</span></td>
@@ -657,7 +664,7 @@ function bindEvents(): void {
 
   $("#f-mode").addEventListener("click", (e) => {
     const mode = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.mode as Mode | undefined;
-    if (mode && mode !== state.mode) update({ mode, sort: defaultSort(mode), dir: "desc" });
+    if (mode && mode !== state.mode) update({ mode, sort: defaultSort(mode), dir: defaultDir(mode) });
   });
   $("#f-pad").addEventListener("click", (e) => {
     const pad = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.pad as State["pad"] | undefined;
@@ -685,7 +692,7 @@ function bindEvents(): void {
     if (!kind) return;
     let kinds = state.kinds.includes(kind) ? state.kinds.filter((k) => k !== kind) : [...state.kinds, kind];
     // "Sonstige" läuft immer mit, solange nicht gezielt gefiltert wird.
-    if (kinds.filter((k) => k !== "other").length === 4) kinds = [...ALL_KINDS];
+    if (kinds.filter((k) => k !== "other").length === ALL_KINDS.length - 1) kinds = [...ALL_KINDS];
     else kinds = kinds.filter((k) => k !== "other");
     update({ kinds });
   });
@@ -703,7 +710,7 @@ function bindEvents(): void {
     const q = (e.target as HTMLInputElement).value.trim();
     qTimer = window.setTimeout(() => update({ q }), 180);
   });
-  $("#f-reset").addEventListener("click", () => update({ ...DEFAULTS, kinds: [...ALL_KINDS], mode: state.mode, sort: defaultSort(state.mode) }));
+  $("#f-reset").addEventListener("click", () => update({ ...DEFAULTS, kinds: [...ALL_KINDS], mode: state.mode, sort: defaultSort(state.mode), dir: defaultDir(state.mode) }));
 
   $("#thead-row").addEventListener("click", (e) => {
     const th = (e.target as HTMLElement).closest<HTMLElement>("th.sortable");
@@ -738,6 +745,12 @@ function bindEvents(): void {
 }
 
 // ---------------------------------------------------------------------------
+/** Alte Daten: "settlement" zählt jetzt als "planetary" (Landung auf Planet nötig). */
+function normalizeKinds(): void {
+  for (const m of snap.markets) if (m.kind === "settlement") m.kind = "planetary";
+  if (hist) for (const meta of Object.values(hist.stations)) if (meta.kind === "settlement") meta.kind = "planetary";
+}
+
 async function main(): Promise<void> {
   setLang(initialLang(), false);
   try {
@@ -746,6 +759,7 @@ async function main(): Promise<void> {
     $("#tbody").innerHTML = `<tr><td class="empty">${esc(t("load.error", { msg: (err as Error).message }))}</td></tr>`;
     return;
   }
+  normalizeKinds();
   bindEvents();
   renderAll();
 }

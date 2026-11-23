@@ -174,8 +174,8 @@ const num = (v: unknown): number | null => (typeof v === "number" && Number.isFi
 export function classifyStation(typeLabel: string, isPlanetary?: boolean): StationKind {
   const t = typeLabel.toLowerCase();
   if (t.includes("carrier")) return "carrier";
-  if (t.includes("settlement")) return "settlement";
-  if (t.includes("planetary") || t.includes("surface") || isPlanetary === true) return "planetary";
+  // Nur relevant: Landung auf einem Planeten nötig? Settlements liegen alle auf Planeten.
+  if (isPlanetary === true || t.includes("settlement") || t.includes("planetary") || t.includes("surface")) return "planetary";
   if (t.length === 0) return "other";
   return "orbital";
 }

@@ -4,7 +4,12 @@
  * Browser-Build nichts davon ausgeben muss.
  */
 
-/** Grobe Stationskategorie, auf die im Frontend gefiltert wird. */
+/**
+ * Grobe Stationskategorie, auf die im Frontend gefiltert wird.
+ * Entscheidend ist nur: Muss man auf einem Planeten landen? → "planetary"
+ * (inkl. Odyssey-Settlements). "settlement" kommt nur noch in alten Daten vor
+ * und wird beim Laden auf "planetary" abgebildet.
+ */
 export type StationKind = "orbital" | "planetary" | "settlement" | "carrier" | "other";
 
 /** Größte Landepad-Klasse einer Station. */
