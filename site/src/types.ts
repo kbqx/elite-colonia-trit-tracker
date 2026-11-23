@@ -23,6 +23,12 @@ export interface MarketEntry {
    * ("All", "Squadron", "Friends", "Squadron Friends", "None") – null = unbekannt.
    */
   dockingAccess?: string | null;
+  /**
+   * Nur Fleet Carrier: Bauart. Spansh meldet ALLE Carrier als "Drake-Class Carrier";
+   * Squadron Carrier erkennen wir an 16 Large-Pads (Drake: 8 L / 4 M / 4 S) bzw.
+   * am 4-stelligen Rufzeichen ohne Bindestrich.
+   */
+  carrierClass?: "drake" | "squadron";
   system: string;
   kind: StationKind;
   /** Originaler Stationstyp laut Spansh, z. B. "Coriolis Starport". */
@@ -83,7 +89,7 @@ export interface HistoryFile {
   startedAt?: string;
   retentionDays: number;
   /** Stammdaten je Markt-ID. */
-  stations: Record<string, { station: string; system: string; kind: StationKind; callsign?: string }>;
+  stations: Record<string, { station: string; system: string; kind: StationKind; callsign?: string; carrierClass?: "drake" | "squadron" }>;
   /** Zeilen je Markt-ID, chronologisch sortiert. */
   series: Record<string, HistoryRow[]>;
 }

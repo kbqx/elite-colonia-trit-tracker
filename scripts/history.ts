@@ -71,7 +71,13 @@ export function appendToHistory(history: HistoryFile, snap: Snapshot, retentionD
 
   for (const e of snap.markets) {
     seen.add(e.id);
-    stations[e.id] = { station: e.station, system: e.system, kind: e.kind, ...(e.callsign ? { callsign: e.callsign } : {}) };
+    stations[e.id] = {
+      station: e.station,
+      system: e.system,
+      kind: e.kind,
+      ...(e.callsign ? { callsign: e.callsign } : {}),
+      ...(e.carrierClass ? { carrierClass: e.carrierClass } : {}),
+    };
 
     const t = e.marketUpdatedAt ? toSec(e.marketUpdatedAt) : now;
     const rows = (series[e.id] ??= []);

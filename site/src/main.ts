@@ -48,6 +48,9 @@ const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT
 
 /** Anzeigename einer Stationsart in der aktuellen Sprache. */
 const kindLabel = (k: StationKind) => t(`kind.${k}`);
+/** Typ-Bezeichnung eines konkreten Marktes (unterscheidet Drake- und Squadron Carrier). */
+const typeName = (m: { kind: StationKind; carrierClass?: "drake" | "squadron" }) =>
+  m.kind === "carrier" && m.carrierClass === "squadron" ? t("kind.squadron") : kindLabel(m.kind);
 const KIND_ICON: Record<StationKind, string> = {
   orbital: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-25 12 12)"/></svg>`,
   planetary: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 18c4-5 16-5 20 0"/><path d="M8 14V9h8v5"/><path d="M12 9V5"/></svg>`,
@@ -462,7 +465,7 @@ function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | nu
       return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}${ac === "stale" || (out && state.outl === "hide") ? " dim" : ""}">
         <td><span class="st-name">${esc(dn.name)}</span><span class="st-type">${esc(dn.sub)}</span></td>
         <td>${esc(m.system)}</td>
-        <td><span class="kind ${m.kind}">${KIND_ICON[m.kind]}${kindLabel(m.kind)}</span></td>
+        <td><span class="kind ${m.kind}">${KIND_ICON[m.kind]}${typeName(m)}</span></td>
         <td><span class="pad ${m.maxPad ?? ""}">${m.maxPad ?? "?"}</span></td>
         <td class="r num">${m.distanceLy == null ? "–" : `${fmtNum1(m.distanceLy)} ly`}<span class="st-type">${m.arrivalLs == null ? "" : `${fmtInt(m.arrivalLs)} ls`}</span></td>
         <td class="r num price">${outTag}${fmtInt(priceOf(m, state.mode))}</td>
@@ -484,7 +487,7 @@ function renderLeader(rows: MarketEntry[]): void {
         .map(
           (m) => `<li data-id="${esc(m.id)}">
           <div class="l-top"><span class="l-name">${esc(m.station)}</span><span class="l-val">${fmtInt(qtyOf(m, state.mode))} t</span></div>
-          <div class="l-sub">${esc(m.system)} · ${fmtInt(priceOf(m, state.mode))} Cr/t · ${kindLabel(m.kind)}</div>
+          <div class="l-sub">${esc(m.system)} · ${fmtInt(priceOf(m, state.mode))} Cr/t · ${typeName(m)}</div>
           <div class="l-bar"><i style="width:${((qtyOf(m, state.mode) / max) * 100).toFixed(1)}%"></i></div>
         </li>`,
         )
@@ -522,7 +525,7 @@ function renderHistory(): void {
       { title: buy ? t("chart.supplyT") : t("chart.demandT"), height: 130, series: [{ label: buy ? t("col.supply") : t("col.demand"), color: COLOR_QTY, values: at.map((r) => (r ? rowQty(r, state.mode) : null)), format: fmtCompact, area: true, step: true }] },
     ];
     $("#chart-title").innerHTML = `${esc(selMeta.station)} <a href="#" class="clear" id="clear-sel">${t("chart.showMarket")}</a>`;
-    $("#chart-sub").textContent = [selMeta.callsign && selMeta.callsign !== selMeta.station ? selMeta.callsign : "", selMeta.system, kindLabel(selMeta.kind)].filter(Boolean).join(" · ");
+    $("#chart-sub").textContent = [selMeta.callsign && selMeta.callsign !== selMeta.station ? selMeta.callsign : "", selMeta.system, typeName(selMeta)].filter(Boolean).join(" · ");
   } else {
     // Gesamtmarkt zu jedem Zeitpunkt T: alle Märkte, die die Filter erfüllen
     // (Market-Update-Alter relativ zu T), Ausreißer per Median entfernt, dann

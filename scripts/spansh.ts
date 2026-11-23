@@ -180,6 +180,22 @@ export function classifyStation(typeLabel: string, isPlanetary?: boolean): Stati
   return "orbital";
 }
 
+/** Anzeigename für Squadron Carrier (Spansh liefert hierfür keinen eigenen Typ). */
+export const SQUADRON_CARRIER_LABEL = "Squadron Carrier";
+
+/**
+ * Drake-Class Carrier haben 8 Large / 4 Medium / 4 Small Pads und Rufzeichen
+ * wie "T1L-3VK". Im Snapshot vom 23.11.2026 hatten genau 15 Carrier 16/8/8 Pads –
+ * und genau diese 15 hatten 4-stellige Rufzeichen ohne Bindestrich ("VOTB") und
+ * teils über 25.000 t Bestand, was ein Drake nicht fassen kann → Squadron Carrier.
+ */
+export function classifyCarrier(s: SpanshStation): "drake" | "squadron" {
+  const large = num(s.large_pads);
+  if (large != null) return large > 8 ? "squadron" : "drake";
+  // Ohne Pad-Daten: Rufzeichen-Muster als Fallback
+  return /^[A-Z0-9]{4}$/.test(s.name ?? "") ? "squadron" : "drake";
+}
+
 export function inferMaxPad(s: SpanshStation, kind: StationKind): PadSize | null {
   if (s.has_large_pad === true || (num(s.large_pads) ?? 0) > 0) return "L";
   if ((num(s.medium_pads) ?? 0) > 0) return "M";
@@ -212,13 +228,15 @@ export function normalizeStation(s: SpanshStation, commodity: string): MarketEnt
   if (supply <= 0 && demand <= 0) return null;
 
   const carrierName = typeof s.carrier_name === "string" ? s.carrier_name.trim() : "";
+  const carrierClass = kind === "carrier" ? classifyCarrier(s) : undefined;
   return {
     id: String(s.market_id ?? s.id ?? `${s.system_name}/${s.name}`),
     station: kind === "carrier" && carrierName ? carrierName : s.name ?? "?",
-    ...(kind === "carrier" ? { callsign: s.name ?? "?", dockingAccess: s.carrier_docking_access ?? null } : {}),
+    ...(kind === "carrier" ? { callsign: s.name ?? "?", dockingAccess: s.carrier_docking_access ?? null, carrierClass } : {}),
     system: s.system_name ?? "?",
     kind,
-    typeLabel,
+    // Spansh nennt jeden Carrier "Drake-Class Carrier" – für Squadron Carrier korrigieren.
+    typeLabel: carrierClass === "squadron" ? SQUADRON_CARRIER_LABEL : typeLabel,
     maxPad: inferMaxPad(s, kind),
     distanceLy: num(s.distance),
     arrivalLs: num(s.distance_to_arrival),

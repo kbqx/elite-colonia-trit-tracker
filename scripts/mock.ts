@@ -147,7 +147,9 @@ for (const t of times) {
       st.seen = {
         id: ids[i] as string,
         station: s.station,
-        ...(s.callsign ? { callsign: s.callsign, dockingAccess: s.dockingAccess ?? null } : {}),
+        ...(s.callsign
+      ? { callsign: s.callsign, dockingAccess: s.dockingAccess ?? null, carrierClass: /^[A-Z0-9]{4}$/.test(s.callsign) ? ("squadron" as const) : ("drake" as const) }
+      : {}),
         system: s.system,
         kind: s.kind,
         typeLabel: s.typeLabel,
