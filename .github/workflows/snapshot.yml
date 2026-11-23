@@ -1,0 +1,75 @@
+# Holt regelmäßig einen Markt-Snapshot von Spansh, committet die Daten
+# und veröffentlicht die Seite auf GitHub Pages.
+#
+# Einmalig im Repo einstellen: Settings → Pages → Source: "GitHub Actions".
+name: Snapshot & Deploy
+
+on:
+  schedule:
+    # Alle 30 Minuten (UTC). GitHub kann Cron-Läufe um einige Minuten verzögern.
+    - cron: "7,37 * * * *"
+  workflow_dispatch: # manuell über den "Run workflow"-Button
+  push:
+    branches: [main]
+    paths-ignore: ["site/data/**", "README.md"]
+
+permissions:
+  contents: write # Daten-Commit
+  pages: write
+  id-token: write
+
+concurrency:
+  group: snapshot-deploy
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Abhängigkeiten installieren
+        run: npm install --no-audit --no-fund
+
+      - name: Snapshot von Spansh holen
+        id: snapshot
+        # Bei einem Push nur neu bauen, keinen Snapshot ziehen.
+        if: github.event_name != 'push'
+        # Schlägt Spansh fehl, wird trotzdem mit den alten Daten deployed.
+        continue-on-error: true
+        run: npm run snapshot
+
+      - name: Daten committen
+        if: github.event_name != 'push' && steps.snapshot.outcome == 'success'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."
+          else
+            git commit -m "data: snapshot $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git push
+          fi
+
+      - name: Frontend bauen (TypeScript → site/dist)
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

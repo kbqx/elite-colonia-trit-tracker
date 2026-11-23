@@ -1,0 +1,25 @@
+{
+  "name": "elite-colonia-trit-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Colonia Tritium Market Ticker – Snapshots von Spansh + statische Website für GitHub Pages",
+  "type": "module",
+  "scripts": {
+    "snapshot": "tsx scripts/snapshot.ts",
+    "snapshot:raw": "tsx scripts/snapshot.ts --raw",
+    "mock": "tsx scripts/mock.ts",
+    "build": "tsc -p site/tsconfig.json",
+    "watch": "tsc -p site/tsconfig.json --watch",
+    "serve": "tsx scripts/serve.ts",
+    "dev": "npm run build && npm run serve",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p site/tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
