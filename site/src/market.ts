@@ -12,9 +12,12 @@ export const OUTLIER_FACTOR = 2;
 
 /** Mengen für die Kurven "effektiver Preis für X t". */
 export const VOLUMES: Record<Mode, number[]> = {
-  buy: [5_000, 25_000, 50_000],
+  buy: [5_000, 10_000, 25_000, 50_000],
   sell: [1_000, 5_000, 10_000],
 };
+
+/** Menge für die Kennzahl "Effektiver Preis/Erlös für X t". */
+export const KPI_VOLUME: Record<Mode, number> = { buy: 25_000, sell: 5_000 };
 
 /** Nach Menge gewichteter Median – robust gegen Fantasiepreise und Mini-Bestände. */
 export function weightedMedian(pairs: Pair[]): number | null {

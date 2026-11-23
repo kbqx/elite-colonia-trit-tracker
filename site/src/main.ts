@@ -5,7 +5,7 @@
  */
 import { isGoneRow, type HistoryFile, type HistoryRow, type MarketEntry, type Snapshot, type StationKind } from "./types.js";
 import { renderCharts, sparkline, type Panel, type Series } from "./chart.js";
-import { OUTLIER_FACTOR, VOLUMES, bestPrice, effectivePrice, splitOutliers, weightedMedian, type Mode, type Pair } from "./market.js";
+import { KPI_VOLUME, OUTLIER_FACTOR, VOLUMES, bestPrice, effectivePrice, splitOutliers, weightedMedian, type Mode, type Pair } from "./market.js";
 import { ageClass, esc, fmtCompact, fmtDateTime, fmtInt, fmtNum1, fmtPct, relTime } from "./format.js";
 import { getLang, initialLang, setLang, t, type Lang } from "./i18n.js";
 
@@ -339,7 +339,7 @@ function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
   // Effektiver Preis für die mittlere Menge + Veränderung ggü. 24 h
   // (gleiche Märkte, Preise UND Mengen von damals laut Verlauf).
   const vols = VOLUMES[state.mode];
-  const vMid = vols[1] as number;
+  const vMid = KPI_VOLUME[state.mode];
   const eff = effectivePrice(pairs, vMid, state.mode);
   // Nur vergleichen, wenn der Verlauf vor 24 h schon lief – sonst ist der Markt
   // damals nur lückenhaft bekannt und der Vergleich wäre verzerrt.
@@ -492,10 +492,12 @@ function renderLeader(rows: MarketEntry[]): void {
     : `<li class="muted">${t("kpi.noResults")}</li>`;
 }
 
-// Kurvenfarben: validierte Kategorie-Palette (blau, orange, aqua) auf dunklem Grund;
-// "Bester Einzelpreis" neutral und gestrichelt als Referenzlinie.
-const VOLUME_COLORS = ["#3987e5", "#d95926", "#199e70"];
-const VOLUME_DASH = ["", "6 3", "2 3"];
+// Kurvenfarben: validierte Kategorie-Palette (blau, orange, aqua, gelb – feste
+// Reihenfolge) auf dunklem Grund; zusätzlich je ein eigenes Strichmuster, damit
+// die Kurven auch ohne Farbunterscheidung trennbar sind.
+// "Bester Einzelpreis" neutral und fein gepunktet als Referenzlinie.
+const VOLUME_COLORS = ["#3987e5", "#d95926", "#199e70", "#c98500"];
+const VOLUME_DASH = ["", "6 3", "2 3", "10 3 2 3"];
 const COLOR_BEST = "#b9b3a6";
 const COLOR_TOTAL = "#8a93a6";
 
