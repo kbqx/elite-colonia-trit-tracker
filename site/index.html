@@ -42,32 +42,36 @@
 
   <!-- ============ Hero ============ -->
   <header class="hero" id="top">
-    <div class="container">
+    <!-- Bühne: Hintergrund-Medium hinter Navigation, Titel und Hero-Zahl (endet am Laufband) -->
+    <div class="hero-stage">
       <!--
-        VIDEO-SLOT "hero": später <img> durch das <video> darunter ersetzen
-        und das Attribut data-placeholder + das Badge entfernen.
+        VIDEO-SLOT "hero" (Vollbild-Hintergrund): später <img> durch das <video> darunter
+        ersetzen und das Attribut data-placeholder + das Badge entfernen.
+        Empfohlen: 1920×1080, ruhiger Loop, ohne Ton, möglichst < 8 MB.
         <video autoplay muted loop playsinline poster="assets/hero-colonia.jpg">
           <source src="assets/hero.webm" type="video/webm" />
           <source src="assets/hero.mp4" type="video/mp4" />
         </video>
       -->
-      <figure class="media-slot" data-placeholder data-video-slot="hero">
+      <figure class="media-slot hero-bg" data-placeholder data-video-slot="hero" aria-hidden="true">
         <img src="assets/hero-colonia.jpg" alt="" />
         <figcaption class="slot-badge">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-          <span class="sb-main" data-i18n="video.placeholder">Video placeholder</span> <span>hero · 2400×760 · Loop</span>
+          <span class="sb-main" data-i18n="video.placeholder">Video placeholder</span> <span>hero · 1920×1080 · Loop</span>
         </figcaption>
       </figure>
 
-      <div class="hero-text">
-        <div class="eyebrow" data-i18n="hero.eyebrow">Elite Dangerous · Colonia region</div>
-        <h1>Colonia Tritium Ticker</h1>
-        <p class="lead" data-i18n="hero.lead">Where can you get Tritium right now, at what price and in what quantity? Automatic market snapshots of every station and fleet carrier around Colonia.</p>
-      </div>
+      <div class="container hero-content">
+        <div class="hero-text">
+          <div class="eyebrow" data-i18n="hero.eyebrow">Elite Dangerous · Colonia region</div>
+          <h1>Colonia Tritium Ticker</h1>
+          <p class="lead" data-i18n="hero.lead">Where can you get Tritium right now, at what price and in what quantity? Automatic market snapshots of every station and fleet carrier around Colonia.</p>
+        </div>
 
-      <div class="headline-number">
-        <div class="big" id="hero-supply">–<small>t</small></div>
-        <div class="label" id="hero-supply-label">Tritium currently on offer</div>
+        <div class="headline-number">
+          <div class="big" id="hero-supply">–<small>t</small></div>
+          <div class="label" id="hero-supply-label">Tritium currently on offer</div>
+        </div>
       </div>
     </div>
 

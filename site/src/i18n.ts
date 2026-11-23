@@ -111,9 +111,9 @@ const en: Record<string, Entry> = {
   "kpi.supply": "Total supply",
   "kpi.demand": "Total demand",
   "kpi.overMarkets": (p) => `across ${p.n} markets`,
-  "kpi.carrierSupply": "Fleet carrier share of supply",
-  "kpi.carrierDemand": "Fleet carrier share of demand",
-  "kpi.carrierSub": (p) => `${p.c} carriers · ${p.n} of ${p.total} markets`,
+  "kpi.carrierSupply": "Fleet carrier share of total supply",
+  "kpi.carrierDemand": "Fleet carrier share of total demand",
+  "kpi.carrierSub": (p) => `${p.q} t on ${p.c} of ${p.n} markets`,
 
   // Verlauf
   "history.eyebrow": "History",
@@ -259,9 +259,9 @@ const de: Record<string, Entry> = {
   "kpi.supply": "Gesamt-Supply",
   "kpi.demand": "Gesamt-Demand",
   "kpi.overMarkets": (p) => `über ${p.n} Märkte`,
-  "kpi.carrierSupply": "Fleet-Carrier-Anteil am Supply",
-  "kpi.carrierDemand": "Fleet-Carrier-Anteil an Demand",
-  "kpi.carrierSub": (p) => `${p.c} Carrier · ${p.n} von ${p.total} Märkten`,
+  "kpi.carrierSupply": "Fleet-Carrier-Anteil am Gesamt-Supply",
+  "kpi.carrierDemand": "Fleet-Carrier-Anteil am Gesamt-Demand",
+  "kpi.carrierSub": (p) => `${p.q} t auf ${p.c} von ${p.n} Märkten`,
 
   "history.eyebrow": "Verlauf",
   "history.h2": "Marktpreis & Menge über Zeit",

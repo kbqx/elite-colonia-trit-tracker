@@ -103,9 +103,27 @@ a:hover { text-decoration: underline; }
 .slot-badge span { opacity: 0.7; font-weight: 500; text-transform: none; letter-spacing: 0; }
 
 /* ---------- Hero -------------------------------------------------------- */
-.hero { padding-top: calc(var(--nav-h) + 18px); }
-.hero .media-slot { aspect-ratio: 2400 / 760; }
-.hero-text { text-align: center; padding: 42px 0 10px; }
+.hero-stage {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; align-items: center;
+  min-height: min(74vh, 700px);
+  padding: calc(var(--nav-h) + 56px) 0 48px;
+}
+.hero-content { position: relative; z-index: 1; }
+/* Hintergrund-Medium über die ganze Bühne, inkl. hinter der Glas-Navigation */
+.hero-bg { position: absolute; inset: 0; z-index: -1; border: 0; border-radius: 0; background: #05060b; }
+.hero-bg img, .hero-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; }
+/* Abdunkeln für lesbaren Text; unten weicher Übergang ins Seiten-Navy */
+.hero-bg::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 50%, rgba(10, 13, 19, 0.55), rgba(10, 13, 19, 0.15) 70%, transparent),
+    linear-gradient(to bottom, rgba(15, 19, 26, 0.25) 0%, rgba(15, 19, 26, 0.15) 45%, rgba(15, 19, 26, 0.85) 92%, var(--bg-0) 100%);
+}
+.hero-bg[data-placeholder]::after { inset: calc(var(--nav-h) + 12px) 14px 14px; z-index: 2; }
+.hero-bg .slot-badge { top: calc(var(--nav-h) + 24px); right: 28px; }
+.hero-text { text-align: center; padding: 0 0 10px; }
+.hero-text .lead { color: hsl(40 35% 78%); text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6); }
 .eyebrow { font: 600 12px/1 var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
 h1 {
   margin: 14px 0 10px; color: var(--fg-strong);
@@ -125,7 +143,7 @@ h1 {
 
 /* ---------- Ticker-Laufband -------------------------------------------- */
 .ticker {
-  margin-top: 30px; overflow: hidden; white-space: nowrap;
+  margin-top: 0; overflow: hidden; white-space: nowrap;
   border-block: 1px solid var(--border); background: hsl(220 27% 8% / 0.6);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
@@ -298,6 +316,8 @@ footer .container { display: flex; justify-content: space-between; gap: 16px; fl
   .nav-links { display: none; }
 }
 @media (max-width: 560px) {
+  .hero-stage { min-height: 0; padding: calc(var(--nav-h) + 64px) 0 36px; }
+  .hero-bg .slot-badge { right: 18px; }
   .kpis { grid-template-columns: 1fr; }
   .slot-badge span { display: none; }
   .pill .label-long { display: none; }

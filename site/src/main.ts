@@ -357,10 +357,11 @@ function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
   const best = [...anyQty].sort((a, b) => (buy ? (a.buyPrice ?? 0) - (b.buyPrice ?? 0) : (b.sellPrice ?? 0) - (a.sellPrice ?? 0)))[0];
   const qtyRows = byUpdateRange(state.mode);
   const qtySum = qtyRows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
-  const carrierRows = rows.filter((m) => m.kind === "carrier");
+
+  // Carrier-Anteil bezogen auf die Gesamtmenge (gleiche Basis wie "Total supply").
+  const carrierRows = qtyRows.filter((m) => m.kind === "carrier");
   const carrierQty = carrierRows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
-  const rowsQty = rows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
-  const carrierShare = rowsQty > 0 ? (carrierQty / rowsQty) * 100 : null;
+  const carrierShare = qtySum > 0 ? (carrierQty / qtySum) * 100 : null;
 
   // Effektiver Preis für die mittlere Menge + Veränderung ggü. 24 h
   // (gleiche Märkte, Preise UND Mengen von damals laut Verlauf).
@@ -397,7 +398,7 @@ function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
     card(
       buy ? t("kpi.carrierSupply") : t("kpi.carrierDemand"),
       `${carrierShare == null ? "–" : Math.round(carrierShare)} <small>%</small>`,
-      t("kpi.carrierSub", { c: carrierRows.length, n: rows.length, total: snap.markets.length }),
+      t("kpi.carrierSub", { c: carrierRows.length, n: qtyRows.length, q: fmtInt(carrierQty) }),
     ),
   ].join("");
 }
