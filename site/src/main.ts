@@ -3,7 +3,7 @@
  * Lädt data/latest.json + data/history.json und rendert KPIs, Laufband,
  * filterbare Tabelle, Top-Liste und Verlaufscharts. Filterzustand liegt in der URL.
  */
-import type { HistoryFile, MarketEntry, Snapshot, StationKind } from "./types.js";
+import { isGoneRow, type HistoryFile, type HistoryRow, type MarketEntry, type Snapshot, type StationKind } from "./types.js";
 import { renderCharts, sparkline, type Series } from "./chart.js";
 import { ageClass, esc, fmtCompact, fmtDateTime, fmtInt, fmtPct, relTime } from "./format.js";
 
@@ -120,7 +120,8 @@ async function loadData(): Promise<void> {
   snap = (await res.json()) as Snapshot;
   try {
     const h = await fetch(`data/history.json${bust}`);
-    hist = h.ok ? ((await h.json()) as HistoryFile) : null;
+    const data = h.ok ? ((await h.json()) as HistoryFile) : null;
+    hist = data?.schema === 2 ? data : null; // ältere Formate ignorieren
   } catch {
     hist = null;
   }
@@ -159,34 +160,66 @@ function filtered(mode: Mode = state.mode): MarketEntry[] {
   });
 }
 
-/** Preis pro Markt-ID von vor ~24 h (für Δ-Spalte). */
+// ---------------------------------------------------------------------------
+// Verlauf (Schema 2): pro Markt nur Änderungen. Zustand zum Zeitpunkt T =
+// letzte Zeile mit t ≤ T. "Weg"-Zeilen bedeuten: kein Handel mehr.
+// ---------------------------------------------------------------------------
+
+/** Ende der Zeitachse = Zeitpunkt des aktuellen Snapshots (ms). */
+const historyEnd = () => Date.parse(snap.generatedAt);
+
+/** Letzte Zeile mit t ≤ tSec (binäre Suche) – oder null. */
+function rowAt(rows: HistoryRow[] | undefined, tSec: number): HistoryRow | null {
+  if (!rows || rows.length === 0 || (rows[0] as HistoryRow)[0] > tSec) return null;
+  let lo = 0, hi = rows.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if ((rows[mid] as HistoryRow)[0] <= tSec) lo = mid;
+    else hi = mid - 1;
+  }
+  const r = rows[lo] as HistoryRow;
+  return isGoneRow(r) ? null : r;
+}
+
+const rowPrice = (r: HistoryRow, mode: Mode) => (mode === "buy" ? r[1] : r[3]);
+const rowQty = (r: HistoryRow, mode: Mode) => (mode === "buy" ? r[2] : r[4]);
+
+/**
+ * Gleichmäßige Zeitachse über `days` Tage bis zum aktuellen Snapshot.
+ * clip=true: nicht vor dem ersten Snapshot beginnen (davor ist der Markt nur
+ * lückenhaft bekannt und Summen würden einen Scheinanstieg zeigen).
+ */
+function timeGrid(days: number, clip = true): number[] {
+  const end = historyEnd();
+  const stepH = days <= 1 ? 0.5 : days <= 7 ? 2 : days <= 14 ? 3 : 6;
+  const step = stepH * 3_600_000;
+  let n = Math.round((days * 86_400_000) / step);
+  const started = clip && hist?.startedAt ? Date.parse(hist.startedAt) : -Infinity;
+  while (n > 0 && end - n * step < started) n--;
+  return Array.from({ length: n + 1 }, (_, i) => end - (n - i) * step);
+}
+
+/** Preis pro Markt-ID vor `hours` Stunden (für Δ-Spalte und Laufband). */
 function pricesAgo(hours: number): Map<string, number> {
   const out = new Map<string, number>();
-  if (!hist || hist.points.length === 0) return out;
-  const last = Date.parse((hist.points[hist.points.length - 1] as { t: string }).t);
-  const target = last - hours * 3_600_000;
-  let best = hist.points[0];
-  for (const p of hist.points) {
-    if (Date.parse(p.t) <= target) best = p;
-    else break;
-  }
-  if (!best || Date.parse(best.t) > target + 3 * 3_600_000) return out; // zu wenig Historie
-  for (const [id, tuple] of Object.entries(best.m)) {
-    const v = state.mode === "buy" ? tuple[0] : tuple[2];
+  if (!hist) return out;
+  const tSec = Math.floor((historyEnd() - hours * 3_600_000) / 1000);
+  for (const [id, rows] of Object.entries(hist.series)) {
+    const r = rowAt(rows, tSec);
+    const v = r ? rowPrice(r, state.mode) : null;
     if (v != null) out.set(id, v);
   }
   return out;
 }
 
+/** Preisverlauf eines Marktes für die Sparkline. */
 function seriesFor(id: string, days: number): Array<number | null> {
-  if (!hist) return [];
-  const last = Date.parse((hist.points[hist.points.length - 1] as { t: string } | undefined)?.t ?? snap.generatedAt);
-  const from = last - days * 86_400_000;
-  const pts = hist.points.filter((p) => Date.parse(p.t) >= from);
-  const stepN = Math.max(1, Math.ceil(pts.length / 60));
-  return pts.filter((_, i) => i % stepN === 0).map((p) => {
-    const t = p.m[id];
-    return t ? (state.mode === "buy" ? t[0] : t[2]) : null;
+  const rows = hist?.series[id];
+  if (!rows) return [];
+  // Einzelmarkt: hier ist jede Zeile echt, also auch Daten vor dem ersten Snapshot zeigen.
+  return timeGrid(days, false).map((t) => {
+    const r = rowAt(rows, Math.floor(t / 1000));
+    return r ? rowPrice(r, state.mode) : null;
   });
 }
 
@@ -407,56 +440,65 @@ function renderLeader(rows: MarketEntry[]): void {
 function renderHistory(): void {
   const host = $("#charts");
   const buy = state.mode === "buy";
-  if (!hist || hist.points.length === 0) {
+  if (!hist) {
     renderCharts(host, [], [], $("#tooltip"));
     return;
   }
-  const last = Date.parse((hist.points[hist.points.length - 1] as { t: string }).t);
-  const pts = hist.points.filter((p) => Date.parse(p.t) >= last - state.days * 86_400_000);
-  const times = pts.map((p) => Date.parse(p.t));
-
   const selMeta = state.sel ? hist.stations[state.sel] : undefined;
+  // Einzelmarkt: volle Zeitachse; Gesamtmarkt: erst ab dem ersten Snapshot.
+  const times = timeGrid(state.days, !selMeta);
   let price: Array<number | null>, qty: Array<number | null>;
 
   if (state.sel && selMeta) {
-    const id = state.sel;
-    price = pts.map((p) => { const t = p.m[id]; return t ? (buy ? t[0] : t[2]) : null; });
-    qty = pts.map((p) => { const t = p.m[id]; return t ? (buy ? t[1] : t[3]) : null; });
+    const rows = hist.series[state.sel];
+    const at = times.map((t) => rowAt(rows, Math.floor(t / 1000)));
+    price = at.map((r) => (r ? rowPrice(r, state.mode) : null));
+    qty = at.map((r) => (r ? rowQty(r, state.mode) : null));
     $("#chart-title").innerHTML = `${esc(selMeta.station)} <a href="#" class="clear" id="clear-sel">× Gesamtmarkt anzeigen</a>`;
     $("#chart-sub").textContent = [selMeta.callsign && selMeta.callsign !== selMeta.station ? selMeta.callsign : "", selMeta.system, KIND_LABEL[selMeta.kind]].filter(Boolean).join(" · ");
   } else {
-    // Gesamtmarkt: bester Preis + Summe der Menge über alle Stationen, die die
-    // stationsbezogenen Filter (Typ, Pad, Distanz, Suche) und Min.-Menge erfüllen.
+    // Gesamtmarkt: bester Preis + Summe der Menge zu jedem Zeitpunkt, über alle
+    // Märkte, die die Filter erfüllen. Das Market-Update-Alter wird relativ zum
+    // jeweiligen Zeitpunkt geprüft – genau wie die Tabelle es "damals" gezeigt hätte.
     const current = new Map(snap.markets.map((m) => [m.id, m]));
-    const ok = (id: string) => {
+    const markets = Object.entries(hist.series).filter(([id]) => {
       const meta = hist!.stations[id];
-      if (!meta) return false;
-      return passesStatic(meta, current.get(id));
-    };
+      return meta ? passesStatic(meta, current.get(id)) : false;
+    });
+    const minQty = Math.max(1, state.min);
+    const maxAge = state.age > 0 ? state.age * 3_600 : Infinity;
     price = [];
     qty = [];
-    for (const p of pts) {
-      let best: number | null = null, sum = 0;
-      for (const [id, t] of Object.entries(p.m)) {
-        if (!ok(id)) continue;
-        const pr = buy ? t[0] : t[2];
-        const q = buy ? t[1] : t[3];
-        if (pr == null || q <= 0 || q < state.min) continue;
+    for (const t of times) {
+      const tSec = Math.floor(t / 1000);
+      let best: number | null = null, sum = 0, any = false;
+      for (const [, rows] of markets) {
+        const r = rowAt(rows, tSec);
+        if (!r) continue;
+        any = true;
+        if (tSec - r[0] > maxAge) continue;
+        const pr = rowPrice(r, state.mode), q = rowQty(r, state.mode);
+        if (pr == null || q < minQty) continue;
         sum += q;
         best = best == null ? pr : buy ? Math.min(best, pr) : Math.max(best, pr);
       }
       price.push(best);
-      qty.push(sum);
+      qty.push(any ? sum : null);
     }
     $("#chart-title").textContent = "Gesamter Markt";
     $("#chart-sub").textContent = `${buy ? "günstigster Kaufpreis & Gesamt-Supply" : "höchster Ankaufspreis & Gesamt-Demand"} · gefiltert wie die Tabelle · Zeile anklicken für Einzelstation`;
   }
 
   const series: Series[] = [
-    { label: buy ? (state.sel ? "Kaufpreis (Cr/t)" : "Bester Kaufpreis (Cr/t)") : state.sel ? "Ankaufspreis (Cr/t)" : "Bester Ankaufspreis (Cr/t)", color: COLOR_PRICE, values: price, format: (v) => fmtInt(v) },
-    { label: buy ? "Supply (t)" : "Demand (t)", color: COLOR_QTY, values: qty, format: (v) => fmtCompact(v), area: true },
+    { label: buy ? (state.sel ? "Kaufpreis (Cr/t)" : "Bester Kaufpreis (Cr/t)") : state.sel ? "Ankaufspreis (Cr/t)" : "Bester Ankaufspreis (Cr/t)", color: COLOR_PRICE, values: price, format: (v) => fmtInt(v), step: true },
+    { label: buy ? "Supply (t)" : "Demand (t)", color: COLOR_QTY, values: qty, format: (v) => fmtCompact(v), area: true, step: true },
   ];
   renderCharts(host, times, series, $("#tooltip"));
+  if (times.length < 2 && hist.startedAt) {
+    host.querySelector(".empty")!.textContent =
+      `Der Gesamtverlauf startet mit dem ersten Snapshot (${fmtDateTime(hist.startedAt)}) und erscheint nach ein bis zwei Läufen. ` +
+      `Einzelne Märkte kannst du schon jetzt per Klick in der Tabelle ansehen.`;
+  }
   document.querySelector("#clear-sel")?.addEventListener("click", (e) => {
     e.preventDefault();
     update({ sel: null });

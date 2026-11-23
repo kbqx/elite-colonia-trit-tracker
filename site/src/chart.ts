@@ -13,6 +13,8 @@ export interface Series {
   format: (v: number) => string;
   /** Fläche unter der Linie füllen (für Mengen). Y-Achse beginnt dann bei 0. */
   area?: boolean;
+  /** Treppenlinie: Wert gilt bis zum nächsten Punkt (passt zu Marktupdates). */
+  step?: boolean;
 }
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -35,23 +37,25 @@ function extent(values: Array<number | null>, fromZero: boolean): [number, numbe
   return [Math.floor(lo / step) * step, Math.ceil(hi / step) * step, step];
 }
 
-function linePath(xs: number[], ys: Array<number | null>): string {
+function linePath(xs: number[], ys: Array<number | null>, step = false): string {
   let d = "", pen = false;
   ys.forEach((y, i) => {
     if (y == null) { pen = false; return; }
-    d += `${pen ? "L" : "M"}${(xs[i] as number).toFixed(1)},${y.toFixed(1)}`;
+    const x = (xs[i] as number).toFixed(1);
+    if (pen && step) d += `H${x}`;
+    d += `${pen ? "L" : "M"}${x},${y.toFixed(1)}`;
     pen = true;
   });
   return d;
 }
 
-function areaPath(xs: number[], ys: Array<number | null>, base: number): string {
+function areaPath(xs: number[], ys: Array<number | null>, base: number, step = false): string {
   // Fläche pro zusammenhängendem Segment schließen.
   let d = "", seg: Array<[number, number]> = [];
   const flush = () => {
     if (seg.length > 1) {
       const first = seg[0] as [number, number], last = seg[seg.length - 1] as [number, number];
-      d += `M${first[0]},${base}` + seg.map(([x, y]) => `L${x.toFixed(1)},${y.toFixed(1)}`).join("") + `L${last[0]},${base}Z`;
+      d += `M${first[0]},${base}` + seg.map(([x, y], k) => `${step && k > 0 ? `H${x.toFixed(1)}` : ""}L${x.toFixed(1)},${y.toFixed(1)}`).join("") + `L${last[0]},${base}Z`;
     }
     seg = [];
   };
@@ -68,8 +72,8 @@ function el<K extends keyof SVGElementTagNameMap>(tag: K, attrs: Record<string, 
 
 export function renderCharts(host: HTMLElement, times: number[], series: Series[], tooltip: HTMLElement): void {
   host.innerHTML = "";
-  if (times.length < 2) {
-    host.innerHTML = `<div class="empty">Der Verlauf beginnt mit dem ersten automatischen Snapshot – ab dem zweiten Lauf (≈ 30 min) erscheint hier der Chart.</div>`;
+  if (times.length < 2 || series.every((s) => s.values.every((v) => v == null))) {
+    host.innerHTML = `<div class="empty">Für diesen Zeitraum und diese Filter gibt es noch keine Marktdaten. Der Verlauf füllt sich mit jedem neuen Marktupdate.</div>`;
     return;
   }
 
@@ -126,8 +130,8 @@ export function renderCharts(host: HTMLElement, times: number[], series: Series[
     }
     svg.append(grid, axis);
 
-    if (s.area) svg.append(el("path", { d: areaPath(xs, ys, y(lo)), fill: s.color, opacity: 0.16 }));
-    svg.append(el("path", { d: linePath(xs, ys), fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    if (s.area) svg.append(el("path", { d: areaPath(xs, ys, y(lo), s.step), fill: s.color, opacity: 0.16 }));
+    svg.append(el("path", { d: linePath(xs, ys, s.step), fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
 
     const cross = el("line", { class: "crosshair", y1: M.t, y2: height - M.b, visibility: "hidden" });
     const dot = el("circle", { r: 4.5, fill: s.color, stroke: "#0f131a", "stroke-width": 2, visibility: "hidden" });

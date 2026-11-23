@@ -55,22 +55,38 @@ export interface Snapshot {
   markets: MarketEntry[];
 }
 
-/** Ein Messpunkt im Verlauf: pro Markt-ID [buyPrice, supply, sellPrice, demand]. */
-export type HistoryTuple = [buy: number | null, supply: number, sell: number | null, demand: number];
+/**
+ * Eine Beobachtung eines Marktes:
+ * [Zeit (Unix-Sekunden), Kaufpreis, Supply, Ankaufspreis, Demand]
+ *
+ * Zeit = market_updated_at laut Spansh, also wann ein Spieler den Markt
+ * tatsächlich gesehen hat. Eine Zeile [t, null, 0, null, 0] heißt: Markt
+ * handelt seit diesem Snapshot kein Tritium mehr (ausverkauft, Carrier weg …).
+ */
+export type HistoryRow = [t: number, buy: number | null, supply: number, sell: number | null, demand: number];
 
-export interface HistoryPoint {
-  /** Zeitpunkt des Snapshots (ISO 8601). */
-  t: string;
-  m: Record<string, HistoryTuple>;
-}
-
-/** Inhalt von site/data/history.json */
+/**
+ * Inhalt von site/data/history.json (Schema 2).
+ * Gespeichert werden nur ÄNDERUNGEN: eine neue Zeile entsteht nur, wenn sich
+ * market_updated_at eines Marktes ändert oder er verschwindet. Der Zustand zu
+ * einem Zeitpunkt T ist die letzte Zeile mit t ≤ T.
+ */
 export interface HistoryFile {
-  schema: 1;
+  schema: 2;
   commodity: string;
+  /** Zeitpunkt der letzten inhaltlichen Änderung (ISO 8601). */
   updatedAt: string;
+  /**
+   * Erster Snapshot dieses Verlaufs. Davor ist pro Markt nur die jeweils letzte
+   * Beobachtung bekannt – Charts beginnen deshalb erst hier.
+   */
+  startedAt?: string;
   retentionDays: number;
-  /** Stammdaten je Markt-ID, damit Punkte kompakt bleiben. */
+  /** Stammdaten je Markt-ID. */
   stations: Record<string, { station: string; system: string; kind: StationKind; callsign?: string }>;
-  points: HistoryPoint[];
+  /** Zeilen je Markt-ID, chronologisch sortiert. */
+  series: Record<string, HistoryRow[]>;
 }
+
+/** Ist das eine "Markt weg"-Zeile? */
+export const isGoneRow = (r: HistoryRow): boolean => r[1] === null && r[2] === 0 && r[3] === null && r[4] === 0;

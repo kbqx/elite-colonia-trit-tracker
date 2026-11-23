@@ -4,6 +4,7 @@
  *   npm run snapshot                 → Spansh abfragen, latest.json + history.json schreiben
  *   npm run snapshot -- --raw        → zusätzlich Rohantwort nach data-raw/ speichern
  *   npm run snapshot -- --dry-run    → nur abfragen + Zusammenfassung, nichts schreiben
+ *   npm run snapshot -- --at 2026-11-23T13:48:00Z   → Snapshot-Zeit festlegen (z. B. mit --from-file)
  *   npm run snapshot -- --from-file data-raw/xyz.json
  *                                    → keine Abfrage, sondern eine gespeicherte Spansh-Antwort
  *                                      (oder ein Array davon) normalisieren – zum Testen des Mappings
@@ -12,8 +13,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { MarketEntry, Snapshot } from "../site/src/types.ts";
 import { config } from "./config.ts";
-import { appendToHistory, emptyHistory, readJson, writeJsonAtomic } from "./history.ts";
-import type { HistoryFile } from "../site/src/types.ts";
+import { appendToHistory, emptyHistory, loadHistory, readJson, writeJsonAtomic } from "./history.ts";
 import { fetchAllStations, normalizeStation, type SpanshSearchResponse, type SpanshStation } from "./spansh.ts";
 
 const args = process.argv.slice(2);
@@ -60,8 +60,10 @@ async function main(): Promise<void> {
   const started = Date.now();
   const { raw, stations } = await loadStations();
 
-  // Snapshot-Zeit auf volle Minute runden → saubere Zeitachse im Verlauf.
-  const now = new Date();
+  // Snapshot-Zeit auf volle Minute runden. Mit --at <ISO> überschreibbar (Tests/Nachträge).
+  const at = option("--at");
+  const now = at ? new Date(at) : new Date();
+  if (Number.isNaN(now.getTime())) throw new Error(`--at: ungültiges Datum "${at}"`);
   now.setUTCSeconds(0, 0);
   const generatedAt = now.toISOString();
 
@@ -113,17 +115,21 @@ async function main(): Promise<void> {
   const previous = await readJson<Snapshot>(config.latestFile);
   const startFresh = previous?.source === "mock";
   if (startFresh) console.log("Vorhandene Daten sind Mock-Daten → Verlauf wird neu begonnen.");
-  const history =
-    (startFresh ? null : await readJson<HistoryFile>(config.historyFile)) ??
-    emptyHistory(config.commodity, config.historyRetentionDays);
-  const updated = appendToHistory(history, snapshot, config.historyRetentionDays);
+  const history = startFresh
+    ? emptyHistory(config.commodity, config.historyRetentionDays)
+    : await loadHistory(config.historyFile, config.commodity, config.historyRetentionDays);
+  const r = appendToHistory(history, snapshot, config.historyRetentionDays);
+  const changed = r.updates + r.gone + r.returned + r.pruned > 0;
 
+  // latest.json immer (für "Snapshot vor X min"), history.json nur bei Änderungen.
   await writeJsonAtomic(config.latestFile, snapshot, true);
-  await writeJsonAtomic(config.historyFile, updated);
+  if (changed || startFresh) await writeJsonAtomic(config.historyFile, r.history);
 
+  const rows = Object.values(r.history.series).reduce((n, rs) => n + rs.length, 0);
   console.log(
-    `\n✔ latest.json (${markets.length} Märkte) + history.json (${updated.points.length} Punkte) geschrieben ` +
-      `in ${((Date.now() - started) / 1000).toFixed(1)} s.`,
+    `\n✔ ${r.updates} Marktupdates, ${r.gone} verschwunden, ${r.returned} zurück, ${r.pruned} alte Einträge entfernt.` +
+      `\n  history.json: ${Object.keys(r.history.series).length} Märkte, ${rows} Zeilen` +
+      `${changed ? "" : " (unverändert, nicht neu geschrieben)"} · ${((Date.now() - started) / 1000).toFixed(1)} s`,
   );
 }
 

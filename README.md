@@ -49,10 +49,16 @@ Liegen noch Mock-Daten in `site/data/`, beginnt der erste echte Snapshot automat
 
 Der Workflow committet nur `site/data/`. Ein Push vom `GITHUB_TOKEN` löst keinen neuen Workflow aus, es gibt also keine Schleife.
 
+## Speicherung & Snapshot-Abstand
+
+`history.json` speichert nur **Änderungen**: Pro Markt entsteht eine neue Zeile nur, wenn sich `market_updated_at` ändert (ein Spieler hat angedockt) oder der Markt verschwindet bzw. zurückkommt. Der Zustand zu einem Zeitpunkt ist die letzte Zeile davor. Dadurch wächst die Datei mit der Zahl echter Marktupdates (in Colonia ~50 pro Tag), nicht mit der Zahl der Snapshots – der Snapshot-Abstand bestimmt nur, wie schnell ein Update erkannt wird.
+
+Der Workflow committet nur, wenn `history.json` sich geändert hat; deployed wird bei jedem Lauf (mit frischem `latest.json`). Einträge älter als `HISTORY_RETENTION_DAYS` (Standard 30) werden entfernt.
+
 ## Video-Platzhalter
 
 Zwei Stellen sind markiert (`data-video-slot="hero"` und `"info"` in `index.html`). Zum Austauschen das `<img>` durch das auskommentierte `<video>` ersetzen und `data-placeholder` + das Badge entfernen. Die Bilder in `site/assets/` sind prozedural erzeugte Platzhalter.
 
 ## Datenformat
 
-`site/src/types.ts` ist die einzige Quelle der Wahrheit für `latest.json` (`Snapshot`) und `history.json` (`HistoryFile`). Ein Verlaufspunkt speichert pro Markt-ID `[Kaufpreis, Supply, Ankaufspreis, Demand]`.
+`site/src/types.ts` ist die einzige Quelle der Wahrheit für `latest.json` (`Snapshot`) und `history.json` (`HistoryFile`, Schema 2). Eine Verlaufszeile ist `[Unix-Zeit, Kaufpreis, Supply, Ankaufspreis, Demand]`; `[t, null, 0, null, 0]` heißt „handelt kein Tritium mehr“.

@@ -5,12 +5,12 @@
  *   npm run mock
  *   MOCK_DAYS=30 MOCK_STEP_MIN=30 npm run mock
  */
-import type { HistoryFile, HistoryTuple, MarketEntry, PadSize, Snapshot, StationKind } from "../site/src/types.ts";
+import type { MarketEntry, PadSize, Snapshot, StationKind } from "../site/src/types.ts";
 import { config } from "./config.ts";
-import { writeJsonAtomic } from "./history.ts";
+import { appendToHistory, emptyHistory, writeJsonAtomic } from "./history.ts";
 
 const DAYS = Number(process.env.MOCK_DAYS ?? 14);
-const STEP_MIN = Number(process.env.MOCK_STEP_MIN ?? 60);
+const STEP_MIN = Number(process.env.MOCK_STEP_MIN ?? 30);
 
 // Kleiner deterministischer PRNG (mulberry32).
 function rng(seed: number) {
@@ -93,13 +93,16 @@ const carriers: Seed[] = carrierWords.map((w, i) => {
 
 const seeds = [...fixed, ...carriers];
 
-// --- Zeitreihen simulieren -------------------------------------------------
+// --- Simulation ------------------------------------------------------------
+// Wie in echt: Der "wahre" Markt ändert sich ständig, Spansh sieht ihn aber nur,
+// wenn ein Spieler andockt (Dock-Ereignis → neues market_updated_at). Jeder
+// simulierte Snapshot läuft durch dieselbe appendToHistory()-Logik wie echte.
 const now = new Date();
 now.setUTCMinutes(Math.floor(now.getUTCMinutes() / STEP_MIN) * STEP_MIN, 0, 0);
 const steps = Math.round((DAYS * 24 * 60) / STEP_MIN);
 const times = Array.from({ length: steps + 1 }, (_, i) => new Date(now.getTime() - (steps - i) * STEP_MIN * 60_000));
 
-interface Sim { buy: number; sell: number; supply: number; demand: number }
+interface Sim { buy: number; sell: number; supply: number; demand: number; seen: MarketEntry | null; awayUntil: number }
 // Preisniveau kalibriert am echten Snapshot vom 23.11.2026 (Carrier um ~125–130k Cr/t).
 const marketPrice = { v: 127_000 };
 const states: Sim[] = seeds.map((s) => ({
@@ -107,15 +110,20 @@ const states: Sim[] = seeds.map((s) => ({
   sell: between(55_000, 80_000),
   supply: s.baseSupply * between(0.4, 1),
   demand: s.buys ? between(2_000, 40_000) : 0,
+  seen: null,
+  awayUntil: 0,
 }));
 const ids = seeds.map((s, i) => (s.kind === "carrier" ? `37${String(1000000 + i * 7919).slice(1)}` : `32${String(1000000 + i * 104729).slice(1)}`));
+// Dock-Wahrscheinlichkeit pro Stunde (Carrier in Colonia werden oft angeflogen).
+const dockPerHour = (s: Seed) => (s.kind === "carrier" ? 0.22 : s.kind === "orbital" ? 0.3 : 0.08);
 
-const points: HistoryFile["points"] = [];
+let history = emptyHistory(config.commodity, DAYS);
+let snapshot!: Snapshot;
+
 for (const t of times) {
-  // Gemeinsamer Markttrend (langsamer Random Walk) + tägliche Welle.
-  marketPrice.v = Math.min(150_000, Math.max(105_000, marketPrice.v + between(-1_100, 1_150)));
+  marketPrice.v = Math.min(150_000, Math.max(105_000, marketPrice.v + between(-1_100, 1_150) * (STEP_MIN / 60)));
   const daily = Math.sin((t.getTime() / 86_400_000) * Math.PI * 2) * 1_500;
-  const m: Record<string, HistoryTuple> = {};
+  const markets: MarketEntry[] = [];
 
   seeds.forEach((s, i) => {
     const st = states[i] as Sim;
@@ -123,71 +131,54 @@ for (const t of times) {
     st.sell += (marketPrice.v * 0.55 - st.sell) * 0.08 + between(-600, 600);
     if (s.sells) {
       st.supply -= between(0, s.baseSupply * (s.kind === "carrier" ? 0.05 : 0.02));
-      // Nachschub: Carrier werden schubweise befüllt, Stationen regenerieren.
       const restock = s.kind === "carrier" ? rand() < 0.035 : rand() < 0.12;
       if (restock) st.supply += s.baseSupply * (s.kind === "carrier" ? between(0.6, 1.1) : between(0.1, 0.3));
       st.supply = Math.max(0, Math.min(s.baseSupply * 1.3, st.supply));
     }
     if (s.buys) st.demand = Math.max(0, st.demand + between(-1500, 1600));
 
-    // Nicht jede Station taucht in jedem Snapshot auf (Carrier springen weg).
-    if (s.kind === "carrier" && rand() < 0.02) return;
-    const supply = s.sells ? Math.round(st.supply) : 0;
-    m[ids[i] as string] = [
-      s.sells && supply > 0 ? Math.round(st.buy) : null,
-      supply,
-      s.buys ? Math.round(st.sell) : null,
-      s.buys ? Math.round(st.demand) : 0,
-    ];
+    // Carrier springen gelegentlich für ein paar Stunden aus dem Radius.
+    if (s.kind === "carrier" && st.awayUntil < t.getTime() && rand() < 0.004) st.awayUntil = t.getTime() + between(3, 30) * 3_600_000;
+    if (st.awayUntil > t.getTime()) { st.seen = null; return; }
+
+    // Dock-Ereignis → Spansh bekommt aktuelle Werte.
+    if (!st.seen || rand() < dockPerHour(s) * (STEP_MIN / 60)) {
+      const supply = s.sells ? Math.round(st.supply) : 0;
+      st.seen = {
+        id: ids[i] as string,
+        station: s.station,
+        ...(s.callsign ? { callsign: s.callsign, dockingAccess: s.dockingAccess ?? null } : {}),
+        system: s.system,
+        kind: s.kind,
+        typeLabel: s.typeLabel,
+        maxPad: s.maxPad,
+        distanceLy: s.distanceLy,
+        arrivalLs: s.arrivalLs,
+        buyPrice: s.sells && supply > 0 ? Math.round(st.buy) : null,
+        supply,
+        sellPrice: s.buys ? Math.round(st.sell) : null,
+        demand: s.buys ? Math.round(st.demand) : 0,
+        // Spieler-Upload irgendwann im letzten Intervall
+        marketUpdatedAt: new Date(t.getTime() - Math.floor(between(0, STEP_MIN)) * 60_000).toISOString(),
+      };
+    }
+    const e = st.seen;
+    if (e.supply > 0 || e.demand > 0) markets.push(e);
   });
-  points.push({ t: t.toISOString(), m });
+
+  snapshot = {
+    schema: 1,
+    generatedAt: t.toISOString(),
+    source: "mock",
+    referenceSystem: config.referenceSystem,
+    commodity: config.commodity,
+    radiusLy: config.radiusLy,
+    markets: markets.sort((a, b) => (a.distanceLy ?? 0) - (b.distanceLy ?? 0)),
+  };
+  history = appendToHistory(history, snapshot, DAYS).history;
 }
-
-// --- latest.json aus dem letzten Punkt ableiten ----------------------------
-const last = points[points.length - 1] as HistoryFile["points"][number];
-const ageMinutes = [3, 9, 14, 27, 41, 55, 75, 110, 180, 260, 400, 720, 1500, 2900, 6000];
-const markets: MarketEntry[] = seeds.flatMap((s, i) => {
-  const id = ids[i] as string;
-  const tuple = last.m[id];
-  if (!tuple) return [];
-  const [buyPrice, supply, sellPrice, demand] = tuple;
-  return [{
-    id,
-    station: s.station,
-    ...(s.callsign ? { callsign: s.callsign, dockingAccess: s.dockingAccess ?? null } : {}),
-    system: s.system,
-    kind: s.kind,
-    typeLabel: s.typeLabel,
-    maxPad: s.maxPad,
-    distanceLy: s.distanceLy,
-    arrivalLs: s.arrivalLs,
-    buyPrice,
-    supply,
-    sellPrice,
-    demand,
-    marketUpdatedAt: new Date(now.getTime() - pick(ageMinutes) * 60_000).toISOString(),
-  }];
-});
-
-const snapshot: Snapshot = {
-  schema: 1,
-  generatedAt: now.toISOString(),
-  source: "mock",
-  referenceSystem: config.referenceSystem,
-  commodity: config.commodity,
-  radiusLy: config.radiusLy,
-  markets: markets.sort((a, b) => (a.distanceLy ?? 0) - (b.distanceLy ?? 0)),
-};
-
-const history: HistoryFile = {
-  schema: 1,
-  commodity: config.commodity,
-  updatedAt: now.toISOString(),
-  retentionDays: DAYS,
-  stations: Object.fromEntries(seeds.map((s, i) => [ids[i] as string, { station: s.station, system: s.system, kind: s.kind, ...(s.callsign ? { callsign: s.callsign } : {}) }])),
-  points,
-};
 
 await writeJsonAtomic(config.latestFile, snapshot, true);
 await writeJsonAtomic(config.historyFile, history);
-console.log(`✔ Mock-Daten: ${markets.length} Märkte, ${points.length} Verlaufspunkte (${DAYS} Tage, alle ${STEP_MIN} min).`);
+const rows = Object.values(history.series).reduce((n, r) => n + r.length, 0);
+console.log(`✔ Mock-Daten: ${snapshot.markets.length} Märkte, ${rows} Verlaufszeilen (${DAYS} Tage, ${times.length} simulierte Snapshots).`);

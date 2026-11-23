@@ -48,11 +48,14 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/data
-          if git diff --cached --quiet; then
-            echo "Keine Änderungen."
+          # Nur committen, wenn es neue Marktupdates gibt (history.json geändert).
+          # latest.json ändert sich bei jedem Lauf (Zeitstempel) und wird trotzdem
+          # unten frisch deployed – ein Commit dafür würde das Repo nur aufblähen.
+          if git diff --quiet -- site/data/history.json; then
+            echo "Keine neuen Marktupdates – kein Commit, nur Deploy."
           else
-            git commit -m "data: snapshot $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git add site/data
+            git commit -m "data: Marktupdates $(date -u +'%Y-%m-%d %H:%M') UTC"
             git push
           fi
 
