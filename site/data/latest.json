@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-23T14:29:00.000Z",
+  "generatedAt": "2026-11-23T15:26:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -262,6 +262,23 @@
       "marketUpdatedAt": "2026-07-23T15:05:42.000Z"
     },
     {
+      "id": "3715287296",
+      "station": "Q5M-NQZ",
+      "callsign": "Q5M-NQZ",
+      "dockingAccess": "All",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 1513.767914,
+      "buyPrice": 198750,
+      "supply": 10501,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2026-11-22T02:26:35.000Z"
+    },
+    {
       "id": "3703240704",
       "station": "V3G-G9B",
       "callsign": "V3G-G9B",
@@ -311,23 +328,6 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-06-19T11:09:56.000Z"
-    },
-    {
-      "id": "3715287296",
-      "station": "Q5M-NQZ",
-      "callsign": "Q5M-NQZ",
-      "dockingAccess": "All",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 1513.767914,
-      "buyPrice": 198750,
-      "supply": 10501,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2026-11-22T02:26:35.000Z"
     },
     {
       "id": "3701290240",
@@ -950,12 +950,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1545.805147,
+      "arrivalLs": 1545.37151,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 56082,
-      "demand": 2349,
-      "marketUpdatedAt": "2026-11-23T11:30:50.000Z"
+      "sellPrice": 56083,
+      "demand": 2351,
+      "marketUpdatedAt": "2026-11-23T13:44:41.000Z"
     },
     {
       "id": "3700353792",
@@ -990,6 +990,40 @@
       "sellPrice": 53168,
       "demand": 5000,
       "marketUpdatedAt": "2025-04-09T22:30:06.000Z"
+    },
+    {
+      "id": "3711329024",
+      "station": "USS Grievous Mistake",
+      "callsign": "G9V-5VB",
+      "dockingAccess": "Squadron Friends",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 12.95965,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 51294,
+      "demand": 2968,
+      "marketUpdatedAt": "2026-01-19T13:51:28.000Z"
+    },
+    {
+      "id": "3715491584",
+      "station": "M8Q-40Z",
+      "callsign": "M8Q-40Z",
+      "dockingAccess": "All",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 12.959675,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 82526,
+      "demand": 914,
+      "marketUpdatedAt": "2026-08-20T16:12:03.000Z"
     },
     {
       "id": "3704908288",
@@ -1060,23 +1094,6 @@
       "marketUpdatedAt": "2026-08-10T22:25:30.000Z"
     },
     {
-      "id": "3711329024",
-      "station": "USS Grievous Mistake",
-      "callsign": "G9V-5VB",
-      "dockingAccess": "Squadron Friends",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 12.95965,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 51294,
-      "demand": 2968,
-      "marketUpdatedAt": "2026-01-19T13:51:28.000Z"
-    },
-    {
       "id": "3711412224",
       "station": "T8L-76J",
       "callsign": "T8L-76J",
@@ -1109,23 +1126,6 @@
       "sellPrice": 53342,
       "demand": 496,
       "marketUpdatedAt": "2025-05-13T19:49:19.000Z"
-    },
-    {
-      "id": "3715491584",
-      "station": "M8Q-40Z",
-      "callsign": "M8Q-40Z",
-      "dockingAccess": "All",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 12.959675,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 82526,
-      "demand": 914,
-      "marketUpdatedAt": "2026-08-20T16:12:03.000Z"
     },
     {
       "id": "3810704896",
