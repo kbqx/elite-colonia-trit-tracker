@@ -9,6 +9,7 @@
     "snapshot:raw": "tsx scripts/snapshot.ts --raw",
     "mock": "tsx scripts/mock.ts",
     "build": "tsc -p site/tsconfig.json",
+    "stamp": "tsx scripts/stamp.ts",
     "watch": "tsc -p site/tsconfig.json --watch",
     "serve": "tsx scripts/serve.ts",
     "dev": "npm run build && npm run serve",
