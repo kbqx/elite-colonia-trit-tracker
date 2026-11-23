@@ -8,6 +8,7 @@ import { renderCharts, sparkline, type Panel, type Series } from "./chart.js";
 import { KPI_VOLUME, OUTLIER_FACTOR, VOLUMES, bestPrice, effectivePrice, splitOutliers, weightedMedian, type Mode, type Pair } from "./market.js";
 import { ageClass, esc, fmtCompact, fmtDateTime, fmtInt, fmtNum1, fmtPct, relTime } from "./format.js";
 import { getLang, initialLang, setLang, t, type Lang } from "./i18n.js";
+import { initStars } from "./stars.js";
 
 // ---------------------------------------------------------------------------
 // Typen & Zustand
@@ -780,6 +781,7 @@ function normalizeKinds(): void {
 
 async function main(): Promise<void> {
   setLang(initialLang(), false);
+  document.querySelectorAll<HTMLCanvasElement>("canvas.stars").forEach((c) => initStars(c, Number(c.dataset.seed) || 1));
   try {
     await loadData();
   } catch (err) {
