@@ -42,10 +42,10 @@ const ALL_KINDS: StationKind[] = ["carrier", "orbital", "planetary", "other"];
 // Mindestmengen: Kleinstbestände (z. B. 29 t zu 53k Cr) sind keine ernstzunehmenden
 // Märkte und würden "günstigster Preis", Summen und Charts verzerren.
 // Demand ist in Colonia typischerweise kleiner (meist < 5.000 t), daher eigener Wert.
-// Standard 0: der effektive Preis ("Ø für X t") gewichtet Kleinstbestände ohnehin
-// nur mit ihrer echten Menge; die Mindestmenge ist ein optionaler Tabellenfilter.
-const DEFAULT_MIN_BUY = 0;
-const DEFAULT_MIN_SELL = 0;
+// Mindestmenge gilt nur für die Tabelle (und Top 5 / Laufband). Kennzahlen wie
+// Gesamt-Supply und bester Preis ignorieren sie bewusst.
+const DEFAULT_MIN_BUY = 5000;
+const DEFAULT_MIN_SELL = 1000;
 const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT_MIN_SELL, age: 168, dist: 0, pad: "any", dock: "public", outl: "hide", kinds: [...ALL_KINDS], q: "", sort: "price", dir: "asc", sel: null, days: 7 };
 // Standard-Sortierung: bester Preis zuerst (Kaufen: niedrigster, Verkaufen: höchster).
 const defaultSort = (_mode: Mode): SortKey => "price";
@@ -263,16 +263,16 @@ function renderHeader(): void {
   $("#footer-stamp").textContent = fmtDateTime(snap.generatedAt);
 
   // Hero-Zahl folgt den aktiven Filtern, aber immer auf der Angebotsseite.
-  const sellers = analyze(filtered("buy"), "buy").ok;
+  const sellers = byUpdateRange("buy");
   const totalSupply = sellers.reduce((s, m) => s + m.supply, 0);
   $("#hero-supply").innerHTML = `${fmtInt(totalSupply)}<small>t</small>`;
   const ageTxt = state.age > 0 ? t("hero.age", { age: state.age >= 48 ? t("unit.days", { n: state.age / 24 }) : `${state.age} h` }) : "";
-  const minTxt = state.minBuy > 0 ? t("hero.min", { min: fmtInt(state.minBuy) }) : "";
+  const minTxt = "";
   $("#hero-supply-label").textContent = t("hero.label", {
     n: sellers.length,
     radius: fmtInt(snap.radiusLy),
     ref: snap.referenceSystem,
-    extra: `${minTxt}${ageTxt}${state.dock === "public" ? t("hero.public") : ""}`,
+    extra: `${minTxt}${ageTxt}`,
   });
 }
 
@@ -293,6 +293,20 @@ const pairOf = (m: MarketEntry, mode: Mode = state.mode): Pair => [priceOf(m, mo
 function analyze(rows: MarketEntry[], mode: Mode = state.mode) {
   const r = splitOutliers(rows, (m) => pairOf(m, mode));
   return state.outl === "show" ? { ok: rows, outliers: [] as MarketEntry[], cap: r.cap, flagged: r.outliers } : { ...r, flagged: r.outliers };
+}
+
+/**
+ * Märkte nur nach Market-Update-Zeitraum gefiltert (keine Mindestmenge, kein Typ,
+ * keine Distanz, kein Andocken) – Basis für Gesamt-Supply/-Demand und die Hero-Zahl.
+ * Preis-Ausreißer bleiben draußen, sie zählen in keiner Rechnung.
+ */
+function byUpdateRange(mode: Mode): MarketEntry[] {
+  const rows = snap.markets.filter((m) => {
+    if (priceOf(m, mode) == null || qtyOf(m, mode) <= 0) return false;
+    if (state.age > 0 && (!m.marketUpdatedAt || now - Date.parse(m.marketUpdatedAt) > state.age * 3_600_000)) return false;
+    return true;
+  });
+  return splitOutliers(rows, (m) => pairOf(m, mode)).ok;
 }
 
 /** Paare aller angegebenen Märkte zum Zeitpunkt tSec laut Verlauf. */
@@ -341,10 +355,12 @@ function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
   const pairs = anyQty.map((m) => pairOf(m));
   // Bester Preis: unabhängig von der Mindestmenge, aber mit Alters-/Typ-Filtern und ohne Ausreißer.
   const best = [...anyQty].sort((a, b) => (buy ? (a.buyPrice ?? 0) - (b.buyPrice ?? 0) : (b.sellPrice ?? 0) - (a.sellPrice ?? 0)))[0];
-  const qtySum = rows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
+  const qtyRows = byUpdateRange(state.mode);
+  const qtySum = qtyRows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
   const carrierRows = rows.filter((m) => m.kind === "carrier");
   const carrierQty = carrierRows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
-  const carrierShare = qtySum > 0 ? (carrierQty / qtySum) * 100 : null;
+  const rowsQty = rows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
+  const carrierShare = rowsQty > 0 ? (carrierQty / rowsQty) * 100 : null;
 
   // Effektiver Preis für die mittlere Menge + Veränderung ggü. 24 h
   // (gleiche Märkte, Preise UND Mengen von damals laut Verlauf).
@@ -377,7 +393,7 @@ function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
       `${known ? `<span class="${dCls(dE)}">${fmtPct(dE)}</span> ${t("kpi.vs24h")} · ` : ""}${others}`,
       t(buy ? "kpi.effBuyTitle" : "kpi.effSellTitle", { v: fmtInt(vMid) }),
     ),
-    card(buy ? t("kpi.supply") : t("kpi.demand"), `${fmtInt(qtySum)} <small>t</small>`, t("kpi.overMarkets", { n: rows.length })),
+    card(buy ? t("kpi.supply") : t("kpi.demand"), `${fmtInt(qtySum)} <small>t</small>`, t("kpi.overMarkets", { n: qtyRows.length })),
     card(
       buy ? t("kpi.carrierSupply") : t("kpi.carrierDemand"),
       `${carrierShare == null ? "–" : Math.round(carrierShare)} <small>%</small>`,
@@ -542,16 +558,15 @@ function renderHistory(): void {
       const meta = hist!.stations[id];
       return meta ? passesStatic(meta, current.get(id)) : false;
     });
-    const minQty = Math.max(1, minFor(state.mode));
     const maxAge = state.age > 0 ? state.age * 3_600 : Infinity;
     const vols = VOLUMES[state.mode];
     const best: Array<number | null> = [], total: Array<number | null> = [];
     const effs: Array<Array<number | null>> = vols.map(() => []);
 
+    const allSeries = Object.values(hist.series);
     for (const t of times) {
       const tSec = Math.floor(t / 1000);
-      // Alle Märkte (jede Menge) für effektive Preise + besten Einzelpreis;
-      // die Gesamtmenge folgt dagegen der Mindestmenge wie Tabelle und Kennzahlen.
+      // Alle Märkte (jede Menge) für effektive Preise + besten Einzelpreis.
       let pairs: Pair[] = [];
       let any = false;
       for (const [, rows] of markets) {
@@ -569,7 +584,18 @@ function renderHistory(): void {
       }
       best.push(bestPrice(pairs, state.mode));
       vols.forEach((v, k) => (effs[k] as Array<number | null>).push(effectivePrice(pairs, v, state.mode)));
-      total.push(any ? pairs.reduce((s, [, q]) => s + (q >= minQty ? q : 0), 0) : null);
+      // Gesamtmenge wie die Kennzahl darüber: alle Märkte, nur nach Market-Update-Alter
+      // gefiltert (ohne Typ/Distanz/Andocken/Mindestmenge), Ausreißer raus.
+      let allPairs: Pair[] = [];
+      for (const rows of allSeries) {
+        const r = rowAt(rows, tSec);
+        if (!r || tSec - r[0] > maxAge) continue;
+        const pr = rowPrice(r, state.mode), q = rowQty(r, state.mode);
+        if (pr != null && q > 0) allPairs.push([pr, q]);
+      }
+      const capAll = (weightedMedian(allPairs) ?? Infinity) * OUTLIER_FACTOR;
+      allPairs = allPairs.filter(([p]) => p <= capAll);
+      total.push(any ? allPairs.reduce((s, [, q]) => s + q, 0) : null);
     }
 
     panels = [
