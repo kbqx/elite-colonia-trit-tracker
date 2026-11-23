@@ -4,13 +4,13 @@
  * filterbare Tabelle, Top-Liste und Verlaufscharts. Filterzustand liegt in der URL.
  */
 import { isGoneRow, type HistoryFile, type HistoryRow, type MarketEntry, type Snapshot, type StationKind } from "./types.js";
-import { renderCharts, sparkline, type Series } from "./chart.js";
+import { renderCharts, sparkline, type Panel, type Series } from "./chart.js";
+import { OUTLIER_FACTOR, VOLUMES, bestPrice, effectivePrice, splitOutliers, weightedMedian, type Mode, type Pair } from "./market.js";
 import { ageClass, esc, fmtCompact, fmtDateTime, fmtInt, fmtPct, relTime } from "./format.js";
 
 // ---------------------------------------------------------------------------
 // Typen & Zustand
 // ---------------------------------------------------------------------------
-type Mode = "buy" | "sell";
 type SortKey = "station" | "system" | "kind" | "pad" | "dist" | "price" | "qty" | "delta" | "age";
 
 interface State {
@@ -24,6 +24,8 @@ interface State {
   pad: "any" | "L";
   /** "public": nur Märkte, an denen jeder andocken kann (Carrier-Zugang "All" oder unbekannt). */
   dock: "public" | "any";
+  /** Preis-Ausreißer (> OUTLIER_FACTOR × gewichteter Median) aus Kennzahlen/Charts nehmen? */
+  outl: "hide" | "show";
   kinds: StationKind[];
   q: string;
   sort: SortKey;
@@ -41,7 +43,7 @@ const ALL_KINDS: StationKind[] = ["carrier", "orbital", "planetary", "settlement
 // Demand ist in Colonia typischerweise kleiner (meist < 5.000 t), daher eigener Wert.
 const DEFAULT_MIN_BUY = 5000;
 const DEFAULT_MIN_SELL = 1000;
-const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT_MIN_SELL, age: 168, dist: 0, pad: "any", dock: "public", kinds: [...ALL_KINDS], q: "", sort: "qty", dir: "desc", sel: null, days: 7 };
+const DEFAULTS: State = { mode: "buy", minBuy: DEFAULT_MIN_BUY, minSell: DEFAULT_MIN_SELL, age: 168, dist: 0, pad: "any", dock: "public", outl: "hide", kinds: [...ALL_KINDS], q: "", sort: "qty", dir: "desc", sel: null, days: 7 };
 
 const KIND_LABEL: Record<StationKind, string> = {
   orbital: "Orbital",
@@ -81,6 +83,7 @@ function readStateFromUrl(): State {
   s.dist = n("dist", s.dist);
   if (p.get("pad") === "L") s.pad = "L";
   if (p.get("dock") === "any") s.dock = "any";
+  if (p.get("outl") === "show") s.outl = "show";
   if (p.has("kinds")) s.kinds = (p.get("kinds") ?? "").split(",").filter((k): k is StationKind => (ALL_KINDS as string[]).includes(k));
   s.q = p.get("q") ?? "";
   const sort = p.get("sort");
@@ -101,6 +104,7 @@ function writeStateToUrl(): void {
   if (state.dist !== d.dist) p.set("dist", String(state.dist));
   if (state.pad !== d.pad) p.set("pad", state.pad);
   if (state.dock !== d.dock) p.set("dock", state.dock);
+  if (state.outl !== d.outl) p.set("outl", state.outl);
   if (state.kinds.length !== ALL_KINDS.length) p.set("kinds", state.kinds.join(","));
   if (state.q) p.set("q", state.q);
   if (state.sort !== defaultSort(state.mode)) p.set("sort", state.sort);
@@ -246,7 +250,7 @@ function renderHeader(): void {
   $("#footer-stamp").textContent = fmtDateTime(snap.generatedAt);
 
   // Hero-Zahl folgt den aktiven Filtern, aber immer auf der Angebotsseite.
-  const sellers = filtered("buy");
+  const sellers = analyze(filtered("buy"), "buy").ok;
   const totalSupply = sellers.reduce((s, m) => s + m.supply, 0);
   $("#hero-supply").innerHTML = `${fmtInt(totalSupply)}<small>t</small>`;
   const ageTxt = state.age > 0 ? ` · Update ≤ ${state.age >= 48 ? `${state.age / 24} T` : `${state.age} h`}` : "";
@@ -262,23 +266,36 @@ function displayName(m: MarketEntry): { name: string; sub: string } {
   return { name: m.station, sub: [cs, m.typeLabel || "–"].filter(Boolean).join(" · ") + access };
 }
 
-/** Nach Menge gewichteter Median – robust gegen Fantasiepreise und Mini-Bestände. */
-function weightedMedian(pairs: Array<[value: number, weight: number]>): number | null {
-  const sorted = pairs.filter(([, w]) => w > 0).sort((a, b) => a[0] - b[0]);
-  const total = sorted.reduce((s, [, w]) => s + w, 0);
-  if (total <= 0) return null;
-  let acc = 0;
-  for (const [v, w] of sorted) {
-    acc += w;
-    if (acc >= total / 2) return v;
-  }
-  return null;
+/** Preis/Menge-Paar eines Marktes für den Modus. */
+const pairOf = (m: MarketEntry, mode: Mode = state.mode): Pair => [priceOf(m, mode) ?? 0, qtyOf(m, mode)];
+
+/**
+ * Teilt gefilterte Märkte in "ernst gemeint" und Preis-Ausreißer.
+ * Mit outl = "show" zählen Ausreißer normal mit.
+ */
+function analyze(rows: MarketEntry[], mode: Mode = state.mode) {
+  const r = splitOutliers(rows, (m) => pairOf(m, mode));
+  return state.outl === "show" ? { ok: rows, outliers: [] as MarketEntry[], cap: r.cap, flagged: r.outliers } : { ...r, flagged: r.outliers };
 }
+
+/** Paare aller angegebenen Märkte zum Zeitpunkt tSec laut Verlauf. */
+function pairsAt(ids: string[], tSec: number, mode: Mode): Pair[] {
+  const out: Pair[] = [];
+  for (const id of ids) {
+    const r = rowAt(hist?.series[id], tSec);
+    const p = r ? rowPrice(r, mode) : null;
+    const q = r ? rowQty(r, mode) : 0;
+    if (p != null && q > 0) out.push([p, q]);
+  }
+  return out;
+}
+
+const volLabel = (v: number) => (v >= 1000 ? `${fmtInt(v / 1000)}k t` : `${fmtInt(v)} t`);
 
 let lastTicker = "";
 function renderTicker(): void {
   const ago = pricesAgo(24);
-  const items = filtered("buy")
+  const items = analyze(filtered("buy"), "buy").ok
     .sort((a, b) => b.supply - a.supply)
     .slice(0, 14)
     .map((m) => {
@@ -300,27 +317,31 @@ function renderTicker(): void {
 
 function renderKpis(rows: MarketEntry[]): void {
   const buy = state.mode === "buy";
-  const withPrice = rows.filter((m) => priceOf(m, state.mode) != null);
-  const best = [...withPrice].sort((a, b) => buy ? (a.buyPrice ?? 0) - (b.buyPrice ?? 0) : (b.sellPrice ?? 0) - (a.sellPrice ?? 0))[0];
+  const pairs = rows.map((m) => pairOf(m));
+  const best = [...rows].sort((a, b) => (buy ? (a.buyPrice ?? 0) - (b.buyPrice ?? 0) : (b.sellPrice ?? 0) - (a.sellPrice ?? 0)))[0];
   const qtySum = rows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
-  const weighted = weightedMedian(rows.map((m) => [priceOf(m, state.mode) ?? 0, qtyOf(m, state.mode)]));
   const carrierRows = rows.filter((m) => m.kind === "carrier");
   const carrierQty = carrierRows.reduce((s, m) => s + qtyOf(m, state.mode), 0);
   const carrierShare = qtySum > 0 ? (carrierQty / qtySum) * 100 : null;
 
-  // Δ des gewichteten Medians ggü. 24 h (gleiche Stationen, aktuelle Mengen als Gewicht)
-  const ago = pricesAgo(24);
-  const prevPairs: Array<[number, number]> = [];
-  for (const m of rows) {
-    const prev = ago.get(m.id);
-    if (prev != null) prevPairs.push([prev, qtyOf(m, state.mode)]);
-  }
-  const prevWeighted = weightedMedian(prevPairs);
-  const dW = weighted != null && prevWeighted ? ((weighted - prevWeighted) / prevWeighted) * 100 : null;
+  // Effektiver Preis für die mittlere Menge + Veränderung ggü. 24 h
+  // (gleiche Märkte, Preise UND Mengen von damals laut Verlauf).
+  const vols = VOLUMES[state.mode];
+  const vMid = vols[1] as number;
+  const eff = effectivePrice(pairs, vMid, state.mode);
+  // Nur vergleichen, wenn der Verlauf vor 24 h schon lief – sonst ist der Markt
+  // damals nur lückenhaft bekannt und der Vergleich wäre verzerrt.
+  const t24 = historyEnd() - 86_400_000;
+  const known = !!hist?.startedAt && Date.parse(hist.startedAt) <= t24;
+  const prevAll = known ? pairsAt(rows.map((m) => m.id), Math.floor(t24 / 1000), state.mode) : [];
+  const prevCap = state.outl === "hide" ? (weightedMedian(prevAll) ?? Infinity) * OUTLIER_FACTOR : Infinity;
+  const prevEff = effectivePrice(prevAll.filter(([p, q]) => p <= prevCap && q >= minFor(state.mode)), vMid, state.mode);
+  const dE = known && eff != null && prevEff ? ((eff - prevEff) / prevEff) * 100 : null;
   const dCls = (p: number | null) => (p == null ? "" : p > 0 ? "delta-up" : p < 0 ? "delta-down" : "");
+  const others = vols.filter((v) => v !== vMid).map((v) => `${volLabel(v)}: ${fmtInt(effectivePrice(pairs, v, state.mode))}`).join(" · ");
 
-  const card = (label: string, value: string, sub: string) =>
-    `<div class="card kpi"><div class="k-label">${label}</div><div class="k-value">${value}</div><div class="k-sub">${sub}</div></div>`;
+  const card = (label: string, value: string, sub: string, title = "") =>
+    `<div class="card kpi"${title ? ` title="${esc(title)}"` : ""}><div class="k-label">${label}</div><div class="k-value">${value}</div><div class="k-sub">${sub}</div></div>`;
 
   $("#kpis").innerHTML = [
     card(
@@ -329,9 +350,12 @@ function renderKpis(rows: MarketEntry[]): void {
       best ? `${esc(best.station)} · ${esc(best.system)} · ${fmtInt(qtyOf(best, state.mode))} t` : "keine Treffer",
     ),
     card(
-      buy ? "Typischer Preis (Median, nach Supply gewichtet)" : "Typischer Ankauf (Median, nach Demand gewichtet)",
-      `${fmtInt(weighted)} <small>Cr/t</small>`,
-      `<span class="${dCls(dW)}">${fmtPct(dW)}</span> ggü. 24 h`,
+      buy ? `Effektiver Preis für ${volLabel(vMid)}` : `Effektiver Erlös für ${volLabel(vMid)}`,
+      eff == null ? `– <small>Menge nicht verfügbar</small>` : `${fmtInt(eff)} <small>Cr/t</small>`,
+      `${known ? `<span class="${dCls(dE)}">${fmtPct(dE)}</span> ggü. 24 h · ` : ""}${others}`,
+      buy
+        ? `Durchschnittspreis, wenn du ${fmtInt(vMid)} t nacheinander bei den günstigsten Anbietern kaufst. Kleine Bestände zählen nur mit ihrer echten Menge.`
+        : `Durchschnittserlös, wenn du ${fmtInt(vMid)} t nacheinander an die besten Abnehmer verkaufst.`,
     ),
     card(buy ? "Supply (gefiltert)" : "Demand (gefiltert)", `${fmtInt(qtySum)} <small>t</small>`, `über ${rows.length} Märkte`),
     card(
@@ -380,7 +404,7 @@ function sortValue(m: MarketEntry, key: SortKey, deltas: Map<string, number | nu
   }
 }
 
-function renderTable(rows: MarketEntry[]): void {
+function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | null): void {
   const cols = columns();
   $("#thead-row").innerHTML = cols
     .map((c) => {
@@ -404,7 +428,10 @@ function renderTable(rows: MarketEntry[]): void {
   });
 
   const maxQty = Math.max(1, ...rows.map((m) => qtyOf(m, state.mode)));
-  $("#result-count").textContent = `${rows.length} von ${snap.markets.length} Märkten`;
+  const nOut = rows.filter((m) => flagged.has(m.id)).length;
+  $("#result-count").textContent =
+    `${rows.length} von ${snap.markets.length} Märkten` +
+    (nOut ? ` · ${nOut} Preis-Ausreißer${state.outl === "hide" ? " (nicht in Kennzahlen)" : ""}` : "");
   $("#market-title").textContent = state.mode === "buy" ? "Größte Verkäufer" : "Beste Abnehmer";
 
   if (sorted.length === 0) {
@@ -418,13 +445,17 @@ function renderTable(rows: MarketEntry[]): void {
       const d = deltas.get(m.id) ?? null;
       const ac = ageClass(m.marketUpdatedAt, now);
       const dn = displayName(m);
-      return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}${ac === "stale" ? " dim" : ""}">
+      const out = flagged.has(m.id);
+      const outTag = out
+        ? `<span class="tag-out" title="Preis über ${OUTLIER_FACTOR}× dem gewichteten Median (Grenze ${fmtInt(cap)} Cr/t)">Ausreißer</span>`
+        : "";
+      return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}${ac === "stale" || (out && state.outl === "hide") ? " dim" : ""}">
         <td><span class="st-name">${esc(dn.name)}</span><span class="st-type">${esc(dn.sub)}</span></td>
         <td>${esc(m.system)}</td>
         <td><span class="kind ${m.kind}">${KIND_ICON[m.kind]}${KIND_LABEL[m.kind]}</span></td>
         <td><span class="pad ${m.maxPad ?? ""}">${m.maxPad ?? "?"}</span></td>
         <td class="r num">${m.distanceLy == null ? "–" : `${m.distanceLy.toLocaleString("de-DE", { maximumFractionDigits: 1 })} ly`}<span class="st-type">${m.arrivalLs == null ? "" : `${fmtInt(m.arrivalLs)} ls`}</span></td>
-        <td class="r num price">${fmtInt(priceOf(m, state.mode))}</td>
+        <td class="r num price">${outTag}${fmtInt(priceOf(m, state.mode))}</td>
         <td class="r num"><div class="bar-cell">${fmtInt(qty)}<span class="qty-bar"><i style="width:${((qty / maxQty) * 100).toFixed(1)}%"></i></span></div></td>
         <td class="r num ${d == null ? "faint" : d > 0 ? "delta-up" : d < 0 ? "delta-down" : ""}">${fmtPct(d)}</td>
         <td>${sparkline(seriesFor(m.id, 7), COLOR_PRICE)}</td>
@@ -451,6 +482,13 @@ function renderLeader(rows: MarketEntry[]): void {
     : `<li class="muted">Keine Treffer.</li>`;
 }
 
+// Kurvenfarben: validierte Kategorie-Palette (blau, orange, aqua) auf dunklem Grund;
+// "Bester Einzelpreis" neutral und gestrichelt als Referenzlinie.
+const VOLUME_COLORS = ["#3987e5", "#d95926", "#199e70"];
+const VOLUME_DASH = ["", "6 3", "2 3"];
+const COLOR_BEST = "#b9b3a6";
+const COLOR_TOTAL = "#8a93a6";
+
 function renderHistory(): void {
   const host = $("#charts");
   const buy = state.mode === "buy";
@@ -461,19 +499,22 @@ function renderHistory(): void {
   const selMeta = state.sel ? hist.stations[state.sel] : undefined;
   // Einzelmarkt: volle Zeitachse; Gesamtmarkt: erst ab dem ersten Snapshot.
   const times = timeGrid(state.days, !selMeta);
-  let price: Array<number | null>, qty: Array<number | null>;
+  const fmtCr = (v: number) => fmtInt(v);
+  let panels: Panel[];
 
   if (state.sel && selMeta) {
     const rows = hist.series[state.sel];
     const at = times.map((t) => rowAt(rows, Math.floor(t / 1000)));
-    price = at.map((r) => (r ? rowPrice(r, state.mode) : null));
-    qty = at.map((r) => (r ? rowQty(r, state.mode) : null));
+    panels = [
+      { title: buy ? "Kaufpreis (Cr/t)" : "Ankaufspreis (Cr/t)", series: [{ label: "Preis", color: COLOR_PRICE, values: at.map((r) => (r ? rowPrice(r, state.mode) : null)), format: fmtCr, step: true }] },
+      { title: buy ? "Supply (t)" : "Demand (t)", height: 130, series: [{ label: buy ? "Supply" : "Demand", color: COLOR_QTY, values: at.map((r) => (r ? rowQty(r, state.mode) : null)), format: fmtCompact, area: true, step: true }] },
+    ];
     $("#chart-title").innerHTML = `${esc(selMeta.station)} <a href="#" class="clear" id="clear-sel">× Gesamtmarkt anzeigen</a>`;
     $("#chart-sub").textContent = [selMeta.callsign && selMeta.callsign !== selMeta.station ? selMeta.callsign : "", selMeta.system, KIND_LABEL[selMeta.kind]].filter(Boolean).join(" · ");
   } else {
-    // Gesamtmarkt: bester Preis + Summe der Menge zu jedem Zeitpunkt, über alle
-    // Märkte, die die Filter erfüllen. Das Market-Update-Alter wird relativ zum
-    // jeweiligen Zeitpunkt geprüft – genau wie die Tabelle es "damals" gezeigt hätte.
+    // Gesamtmarkt zu jedem Zeitpunkt T: alle Märkte, die die Filter erfüllen
+    // (Market-Update-Alter relativ zu T), Ausreißer per Median entfernt, dann
+    // bester Einzelpreis, effektive Preise für mehrere Mengen und Gesamtmenge.
     const current = new Map(snap.markets.map((m) => [m.id, m]));
     const markets = Object.entries(hist.series).filter(([id]) => {
       const meta = hist!.stations[id];
@@ -481,11 +522,14 @@ function renderHistory(): void {
     });
     const minQty = Math.max(1, minFor(state.mode));
     const maxAge = state.age > 0 ? state.age * 3_600 : Infinity;
-    price = [];
-    qty = [];
+    const vols = VOLUMES[state.mode];
+    const best: Array<number | null> = [], total: Array<number | null> = [];
+    const effs: Array<Array<number | null>> = vols.map(() => []);
+
     for (const t of times) {
       const tSec = Math.floor(t / 1000);
-      let best: number | null = null, sum = 0, any = false;
+      let pairs: Pair[] = [];
+      let any = false;
       for (const [, rows] of markets) {
         const r = rowAt(rows, tSec);
         if (!r) continue;
@@ -493,26 +537,45 @@ function renderHistory(): void {
         if (tSec - r[0] > maxAge) continue;
         const pr = rowPrice(r, state.mode), q = rowQty(r, state.mode);
         if (pr == null || q < minQty) continue;
-        sum += q;
-        best = best == null ? pr : buy ? Math.min(best, pr) : Math.max(best, pr);
+        pairs.push([pr, q]);
       }
-      price.push(best);
-      qty.push(any ? sum : null);
+      if (state.outl === "hide") {
+        const cap = (weightedMedian(pairs) ?? Infinity) * OUTLIER_FACTOR;
+        pairs = pairs.filter(([p]) => p <= cap);
+      }
+      best.push(bestPrice(pairs, state.mode));
+      vols.forEach((v, k) => (effs[k] as Array<number | null>).push(effectivePrice(pairs, v, state.mode)));
+      total.push(any ? pairs.reduce((s, [, q]) => s + q, 0) : null);
     }
+
+    panels = [
+      {
+        title: buy
+          ? "Kaufpreis in Cr/t – „Ø für X t“ = Durchschnitt beim Kauf von X t bei den günstigsten Anbietern"
+          : "Ankaufspreis in Cr/t – „Ø für X t“ = Durchschnitt beim Verkauf von X t an die besten Abnehmer",
+        height: 210,
+        series: [
+          ...vols.map((v, k): Series => ({
+            label: `Ø für ${volLabel(v)}`,
+            color: VOLUME_COLORS[k] as string,
+            dash: VOLUME_DASH[k] as string,
+            values: effs[k] as Array<number | null>,
+            format: fmtCr,
+            step: true,
+          })),
+          { label: "Bester Einzelpreis", color: COLOR_BEST, dash: "1 4", values: best, format: fmtCr, step: true },
+        ],
+      },
+      { title: buy ? "Gesamt-Supply (t)" : "Gesamt-Demand (t)", height: 130, series: [{ label: buy ? "Supply" : "Demand", color: COLOR_TOTAL, values: total, format: fmtCompact, area: true, step: true }] },
+    ];
     $("#chart-title").textContent = "Gesamter Markt";
-    $("#chart-sub").textContent = `${buy ? "günstigster Kaufpreis & Gesamt-Supply" : "höchster Ankaufspreis & Gesamt-Demand"} · gefiltert wie die Tabelle · Zeile anklicken für Einzelstation`;
+    $("#chart-sub").textContent = `gefiltert wie die Tabelle${state.outl === "hide" ? ` · ohne Preis-Ausreißer (> ${OUTLIER_FACTOR}× Median)` : ""}`;
   }
 
-  const series: Series[] = [
-    { label: buy ? (state.sel ? "Kaufpreis (Cr/t)" : "Bester Kaufpreis (Cr/t)") : state.sel ? "Ankaufspreis (Cr/t)" : "Bester Ankaufspreis (Cr/t)", color: COLOR_PRICE, values: price, format: (v) => fmtInt(v), step: true },
-    { label: buy ? "Supply (t)" : "Demand (t)", color: COLOR_QTY, values: qty, format: (v) => fmtCompact(v), area: true, step: true },
-  ];
-  renderCharts(host, times, series, $("#tooltip"));
-  if (times.length < 2 && hist.startedAt) {
-    host.querySelector(".empty")!.textContent =
-      `Der Gesamtverlauf startet mit dem ersten Snapshot (${fmtDateTime(hist.startedAt)}) und erscheint nach ein bis zwei Läufen. ` +
-      `Einzelne Märkte kannst du schon jetzt per Klick in der Tabelle ansehen.`;
-  }
+  const empty = times.length < 2 && hist.startedAt
+    ? `Der Gesamtverlauf startet mit dem ersten Snapshot (${fmtDateTime(hist.startedAt)}) und erscheint nach ein bis zwei Läufen. Einzelne Märkte kannst du schon jetzt per Klick in der Tabelle ansehen.`
+    : undefined;
+  renderCharts(host, times, panels, $("#tooltip"), empty);
   document.querySelector("#clear-sel")?.addEventListener("click", (e) => {
     e.preventDefault();
     update({ sel: null });
@@ -523,6 +586,7 @@ function syncControls(): void {
   document.querySelectorAll<HTMLButtonElement>("#f-mode button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)));
   document.querySelectorAll<HTMLButtonElement>("#f-pad button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.pad === state.pad)));
   document.querySelectorAll<HTMLButtonElement>("#f-dock button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.dock === state.dock)));
+  document.querySelectorAll<HTMLButtonElement>("#f-outl button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.outl === state.outl)));
   document.querySelectorAll<HTMLButtonElement>("#f-range button").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.days) === state.days)));
   document.querySelectorAll<HTMLButtonElement>("#f-kinds button").forEach((b) => b.setAttribute("aria-pressed", String(state.kinds.includes(b.dataset.kind as StationKind))));
   const onlyCarrier = state.kinds.length === 1 && state.kinds[0] === "carrier";
@@ -538,12 +602,13 @@ function syncControls(): void {
 function renderAll(): void {
   now = Date.now();
   const rows = filtered();
+  const a = analyze(rows);
   syncControls();
   renderHeader();
   renderTicker();
-  renderKpis(rows);
-  renderTable(rows);
-  renderLeader(rows);
+  renderKpis(a.ok);
+  renderTable(rows, new Set(a.flagged.map((m) => m.id)), a.cap);
+  renderLeader(a.ok);
   renderHistory();
 }
 
@@ -568,6 +633,10 @@ function bindEvents(): void {
   $("#f-pad").addEventListener("click", (e) => {
     const pad = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.pad as State["pad"] | undefined;
     if (pad) update({ pad });
+  });
+  $("#f-outl").addEventListener("click", (e) => {
+    const outl = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.outl as State["outl"] | undefined;
+    if (outl) update({ outl });
   });
   $("#f-dock").addEventListener("click", (e) => {
     const dock = (e.target as HTMLElement).closest<HTMLButtonElement>("button")?.dataset.dock as State["dock"] | undefined;
