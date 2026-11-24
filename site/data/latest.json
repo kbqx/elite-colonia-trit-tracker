@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-24T17:31:00.000Z",
+  "generatedAt": "2026-11-24T18:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -2296,6 +2296,39 @@
       "marketUpdatedAt": "2026-08-06T13:59:12.000Z"
     },
     {
+      "id": "128867659",
+      "station": "Exodus Reach",
+      "system": "Ratraii",
+      "kind": "orbital",
+      "typeLabel": "Outpost",
+      "maxPad": "M",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 903.144872,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57674,
+      "demand": 6107,
+      "marketUpdatedAt": "2026-11-22T21:08:23.000Z"
+    },
+    {
+      "id": "3701958400",
+      "station": "K6J-4KN",
+      "callsign": "K6J-4KN",
+      "dockingAccess": null,
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 25.98407,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 30079,
+      "demand": 2001,
+      "marketUpdatedAt": "2021-02-16T02:14:53.000Z"
+    },
+    {
       "id": "3920540672",
       "station": "Ozarkevich Defence Outpost",
       "system": "Ratraii",
@@ -2399,21 +2432,6 @@
       "sellPrice": 51041,
       "demand": 29,
       "marketUpdatedAt": "2026-11-22T23:35:43.000Z"
-    },
-    {
-      "id": "128867659",
-      "station": "Exodus Reach",
-      "system": "Ratraii",
-      "kind": "orbital",
-      "typeLabel": "Outpost",
-      "maxPad": "M",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 903.144872,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57674,
-      "demand": 6107,
-      "marketUpdatedAt": "2026-11-22T21:08:23.000Z"
     },
     {
       "id": "3920540416",
@@ -4282,10 +4300,10 @@
       "distanceLy": 16.1253936482958,
       "arrivalLs": 147.541087,
       "buyPrice": 124510,
-      "supply": 40743,
+      "supply": 33075,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-22T18:33:26.000Z"
+      "marketUpdatedAt": "2026-11-24T16:38:07.000Z"
     },
     {
       "id": "3705305856",
