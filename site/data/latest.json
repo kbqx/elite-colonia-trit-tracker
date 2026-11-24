@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-24T13:01:00.000Z",
+  "generatedAt": "2026-11-24T13:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -931,6 +931,36 @@
       "marketUpdatedAt": "2025-04-27T00:54:07.000Z"
     },
     {
+      "id": "3810701056",
+      "station": "Otto's Foundry",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 1012.201713,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 61575,
+      "demand": 342,
+      "marketUpdatedAt": "2026-11-23T03:12:04.000Z"
+    },
+    {
+      "id": "3810701312",
+      "station": "Konig Synthetics Enterprise",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 2545.266964,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56470,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-22T23:38:40.000Z"
+    },
+    {
       "id": "128959193",
       "station": "Holloway Biology Centre",
       "system": "Colonia",
@@ -1139,36 +1169,6 @@
       "sellPrice": 82526,
       "demand": 914,
       "marketUpdatedAt": "2026-08-20T16:12:03.000Z"
-    },
-    {
-      "id": "3810701056",
-      "station": "Otto's Foundry",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 1012.201713,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 61575,
-      "demand": 342,
-      "marketUpdatedAt": "2026-11-23T03:12:04.000Z"
-    },
-    {
-      "id": "3810701312",
-      "station": "Konig Synthetics Enterprise",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 2545.266964,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56470,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-22T23:38:40.000Z"
     },
     {
       "id": "3810704896",
@@ -2234,12 +2234,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 25.972789,
+      "arrivalLs": 25.994133,
       "buyPrice": 53802,
-      "supply": 43,
+      "supply": 51,
       "sellPrice": 53098,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-23T22:41:50.000Z"
+      "marketUpdatedAt": "2026-11-24T12:49:27.000Z"
     },
     {
       "id": "3707139328",
@@ -2416,42 +2416,6 @@
       "marketUpdatedAt": "2021-02-16T02:14:53.000Z"
     },
     {
-      "id": "3714639616",
-      "station": "TFCS Hand of destiny",
-      "callsign": "V9Q-W0F",
-      "dockingAccess": "Squadron Friends",
-      "carrierClass": "drake",
-      "system": "Ratraii",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 18.059308,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 152670,
-      "demand": 4651,
-      "marketUpdatedAt": "2026-08-01T04:11:13.000Z"
-    },
-    {
-      "id": "3714993664",
-      "station": "H6W-93K",
-      "callsign": "H6W-93K",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Ratraii",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 18.056944,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 51294,
-      "demand": 1669,
-      "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
-    },
-    {
       "id": "3920540416",
       "station": "Engel Fort",
       "system": "Ratraii",
@@ -2603,6 +2567,42 @@
       "sellPrice": 2565,
       "demand": 1434,
       "marketUpdatedAt": "2026-08-26T08:27:27.000Z"
+    },
+    {
+      "id": "3714639616",
+      "station": "TFCS Hand of destiny",
+      "callsign": "V9Q-W0F",
+      "dockingAccess": "Squadron Friends",
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 18.059308,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 152670,
+      "demand": 4651,
+      "marketUpdatedAt": "2026-08-01T04:11:13.000Z"
+    },
+    {
+      "id": "3714993664",
+      "station": "H6W-93K",
+      "callsign": "H6W-93K",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 18.056944,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 51294,
+      "demand": 1669,
+      "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
     },
     {
       "id": "3920541440",
@@ -3351,11 +3351,11 @@
       "maxPad": "L",
       "distanceLy": 10.2365097964345,
       "arrivalLs": 1269.19407,
-      "buyPrice": 2565,
-      "supply": 3696,
+      "buyPrice": 229893,
+      "supply": 18472,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-09-15T09:08:17.000Z"
+      "marketUpdatedAt": "2026-11-24T09:33:00.000Z"
     },
     {
       "id": "3712177152",
@@ -3437,12 +3437,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 10.2365097964345,
-      "arrivalLs": 2424.233012,
+      "arrivalLs": 2424.307906,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53747,
       "demand": 36,
-      "marketUpdatedAt": "2026-11-24T07:39:27.000Z"
+      "marketUpdatedAt": "2026-11-24T13:28:51.000Z"
     },
     {
       "id": "3705827840",
@@ -4082,12 +4082,12 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 14.8827776410353,
-      "arrivalLs": 854.930254,
+      "arrivalLs": 854.295317,
       "buyPrice": 184837,
-      "supply": 992,
+      "supply": 848,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-17T18:59:32.000Z"
+      "marketUpdatedAt": "2026-11-21T00:57:16.000Z"
     },
     {
       "id": "3706220288",
@@ -5423,12 +5423,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1450.783801,
+      "arrivalLs": 1450.670354,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53445,
       "demand": 83,
-      "marketUpdatedAt": "2026-11-24T00:14:40.000Z"
+      "marketUpdatedAt": "2026-11-24T11:16:11.000Z"
     },
     {
       "id": "3703992064",
