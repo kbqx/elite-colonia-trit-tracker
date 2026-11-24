@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-23T23:18:00.000Z",
+  "generatedAt": "2026-11-24T05:20:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -976,21 +976,6 @@
       "marketUpdatedAt": "2026-11-21T05:01:29.000Z"
     },
     {
-      "id": "128667761",
-      "station": "Jaques Station",
-      "system": "Colonia",
-      "kind": "orbital",
-      "typeLabel": "Orbis Starport",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 1547.040313,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56085,
-      "demand": 2357,
-      "marketUpdatedAt": "2026-11-23T22:28:36.000Z"
-    },
-    {
       "id": "3700353792",
       "station": "QLW-0AZ",
       "callsign": "QLW-0AZ",
@@ -1045,6 +1030,21 @@
       "marketUpdatedAt": "2026-10-25T22:57:14.000Z"
     },
     {
+      "id": "128667761",
+      "station": "Jaques Station",
+      "system": "Colonia",
+      "kind": "orbital",
+      "typeLabel": "Orbis Starport",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 1547.416901,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56085,
+      "demand": 2360,
+      "marketUpdatedAt": "2026-11-24T03:52:12.000Z"
+    },
+    {
       "id": "3706128896",
       "station": "MOTHER OF ALL DINGYS",
       "callsign": "V5N-44T",
@@ -1055,12 +1055,12 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 12.959657,
+      "arrivalLs": 12.95966,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 52229,
       "demand": 1046,
-      "marketUpdatedAt": "2026-08-26T16:59:24.000Z"
+      "marketUpdatedAt": "2026-11-23T22:57:30.000Z"
     },
     {
       "id": "3707010304",
@@ -1738,21 +1738,6 @@
       "marketUpdatedAt": "2026-10-03T01:08:38.000Z"
     },
     {
-      "id": "128733861",
-      "station": "Dervish Platform",
-      "system": "Ogmar",
-      "kind": "orbital",
-      "typeLabel": "Outpost",
-      "maxPad": "M",
-      "distanceLy": 8.62460370466377,
-      "arrivalLs": 1732.546967,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57603,
-      "demand": 2528,
-      "marketUpdatedAt": "2026-11-20T15:18:10.000Z"
-    },
-    {
       "id": "3921008896",
       "station": "Rymill Command Base",
       "system": "Ogmar",
@@ -1811,6 +1796,21 @@
       "sellPrice": 53759,
       "demand": 296,
       "marketUpdatedAt": "2026-11-01T06:26:37.000Z"
+    },
+    {
+      "id": "128733861",
+      "station": "Dervish Platform",
+      "system": "Ogmar",
+      "kind": "orbital",
+      "typeLabel": "Outpost",
+      "maxPad": "M",
+      "distanceLy": 8.62460370466377,
+      "arrivalLs": 1732.546967,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57603,
+      "demand": 2528,
+      "marketUpdatedAt": "2026-11-20T15:18:10.000Z"
     },
     {
       "id": "3921008128",
@@ -2252,12 +2252,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 26.014903,
+      "arrivalLs": 25.969497,
       "buyPrice": 53802,
-      "supply": 36,
+      "supply": 43,
       "sellPrice": 53098,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-23T20:31:45.000Z"
+      "marketUpdatedAt": "2026-11-23T22:41:50.000Z"
     },
     {
       "id": "3707139328",
@@ -2333,7 +2333,7 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 1261.601473,
+      "arrivalLs": 1248.687652,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57444,
@@ -2623,6 +2623,21 @@
       "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
     },
     {
+      "id": "3920541440",
+      "station": "Wallis Munitions Complex",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 898.661578,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
+    },
+    {
       "id": "3920541952",
       "station": "Cukkemane Honour",
       "system": "Ratraii",
@@ -2846,21 +2861,6 @@
       "sellPrice": 80990,
       "demand": 800,
       "marketUpdatedAt": "2026-05-03T23:57:56.000Z"
-    },
-    {
-      "id": "3920541440",
-      "station": "Wallis Munitions Complex",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 898.661578,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
     },
     {
       "id": "3920542464",
@@ -3455,12 +3455,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 10.2365097964345,
-      "arrivalLs": 2424.039129,
+      "arrivalLs": 2424.179665,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53747,
       "demand": 36,
-      "marketUpdatedAt": "2026-11-23T19:24:29.000Z"
+      "marketUpdatedAt": "2026-11-24T03:20:38.000Z"
     },
     {
       "id": "3705827840",
@@ -4655,7 +4655,7 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 353.448998,
+      "arrivalLs": 353.485102,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57700,
@@ -4778,12 +4778,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 16.298635151831,
-      "arrivalLs": 3664.506193,
+      "arrivalLs": 3664.512356,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53481,
       "demand": 5,
-      "marketUpdatedAt": "2026-11-23T03:51:16.000Z"
+      "marketUpdatedAt": "2026-11-24T03:29:55.000Z"
     },
     {
       "id": "3703158784",
@@ -5039,7 +5039,7 @@
       "typeLabel": "Outpost",
       "maxPad": "M",
       "distanceLy": 18.2348770817766,
-      "arrivalLs": 683.609881,
+      "arrivalLs": 683.476894,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53965,
@@ -5090,7 +5090,7 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 18.5187299611771,
-      "arrivalLs": 224.490906,
+      "arrivalLs": 224.524773,
       "buyPrice": 56624,
       "supply": 98,
       "sellPrice": 55878,
@@ -5426,12 +5426,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1450.994898,
+      "arrivalLs": 1450.783801,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53445,
       "demand": 83,
-      "marketUpdatedAt": "2026-11-23T22:27:33.000Z"
+      "marketUpdatedAt": "2026-11-24T00:14:40.000Z"
     },
     {
       "id": "3703992064",
@@ -5870,12 +5870,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3201.302608,
+      "arrivalLs": 3200.341492,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53347,
       "demand": 43,
-      "marketUpdatedAt": "2026-11-23T10:11:21.000Z"
+      "marketUpdatedAt": "2026-11-24T00:01:50.000Z"
     },
     {
       "id": "3703725056",
@@ -6091,7 +6091,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-23T22:05:29.000Z"
+      "marketUpdatedAt": "2026-11-24T04:05:36.000Z"
     },
     {
       "id": "3700076032",
@@ -6724,7 +6724,7 @@
       "supply": 0,
       "sellPrice": 45150,
       "demand": 3616,
-      "marketUpdatedAt": "2026-11-23T20:15:26.000Z"
+      "marketUpdatedAt": "2026-11-24T03:11:23.000Z"
     },
     {
       "id": "3700974848",
@@ -6770,12 +6770,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 34.1480290884408,
-      "arrivalLs": 1219.120951,
+      "arrivalLs": 1219.69973,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53341,
       "demand": 46,
-      "marketUpdatedAt": "2026-11-23T21:05:07.000Z"
+      "marketUpdatedAt": "2026-11-24T00:25:13.000Z"
     },
     {
       "id": "3708186368",
@@ -6982,36 +6982,6 @@
       "marketUpdatedAt": "2026-10-23T17:42:24.000Z"
     },
     {
-      "id": "3920832000",
-      "station": "Maiboroda Liberty",
-      "system": "Carcosa",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "M",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 1920.338598,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 51008,
-      "demand": 15,
-      "marketUpdatedAt": "2025-03-09T09:29:09.000Z"
-    },
-    {
-      "id": "3920835840",
-      "station": "Scavo's Outpost",
-      "system": "Carcosa",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 1764.287812,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57432,
-      "demand": 231,
-      "marketUpdatedAt": "2026-11-04T11:06:00.000Z"
-    },
-    {
       "id": "3920836096",
       "station": "Sumlak's Watch",
       "system": "Carcosa",
@@ -7090,6 +7060,84 @@
       "marketUpdatedAt": "2026-10-23T17:48:29.000Z"
     },
     {
+      "id": "3920832000",
+      "station": "Maiboroda Liberty",
+      "system": "Carcosa",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "M",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 1920.338598,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 51008,
+      "demand": 15,
+      "marketUpdatedAt": "2025-03-09T09:29:09.000Z"
+    },
+    {
+      "id": "3920835840",
+      "station": "Scavo's Outpost",
+      "system": "Carcosa",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 1764.287812,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57432,
+      "demand": 231,
+      "marketUpdatedAt": "2026-11-04T11:06:00.000Z"
+    },
+    {
+      "id": "3920829952",
+      "station": "Chakladar Research Enterprise",
+      "system": "Carcosa",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 9979.599209,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53892,
+      "demand": 715,
+      "marketUpdatedAt": "2026-10-16T05:53:03.000Z"
+    },
+    {
+      "id": "3920831744",
+      "station": "Nechuy Research Expedition",
+      "system": "Carcosa",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 9973.685499,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53892,
+      "demand": 715,
+      "marketUpdatedAt": "2026-10-21T11:12:03.000Z"
+    },
+    {
+      "id": "3712445440",
+      "station": "T9K-50X",
+      "callsign": "T9K-50X",
+      "dockingAccess": null,
+      "carrierClass": "drake",
+      "system": "Carcosa",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 8.567704,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 2565,
+      "demand": 507,
+      "marketUpdatedAt": "2026-08-22T15:59:29.000Z"
+    },
+    {
       "id": "3920833024",
       "station": "Cartier's Laboratory",
       "system": "Carcosa",
@@ -7120,21 +7168,6 @@
       "marketUpdatedAt": "2026-10-23T11:34:04.000Z"
     },
     {
-      "id": "3920829952",
-      "station": "Chakladar Research Enterprise",
-      "system": "Carcosa",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 9979.599209,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53892,
-      "demand": 715,
-      "marketUpdatedAt": "2026-10-16T05:53:03.000Z"
-    },
-    {
       "id": "3920837632",
       "station": "Kaplan Inventions",
       "system": "Carcosa",
@@ -7163,21 +7196,6 @@
       "sellPrice": 53692,
       "demand": 80,
       "marketUpdatedAt": "2026-09-27T01:59:55.000Z"
-    },
-    {
-      "id": "3920831744",
-      "station": "Nechuy Research Expedition",
-      "system": "Carcosa",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 9973.685499,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53892,
-      "demand": 715,
-      "marketUpdatedAt": "2026-10-21T11:12:03.000Z"
     },
     {
       "id": "128792546",
@@ -7229,24 +7247,6 @@
       "sellPrice": 2579,
       "demand": 1,
       "marketUpdatedAt": "2024-04-25T16:52:55.000Z"
-    },
-    {
-      "id": "3712445440",
-      "station": "T9K-50X",
-      "callsign": "T9K-50X",
-      "dockingAccess": null,
-      "carrierClass": "drake",
-      "system": "Carcosa",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 8.567704,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 2565,
-      "demand": 507,
-      "marketUpdatedAt": "2026-08-22T15:59:29.000Z"
     },
     {
       "id": "3920836864",
@@ -7433,12 +7433,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 41.1664044041072,
-      "arrivalLs": 163.467606,
+      "arrivalLs": 163.467526,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53714,
       "demand": 39,
-      "marketUpdatedAt": "2026-11-23T16:33:44.000Z"
+      "marketUpdatedAt": "2026-11-24T03:43:07.000Z"
     },
     {
       "id": "3703829248",
