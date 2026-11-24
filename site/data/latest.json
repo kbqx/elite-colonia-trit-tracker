@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-24T14:01:00.000Z",
+  "generatedAt": "2026-11-24T14:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1547.103781,
+      "arrivalLs": 1548.028935,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 56087,
-      "demand": 2366,
-      "marketUpdatedAt": "2026-11-24T12:43:29.000Z"
+      "sellPrice": 56088,
+      "demand": 2367,
+      "marketUpdatedAt": "2026-11-24T14:07:56.000Z"
     },
     {
       "id": "3700353792",
@@ -1586,12 +1586,12 @@
       "typeLabel": "Squadron Carrier",
       "maxPad": "L",
       "distanceLy": 4.4983721013829,
-      "arrivalLs": 17.091043,
+      "arrivalLs": 17.090968,
       "buyPrice": 124510,
-      "supply": 19523,
+      "supply": 20661,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-21T07:40:29.000Z"
+      "marketUpdatedAt": "2026-11-24T12:29:51.000Z"
     },
     {
       "id": "3708048896",
@@ -2234,12 +2234,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 25.994133,
+      "arrivalLs": 25.981077,
       "buyPrice": 53802,
-      "supply": 51,
+      "supply": 57,
       "sellPrice": 53098,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-24T12:49:27.000Z"
+      "marketUpdatedAt": "2026-11-24T14:29:13.000Z"
     },
     {
       "id": "3707139328",
@@ -5282,12 +5282,12 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1454.575542,
+      "arrivalLs": 1454.633719,
       "buyPrice": 56659,
-      "supply": 245,
+      "supply": 326,
       "sellPrice": 55878,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-24T08:11:44.000Z"
+      "marketUpdatedAt": "2026-11-24T13:59:53.000Z"
     },
     {
       "id": "3714797824",
@@ -5423,12 +5423,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1450.670354,
+      "arrivalLs": 1450.760881,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 53445,
-      "demand": 83,
-      "marketUpdatedAt": "2026-11-24T11:16:11.000Z"
+      "sellPrice": 53448,
+      "demand": 84,
+      "marketUpdatedAt": "2026-11-24T13:39:57.000Z"
     },
     {
       "id": "3703992064",
@@ -6073,7 +6073,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-24T08:05:41.000Z"
+      "marketUpdatedAt": "2026-11-24T14:05:53.000Z"
     },
     {
       "id": "3700076032",
