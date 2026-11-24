@@ -6,7 +6,7 @@
 import { isGoneRow, type HistoryFile, type HistoryRow, type MarketEntry, type Snapshot, type StationKind } from "./types.js";
 import { renderCharts, sparkline, type Panel, type Series } from "./chart.js";
 import { KPI_VOLUME, OUTLIER_FACTOR, VOLUMES, bestPrice, effectivePrice, splitOutliers, weightedMedian, type Mode, type Pair } from "./market.js";
-import { ageClass, esc, fmtCompact, fmtDateTime, fmtInt, fmtNum1, fmtPct, relTime } from "./format.js";
+import { ageClass, esc, fmtCompact, fmtDateTime, fmtDec, fmtInt, fmtNum1, fmtPct, relTime } from "./format.js";
 import { getLang, initialLang, setLang, t, type Lang } from "./i18n.js";
 import { initStars } from "./stars.js";
 
@@ -310,6 +310,16 @@ function byUpdateRange(mode: Mode): MarketEntry[] {
   return splitOutliers(rows, (m) => pairOf(m, mode)).ok;
 }
 
+/**
+ * CSS-Klasse für eine Preisänderung aus Sicht des Nutzers:
+ * Kaufen → sinkender Preis ist gut (grün), Verkaufen → steigender Preis ist gut.
+ */
+function priceDeltaCls(p: number | null, mode: Mode = state.mode): string {
+  if (p == null || !Number.isFinite(p) || Math.abs(p) < 0.05) return ""; // ±0,0 % bleibt neutral
+  const good = mode === "buy" ? p < 0 : p > 0;
+  return good ? "delta-good" : "delta-bad";
+}
+
 /** Paare aller angegebenen Märkte zum Zeitpunkt tSec laut Verlauf. */
 function pairsAt(ids: string[], tSec: number, mode: Mode): Pair[] {
   const out: Pair[] = [];
@@ -333,7 +343,7 @@ function renderTicker(): void {
     .map((m) => {
       const prev = ago.get(m.id);
       const pct = prev && m.buyPrice ? ((m.buyPrice - prev) / prev) * 100 : null;
-      const cls = pct == null ? "" : pct > 0 ? "up" : pct < 0 ? "down" : "";
+      const cls = priceDeltaCls(pct, "buy");
       const arrow = pct == null ? "" : pct > 0 ? "▲" : pct < 0 ? "▼" : "■";
       const change = pct == null ? "" : ` <span class="${cls}">${arrow} ${fmtPct(pct)}</span>`;
       return `<span class="ticker-item"><b>${esc(m.station.toUpperCase())}</b>${fmtInt(m.buyPrice)} Cr · ${fmtCompact(m.supply)} t${change}</span>`;
@@ -351,7 +361,115 @@ function renderTicker(): void {
  * rows: Märkte nach allen Tabellen-Filtern (inkl. Mindestmenge).
  * anyQty: dieselben Märkte, aber ohne Mindestmenge – Grundlage für den effektiven Preis.
  */
+// ---------------------------------------------------------------------------
+// "Üblich"-Vergleich für die Kennzahlen: Median der Kennzahl über die letzten
+// 7 Tage (stündlich aus dem Verlauf rekonstruiert, mit denselben Regeln wie die
+// Karte selbst). Braucht mindestens BASELINE_MIN_H Stunden Verlauf.
+// ---------------------------------------------------------------------------
+const BASELINE_DAYS = 7;
+const BASELINE_MIN_H = 12;
+/** Abweichungen darunter gelten als "normal" (Preise/Mengen in %, Anteil in Prozentpunkten). */
+const NORMAL_BAND = 2;
+
+interface KpiMetrics { best: number | null; eff: number | null; total: number | null; share: number | null }
+
+function metricsAt(tSec: number, staticSeries: HistoryRow[][], allSeries: Array<[string, HistoryRow[]]>): KpiMetrics {
+  const mode = state.mode;
+  const maxAge = state.age > 0 ? state.age * 3_600 : Infinity;
+  const collect = (rows: HistoryRow[]): Pair | null => {
+    const r = rowAt(rows, tSec);
+    if (!r || tSec - r[0] > maxAge) return null;
+    const p = rowPrice(r, mode), q = rowQty(r, mode);
+    return p != null && q > 0 ? [p, q] : null;
+  };
+  const capOf = (pairs: Pair[]) => (state.outl === "hide" ? (weightedMedian(pairs) ?? Infinity) * OUTLIER_FACTOR : Infinity);
+
+  // Bester Preis + effektiver Preis: Tabellen-Filter ohne Mindestmenge (wie die Karten)
+  let sp = staticSeries.map(collect).filter((x): x is Pair => x != null);
+  const cap1 = capOf(sp);
+  sp = sp.filter(([p]) => p <= cap1);
+
+  // Gesamtmenge + Carrier-Anteil: alle Märkte, nur Alter (wie die Karten)
+  const ap: Array<[Pair, boolean]> = [];
+  for (const [id, rows] of allSeries) {
+    const x = collect(rows);
+    if (x) ap.push([x, hist?.stations[id]?.kind === "carrier"]);
+  }
+  const cap2 = capOf(ap.map(([x]) => x));
+  const ok = ap.filter(([[p]]) => p <= cap2);
+  const total = ok.reduce((s, [[, q]]) => s + q, 0);
+  const carrier = ok.reduce((s, [[, q], c]) => s + (c ? q : 0), 0);
+
+  return {
+    best: bestPrice(sp, mode),
+    eff: effectivePrice(sp, KPI_VOLUME[mode], mode),
+    total: ok.length ? total : null,
+    share: total > 0 ? (carrier / total) * 100 : null,
+  };
+}
+
+interface Baseline { values: Record<keyof KpiMetrics, number | null>; hours: number; samples: number }
+
+function computeBaseline(): Baseline | null {
+  if (!hist?.startedAt) return null;
+  const end = historyEnd();
+  const start = Math.max(end - BASELINE_DAYS * 86_400_000, Date.parse(hist.startedAt));
+  const hours = (end - start) / 3_600_000;
+  if (hours < BASELINE_MIN_H) return { values: { best: null, eff: null, total: null, share: null }, hours, samples: 0 };
+
+  const current = new Map(snap.markets.map((m) => [m.id, m]));
+  const staticSeries = Object.entries(hist.series)
+    .filter(([id]) => {
+      const meta = hist!.stations[id];
+      return meta ? passesStatic(meta, current.get(id)) : false;
+    })
+    .map(([, rows]) => rows);
+  const allSeries = Object.entries(hist.series);
+
+  const keys: Array<keyof KpiMetrics> = ["best", "eff", "total", "share"];
+  const samples: Record<keyof KpiMetrics, number[]> = { best: [], eff: [], total: [], share: [] };
+  let n = 0;
+  for (let t = start; t <= end; t += 3_600_000) {
+    const m = metricsAt(Math.floor(t / 1000), staticSeries, allSeries);
+    n++;
+    for (const k of keys) if (m[k] != null) samples[k].push(m[k] as number);
+  }
+  const median = (xs: number[]) => {
+    if (!xs.length) return null;
+    const a = [...xs].sort((x, y) => x - y);
+    const mid = a.length >> 1;
+    return a.length % 2 ? (a[mid] as number) : ((a[mid - 1] as number) + (a[mid] as number)) / 2;
+  };
+  return { values: { best: median(samples.best), eff: median(samples.eff), total: median(samples.total), share: median(samples.share) }, hours, samples: n };
+}
+
+/**
+ * Kleines Abzeichen "über/unter üblich". kind bestimmt, was "gut" ist:
+ * price → im Kaufmodus niedriger besser, im Verkaufsmodus höher besser;
+ * qty → mehr ist besser; neutral → keine Wertung (grau).
+ */
+function usualBadge(cur: number | null, base: Baseline | null, key: keyof KpiMetrics, kind: "price" | "qty" | "neutral"): string {
+  if (!base) return "";
+  const span = base.hours >= 48 ? t("unit.days", { n: Math.round(base.hours / 24) }) : `${Math.round(base.hours)} h`;
+  if (base.samples === 0) {
+    return `<span class="usual" title="${esc(t("usual.collectingTitle", { min: BASELINE_MIN_H }))}">${t("usual.collecting", { h: Math.floor(base.hours), min: BASELINE_MIN_H })}</span>`;
+  }
+  const b = base.values[key];
+  if (cur == null || b == null || b === 0) return "";
+  const diff = key === "share" ? cur - b : ((cur - b) / b) * 100;
+  const unit = key === "share" ? " pp" : " %";
+  const title = esc(t("usual.title", { span, base: key === "share" ? `${fmtInt(b)} %` : fmtInt(b) }));
+  if (Math.abs(diff) < NORMAL_BAND) return `<span class="usual" title="${title}">● ${t("usual.normal")}</span>`;
+  const up = diff > 0;
+  let cls = "usual-neutral";
+  if (kind === "qty") cls = up ? "usual-good" : "usual-bad";
+  if (kind === "price") cls = (state.mode === "buy" ? !up : up) ? "usual-good" : "usual-bad";
+  const txt = `${up ? "▲" : "▼"} ${fmtDec(Math.abs(diff))}${unit} ${up ? t("usual.above") : t("usual.below")}`;
+  return `<span class="usual ${cls}" title="${title}">${txt}</span>`;
+}
+
 function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
+  const base = computeBaseline();
   const buy = state.mode === "buy";
   const pairs = anyQty.map((m) => pairOf(m));
   // Bester Preis: unabhängig von der Mindestmenge, aber mit Alters-/Typ-Filtern und ohne Ausreißer.
@@ -377,29 +495,35 @@ function renderKpis(rows: MarketEntry[], anyQty: MarketEntry[]): void {
   const prevCap = state.outl === "hide" ? (weightedMedian(prevAll) ?? Infinity) * OUTLIER_FACTOR : Infinity;
   const prevEff = effectivePrice(prevAll.filter(([p]) => p <= prevCap), vMid, state.mode);
   const dE = known && eff != null && prevEff ? ((eff - prevEff) / prevEff) * 100 : null;
-  const dCls = (p: number | null) => (p == null ? "" : p > 0 ? "delta-up" : p < 0 ? "delta-down" : "");
+  const dCls = (p: number | null) => priceDeltaCls(p);
   const others = vols.filter((v) => v !== vMid).map((v) => `${volLabel(v)}: ${fmtInt(effectivePrice(pairs, v, state.mode))}`).join(" · ");
 
-  const card = (label: string, value: string, sub: string, title = "") =>
-    `<div class="card kpi"${title ? ` title="${esc(title)}"` : ""}><div class="k-label">${label}</div><div class="k-value">${value}</div><div class="k-sub">${sub}</div></div>`;
+  const card = (label: string, value: string, sub: string, title = "", badge = "") =>
+    `<div class="card kpi"${title ? ` title="${esc(title)}"` : ""}><div class="k-label">${label}</div><div class="k-row"><div class="k-value">${value}</div>${badge}</div><div class="k-sub">${sub}</div></div>`;
+  const bestVal = best ? priceOf(best, state.mode) : null;
 
   $("#kpis").innerHTML = [
     card(
       buy ? t("kpi.bestBuy") : t("kpi.bestSell"),
-      `${fmtInt(best ? priceOf(best, state.mode) : null)} <small>Cr/t</small>`,
+      `${fmtInt(bestVal)} <small>Cr/t</small>`,
       best ? `${esc(best.station)} · ${esc(best.system)} · ${fmtInt(qtyOf(best, state.mode))} t` : t("kpi.noResults"),
+      "",
+      usualBadge(bestVal, base, "best", "price"),
     ),
     card(
       t(buy ? "kpi.effBuy" : "kpi.effSell", { v: volLabel(vMid) }),
       eff == null ? `– <small>${t("kpi.effNA")}</small>` : `${fmtInt(eff)} <small>Cr/t</small>`,
       `${known ? `<span class="${dCls(dE)}">${fmtPct(dE)}</span> ${t("kpi.vs24h")} · ` : ""}${others}`,
       t(buy ? "kpi.effBuyTitle" : "kpi.effSellTitle", { v: fmtInt(vMid) }),
+      usualBadge(eff, base, "eff", "price"),
     ),
-    card(buy ? t("kpi.supply") : t("kpi.demand"), `${fmtInt(qtySum)} <small>t</small>`, t("kpi.overMarkets", { n: qtyRows.length })),
+    card(buy ? t("kpi.supply") : t("kpi.demand"), `${fmtInt(qtySum)} <small>t</small>`, t("kpi.overMarkets", { n: qtyRows.length }), "", usualBadge(qtySum, base, "total", "qty")),
     card(
       buy ? t("kpi.carrierSupply") : t("kpi.carrierDemand"),
       `${carrierShare == null ? "–" : Math.round(carrierShare)} <small>%</small>`,
       t("kpi.carrierSub", { c: carrierRows.length, n: qtyRows.length, q: fmtInt(carrierQty) }),
+      "",
+      usualBadge(carrierShare, base, "share", "neutral"),
     ),
   ].join("");
 }
@@ -487,7 +611,7 @@ function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | nu
       const outTag = out
         ? `<span class="tag-out" title="${esc(t("table.outlierTitle", { f: OUTLIER_FACTOR, cap: fmtInt(cap) }))}">${t("table.outlier")}</span>`
         : "";
-      return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}${ac === "stale" ? " dim" : ""}">
+      return `<tr data-id="${esc(m.id)}" class="${m.id === state.sel ? "selected" : ""}">
         <td><span class="st-name">${esc(dn.name)}</span><span class="st-type">${esc(dn.sub)}</span></td>
         <td>${esc(m.system)}</td>
         <td><span class="kind ${m.kind}">${KIND_ICON[m.kind]}${typeName(m)}</span></td>
@@ -495,7 +619,7 @@ function renderTable(rows: MarketEntry[], flagged: Set<string>, cap: number | nu
         <td class="r num">${m.distanceLy == null ? "–" : `${fmtNum1(m.distanceLy)} ly`}<span class="st-type">${m.arrivalLs == null ? "" : `${fmtInt(m.arrivalLs)} ls`}</span></td>
         <td class="r num price">${outTag}${fmtInt(priceOf(m, state.mode))}</td>
         <td class="r num"><div class="bar-cell">${fmtInt(qty)}<span class="qty-bar"><i style="width:${((qty / maxQty) * 100).toFixed(1)}%"></i></span></div></td>
-        <td class="r num ${d == null ? "faint" : d > 0 ? "delta-up" : d < 0 ? "delta-down" : ""}">${fmtPct(d)}</td>
+        <td class="r num ${d == null ? "faint" : priceDeltaCls(d)}">${fmtPct(d)}</td>
         <td>${sparkline(seriesFor(m.id, 7), COLOR_PRICE)}</td>
         <td><span class="age ${ac}" title="${m.marketUpdatedAt ? fmtDateTime(m.marketUpdatedAt) : ""}">${relTime(m.marketUpdatedAt, now)}</span></td>
       </tr>`;
