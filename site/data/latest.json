@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-24T10:06:00.000Z",
+  "generatedAt": "2026-11-24T11:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -295,6 +295,24 @@
       "marketUpdatedAt": "2026-11-12T04:38:48.000Z"
     },
     {
+      "id": "3703507200",
+      "station": "W3J-09V",
+      "callsign": "W3J-09V",
+      "dockingAccess": "Squadron Friends",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 0,
+      "buyPrice": 51717,
+      "supply": 3389,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2026-07-28T07:22:44.000Z"
+    },
+    {
       "id": "3711776768",
       "station": "Into the void",
       "callsign": "V7Q-5XX",
@@ -329,24 +347,6 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-11-22T02:26:35.000Z"
-    },
-    {
-      "id": "3703507200",
-      "station": "W3J-09V",
-      "callsign": "W3J-09V",
-      "dockingAccess": "Squadron Friends",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 0,
-      "buyPrice": 51717,
-      "supply": 3389,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2026-07-28T07:22:44.000Z"
     },
     {
       "id": "3701290240",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1547.54997,
+      "arrivalLs": 1546.885122,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 56086,
-      "demand": 2363,
-      "marketUpdatedAt": "2026-11-24T08:32:46.000Z"
+      "sellPrice": 56087,
+      "demand": 2365,
+      "marketUpdatedAt": "2026-11-24T11:25:26.000Z"
     },
     {
       "id": "3700353792",
@@ -1025,6 +1025,24 @@
       "sellPrice": 53168,
       "demand": 5000,
       "marketUpdatedAt": "2025-04-09T22:30:06.000Z"
+    },
+    {
+      "id": "3704908288",
+      "station": "ERIN GO BRAGH",
+      "callsign": "VNN-2VF",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 1010.470651,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 62507,
+      "demand": 1899,
+      "marketUpdatedAt": "2026-10-25T22:57:14.000Z"
     },
     {
       "id": "3706128896",
@@ -1151,24 +1169,6 @@
       "sellPrice": 82526,
       "demand": 914,
       "marketUpdatedAt": "2026-08-20T16:12:03.000Z"
-    },
-    {
-      "id": "3704908288",
-      "station": "ERIN GO BRAGH",
-      "callsign": "VNN-2VF",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 1010.470651,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 62507,
-      "demand": 1899,
-      "marketUpdatedAt": "2026-10-25T22:57:14.000Z"
     },
     {
       "id": "3810704896",
