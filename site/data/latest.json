@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-24T15:01:00.000Z",
+  "generatedAt": "2026-11-24T15:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -1664,6 +1664,24 @@
       "sellPrice": 2565,
       "demand": 350,
       "marketUpdatedAt": "2026-01-17T15:25:13.000Z"
+    },
+    {
+      "id": "3711486464",
+      "station": "T9X-0QF",
+      "callsign": "T9X-0QF",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Eol Prou LW-L c8-314",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 6.52825888445763,
+      "arrivalLs": 0,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 52318,
+      "demand": 700,
+      "marketUpdatedAt": "2026-11-24T14:06:59.000Z"
     },
     {
       "id": "3708300032",
@@ -5423,12 +5441,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1450.760881,
+      "arrivalLs": 1450.830801,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53448,
       "demand": 84,
-      "marketUpdatedAt": "2026-11-24T13:39:57.000Z"
+      "marketUpdatedAt": "2026-11-24T15:02:19.000Z"
     },
     {
       "id": "3703992064",
@@ -7637,24 +7655,6 @@
       "sellPrice": 51707,
       "demand": 2541,
       "marketUpdatedAt": "2025-06-07T03:13:30.000Z"
-    },
-    {
-      "id": "3711486464",
-      "station": "T9X-0QF",
-      "callsign": "T9X-0QF",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Eol Prou SX-S c4-282",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 224.521924823752,
-      "arrivalLs": 0,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 52318,
-      "demand": 700,
-      "marketUpdatedAt": "2026-11-24T08:36:02.000Z"
     },
     {
       "id": "3711680256",
