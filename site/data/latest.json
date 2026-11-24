@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-24T13:31:00.000Z",
+  "generatedAt": "2026-11-24T14:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -5801,7 +5801,7 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3210.910795,
+      "arrivalLs": 3205.468291,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 77406,
@@ -6752,12 +6752,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 34.1480290884408,
-      "arrivalLs": 1220.691737,
+      "arrivalLs": 1220.678791,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53341,
       "demand": 46,
-      "marketUpdatedAt": "2026-11-24T08:38:59.000Z"
+      "marketUpdatedAt": "2026-11-24T13:37:42.000Z"
     },
     {
       "id": "3708186368",
