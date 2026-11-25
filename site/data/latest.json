@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-25T01:30:00.000Z",
+  "generatedAt": "2026-11-25T02:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -2279,6 +2279,21 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-08-06T13:59:12.000Z"
+    },
+    {
+      "id": "3921625344",
+      "station": "Bullen Biochemical Centre",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1734.221827,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57468,
+      "demand": 272,
+      "marketUpdatedAt": "2026-11-21T19:15:13.000Z"
     },
     {
       "id": "3921625600",
