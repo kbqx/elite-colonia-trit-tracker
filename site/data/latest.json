@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-25T02:01:00.000Z",
+  "generatedAt": "2026-11-25T02:30:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -592,6 +592,36 @@
       "marketUpdatedAt": "2026-03-14T02:29:50.000Z"
     },
     {
+      "id": "3811460096",
+      "station": "Cartier's Productions",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3717.866842,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53781,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-23T21:40:33.000Z"
+    },
+    {
+      "id": "3810711040",
+      "station": "Knapper Astrophysics Complex",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3756.709568,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56712,
+      "demand": 537,
+      "marketUpdatedAt": "2026-11-21T22:59:54.000Z"
+    },
+    {
       "id": "3810703360",
       "station": "Lavoie Genetics Institution",
       "system": "Colonia",
@@ -652,21 +682,6 @@
       "marketUpdatedAt": "2026-10-29T17:47:11.000Z"
     },
     {
-      "id": "3811460096",
-      "station": "Cartier's Productions",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3717.866842,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53781,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-23T21:40:33.000Z"
-    },
-    {
       "id": "3811458048",
       "station": "Nnadi Engineering Forge",
       "system": "Colonia",
@@ -695,21 +710,6 @@
       "sellPrice": 57792,
       "demand": 777,
       "marketUpdatedAt": "2026-10-21T08:38:17.000Z"
-    },
-    {
-      "id": "3810711040",
-      "station": "Knapper Astrophysics Complex",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3756.709568,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56712,
-      "demand": 537,
-      "marketUpdatedAt": "2026-11-21T22:59:54.000Z"
     },
     {
       "id": "3703150080",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1548.918889,
+      "arrivalLs": 1548.865748,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 56088,
-      "demand": 2369,
-      "marketUpdatedAt": "2026-11-25T01:28:42.000Z"
+      "demand": 2370,
+      "marketUpdatedAt": "2026-11-25T01:53:25.000Z"
     },
     {
       "id": "3700353792",
@@ -5380,21 +5380,6 @@
       "marketUpdatedAt": "2023-08-10T20:41:23.000Z"
     },
     {
-      "id": "128681095",
-      "station": "The Brig",
-      "system": "Luchtaine",
-      "kind": "planetary",
-      "typeLabel": "Planetary Port",
-      "maxPad": "L",
-      "distanceLy": 19.6307963175848,
-      "arrivalLs": 1451.135001,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53448,
-      "demand": 84,
-      "marketUpdatedAt": "2026-11-24T20:55:18.000Z"
-    },
-    {
       "id": "3703992064",
       "station": "King charles III",
       "callsign": "T9X-N4Z",
@@ -5429,6 +5414,21 @@
       "sellPrice": 77406,
       "demand": 627,
       "marketUpdatedAt": "2026-11-16T23:10:38.000Z"
+    },
+    {
+      "id": "128681095",
+      "station": "The Brig",
+      "system": "Luchtaine",
+      "kind": "planetary",
+      "typeLabel": "Planetary Port",
+      "maxPad": "L",
+      "distanceLy": 19.6307963175848,
+      "arrivalLs": 1451.135001,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53448,
+      "demand": 84,
+      "marketUpdatedAt": "2026-11-24T20:55:18.000Z"
     },
     {
       "id": "3700598784",
