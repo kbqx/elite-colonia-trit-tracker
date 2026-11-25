@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-25T19:57:00.000Z",
+  "generatedAt": "2026-11-25T20:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -7115,12 +7115,12 @@
       "typeLabel": "Outpost",
       "maxPad": "M",
       "distanceLy": 36.3891322418177,
-      "arrivalLs": 1796.0598,
+      "arrivalLs": 1796.23314,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 51292,
       "demand": 9999,
-      "marketUpdatedAt": "2026-11-25T18:58:46.000Z"
+      "marketUpdatedAt": "2026-11-25T19:44:05.000Z"
     },
     {
       "id": "3702127872",
