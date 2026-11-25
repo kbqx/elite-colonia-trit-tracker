@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-25T12:31:00.000Z",
+  "generatedAt": "2026-11-25T13:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -392,7 +392,7 @@
       "typeLabel": "Settlement",
       "maxPad": "S",
       "distanceLy": 0,
-      "arrivalLs": 1500.023443,
+      "arrivalLs": 1495.651987,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53781,
@@ -592,24 +592,6 @@
       "marketUpdatedAt": "2026-03-14T02:29:50.000Z"
     },
     {
-      "id": "3711839488",
-      "station": "V0G-B5Y",
-      "callsign": "V0G-B5Y",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 2549.30016,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 59998,
-      "demand": 4000,
-      "marketUpdatedAt": "2026-10-22T23:06:53.000Z"
-    },
-    {
       "id": "3810703360",
       "station": "Lavoie Genetics Institution",
       "system": "Colonia",
@@ -746,6 +728,24 @@
       "sellPrice": 77317,
       "demand": 2488,
       "marketUpdatedAt": "2025-07-26T03:30:30.000Z"
+    },
+    {
+      "id": "3711839488",
+      "station": "V0G-B5Y",
+      "callsign": "V0G-B5Y",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 2549.30016,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 59998,
+      "demand": 4000,
+      "marketUpdatedAt": "2026-10-22T23:06:53.000Z"
     },
     {
       "id": "3811459328",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1549.649107,
+      "arrivalLs": 1549.238561,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 56090,
       "demand": 2377,
-      "marketUpdatedAt": "2026-11-25T12:27:06.000Z"
+      "marketUpdatedAt": "2026-11-25T13:26:07.000Z"
     },
     {
       "id": "3700353792",
@@ -6698,7 +6698,7 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 34.1480290884408,
-      "arrivalLs": 1218.070271,
+      "arrivalLs": 1218.025912,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53345,
