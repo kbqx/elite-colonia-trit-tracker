@@ -1,29 +1,11 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-26T07:31:00.000Z",
+  "generatedAt": "2026-11-26T09:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
   "radiusLy": 500,
   "markets": [
-    {
-      "id": "3711290880",
-      "station": "W7V-2XT",
-      "callsign": "W7V-2XT",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 12.959662,
-      "buyPrice": 200286,
-      "supply": 398,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2026-09-04T07:59:56.000Z"
-    },
     {
       "id": "3702700544",
       "station": "HBW-48F",
@@ -41,6 +23,24 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-09-04T08:08:39.000Z"
+    },
+    {
+      "id": "3711290880",
+      "station": "W7V-2XT",
+      "callsign": "W7V-2XT",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 12.959662,
+      "buyPrice": 200286,
+      "supply": 398,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2026-09-04T07:59:56.000Z"
     },
     {
       "id": "3715317248",
@@ -430,21 +430,6 @@
       "marketUpdatedAt": "2026-11-13T19:02:18.000Z"
     },
     {
-      "id": "3810707968",
-      "station": "Loeffler Synthetics Silo",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3743.045252,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56455,
-      "demand": 342,
-      "marketUpdatedAt": "2026-11-14T19:03:12.000Z"
-    },
-    {
       "id": "3811460352",
       "station": "Vinet Synthetics Hub",
       "system": "Colonia",
@@ -518,6 +503,21 @@
       "sellPrice": 56470,
       "demand": 359,
       "marketUpdatedAt": "2026-10-26T19:34:00.000Z"
+    },
+    {
+      "id": "3810707968",
+      "station": "Loeffler Synthetics Silo",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3743.045252,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56455,
+      "demand": 342,
+      "marketUpdatedAt": "2026-11-14T19:03:12.000Z"
     },
     {
       "id": "3702707200",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1549.765584,
+      "arrivalLs": 1550.912825,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 56094,
-      "demand": 2388,
-      "marketUpdatedAt": "2026-11-26T06:19:25.000Z"
+      "demand": 2390,
+      "marketUpdatedAt": "2026-11-26T09:09:08.000Z"
     },
     {
       "id": "3700353792",
@@ -1681,7 +1681,7 @@
       "supply": 0,
       "sellPrice": 52318,
       "demand": 345,
-      "marketUpdatedAt": "2026-11-26T06:58:44.000Z"
+      "marketUpdatedAt": "2026-11-26T09:00:51.000Z"
     },
     {
       "id": "3708300032",
@@ -2227,24 +2227,6 @@
       "marketUpdatedAt": "2023-04-05T21:01:37.000Z"
     },
     {
-      "id": "3708485120",
-      "station": "THX-84G",
-      "callsign": "THX-84G",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Ratraii",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 980.756336,
-      "buyPrice": 134750,
-      "supply": 315,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2026-08-06T13:59:12.000Z"
-    },
-    {
       "id": "128732581",
       "station": "Colonia Dream",
       "system": "Ratraii",
@@ -2276,6 +2258,24 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-07-09T19:15:12.000Z"
+    },
+    {
+      "id": "3708485120",
+      "station": "THX-84G",
+      "callsign": "THX-84G",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 980.756336,
+      "buyPrice": 134750,
+      "supply": 315,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2026-08-06T13:59:12.000Z"
     },
     {
       "id": "3920540672",
@@ -3061,39 +3061,6 @@
       "marketUpdatedAt": "2026-08-08T17:54:21.000Z"
     },
     {
-      "id": "3920541696",
-      "station": "Yamazaki Research Institution",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "S",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 860.439414,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57438,
-      "demand": 97,
-      "marketUpdatedAt": "2026-11-06T15:45:14.000Z"
-    },
-    {
-      "id": "3710044160",
-      "station": "THJ-L9G",
-      "callsign": "THJ-L9G",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Ratraii",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 25.992309,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 90493,
-      "demand": 3448,
-      "marketUpdatedAt": "2026-07-19T10:24:29.000Z"
-    },
-    {
       "id": "3922073088",
       "station": "Lange Biological Site",
       "system": "Ratraii",
@@ -3176,6 +3143,39 @@
       "sellPrice": 51294,
       "demand": 666,
       "marketUpdatedAt": "2025-03-28T02:44:52.000Z"
+    },
+    {
+      "id": "3920541696",
+      "station": "Yamazaki Research Institution",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "S",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 860.439414,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57438,
+      "demand": 97,
+      "marketUpdatedAt": "2026-11-06T15:45:14.000Z"
+    },
+    {
+      "id": "3710044160",
+      "station": "THJ-L9G",
+      "callsign": "THJ-L9G",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 25.992309,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 90493,
+      "demand": 3448,
+      "marketUpdatedAt": "2026-07-19T10:24:29.000Z"
     },
     {
       "id": "3704540416",
@@ -5354,12 +5354,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1456.640333,
+      "arrivalLs": 1457.073261,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53452,
       "demand": 85,
-      "marketUpdatedAt": "2026-11-26T06:33:51.000Z"
+      "marketUpdatedAt": "2026-11-26T09:15:38.000Z"
     },
     {
       "id": "3703992064",
@@ -6037,7 +6037,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-26T06:49:58.000Z"
+      "marketUpdatedAt": "2026-11-26T09:27:57.000Z"
     },
     {
       "id": "3700076032",
