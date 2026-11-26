@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-25T23:01:00.000Z",
+  "generatedAt": "2026-11-26T00:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -97,24 +97,6 @@
       "marketUpdatedAt": "2024-05-31T21:24:40.000Z"
     },
     {
-      "id": "3708269312",
-      "station": "dsv mirandas rest",
-      "callsign": "QZJ-62F",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 0,
-      "buyPrice": 300126,
-      "supply": 12358,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2026-09-25T17:08:33.000Z"
-    },
-    {
       "id": "3709281792",
       "station": "TZH-B8Z",
       "callsign": "TZH-B8Z",
@@ -131,6 +113,24 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-08-23T14:52:44.000Z"
+    },
+    {
+      "id": "3708269312",
+      "station": "dsv mirandas rest",
+      "callsign": "QZJ-62F",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 0,
+      "buyPrice": 300126,
+      "supply": 12358,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2026-09-25T17:08:33.000Z"
     },
     {
       "id": "3711031808",
@@ -385,51 +385,6 @@
       "marketUpdatedAt": "2026-10-26T00:37:19.000Z"
     },
     {
-      "id": "3811459072",
-      "station": "Degefa Industrial Enterprise",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3718.855246,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 60682,
-      "demand": 777,
-      "marketUpdatedAt": "2026-11-13T19:02:18.000Z"
-    },
-    {
-      "id": "3811460352",
-      "station": "Vinet Synthetics Hub",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3722.239449,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53781,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-21T23:08:08.000Z"
-    },
-    {
-      "id": "3810707456",
-      "station": "Schneider Industrial Depot",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3750.205896,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56470,
-      "demand": 359,
-      "marketUpdatedAt": "2026-10-26T19:34:00.000Z"
-    },
-    {
       "id": "3810706944",
       "station": "Diawara Biochemical Facility",
       "system": "Colonia",
@@ -458,6 +413,36 @@
       "sellPrice": 56470,
       "demand": 162,
       "marketUpdatedAt": "2026-11-23T00:00:15.000Z"
+    },
+    {
+      "id": "3811459072",
+      "station": "Degefa Industrial Enterprise",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3718.855246,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 60682,
+      "demand": 777,
+      "marketUpdatedAt": "2026-11-13T19:02:18.000Z"
+    },
+    {
+      "id": "3811460352",
+      "station": "Vinet Synthetics Hub",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3722.239449,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53781,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-21T23:08:08.000Z"
     },
     {
       "id": "3811458560",
@@ -503,6 +488,21 @@
       "sellPrice": 53781,
       "demand": 110,
       "marketUpdatedAt": "2026-10-31T09:53:26.000Z"
+    },
+    {
+      "id": "3810707456",
+      "station": "Schneider Industrial Depot",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3750.205896,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56470,
+      "demand": 359,
+      "marketUpdatedAt": "2026-10-26T19:34:00.000Z"
     },
     {
       "id": "3810707968",
@@ -590,21 +590,6 @@
       "sellPrice": 2565,
       "demand": 270,
       "marketUpdatedAt": "2026-03-14T02:29:50.000Z"
-    },
-    {
-      "id": "3810703360",
-      "station": "Lavoie Genetics Institution",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 1495.646224,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56712,
-      "demand": 537,
-      "marketUpdatedAt": "2026-11-25T02:42:28.000Z"
     },
     {
       "id": "3810704128",
@@ -695,6 +680,21 @@
       "sellPrice": 57792,
       "demand": 777,
       "marketUpdatedAt": "2026-10-21T08:38:17.000Z"
+    },
+    {
+      "id": "3810703360",
+      "station": "Lavoie Genetics Institution",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 1495.646224,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56712,
+      "demand": 537,
+      "marketUpdatedAt": "2026-11-25T02:42:28.000Z"
     },
     {
       "id": "3810711040",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1550.23168,
+      "arrivalLs": 1550.388189,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 56092,
       "demand": 2383,
-      "marketUpdatedAt": "2026-11-25T22:27:13.000Z"
+      "marketUpdatedAt": "2026-11-25T22:40:25.000Z"
     },
     {
       "id": "3700353792",
@@ -2011,24 +2011,6 @@
       "marketUpdatedAt": "2026-11-06T06:46:47.000Z"
     },
     {
-      "id": "3702588672",
-      "station": "T9J-2VT",
-      "callsign": "T9J-2VT",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Ratraii",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 18.040054,
-      "buyPrice": 149931,
-      "supply": 3638,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2024-03-16T21:26:08.000Z"
-    },
-    {
       "id": "3703487744",
       "station": "DIXIEDO FOX OMNIBUS",
       "callsign": "GZG-T4Z",
@@ -2081,6 +2063,24 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-07-18T16:29:34.000Z"
+    },
+    {
+      "id": "3702588672",
+      "station": "T9J-2VT",
+      "callsign": "T9J-2VT",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 18.040054,
+      "buyPrice": 149931,
+      "supply": 3638,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2024-03-16T21:26:08.000Z"
     },
     {
       "id": "3700171776",
@@ -2338,36 +2338,6 @@
       "marketUpdatedAt": "2026-11-01T19:01:14.000Z"
     },
     {
-      "id": "3921625344",
-      "station": "Bullen Biochemical Centre",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1734.221827,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57468,
-      "demand": 272,
-      "marketUpdatedAt": "2026-11-21T19:15:13.000Z"
-    },
-    {
-      "id": "3921625600",
-      "station": "Biggs's Resolve",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1677.754853,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57444,
-      "demand": 87,
-      "marketUpdatedAt": "2026-11-01T22:58:57.000Z"
-    },
-    {
       "id": "3921626624",
       "station": "Qian Dock",
       "system": "Ratraii",
@@ -2414,6 +2384,36 @@
       "sellPrice": 30079,
       "demand": 2001,
       "marketUpdatedAt": "2021-02-16T02:14:53.000Z"
+    },
+    {
+      "id": "3921625344",
+      "station": "Bullen Biochemical Centre",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1734.221827,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57468,
+      "demand": 272,
+      "marketUpdatedAt": "2026-11-21T19:15:13.000Z"
+    },
+    {
+      "id": "3921625600",
+      "station": "Biggs's Resolve",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1677.754853,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57444,
+      "demand": 87,
+      "marketUpdatedAt": "2026-11-01T22:58:57.000Z"
     },
     {
       "id": "3920540416",
@@ -5228,7 +5228,7 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1454.932062,
+      "arrivalLs": 1454.775233,
       "buyPrice": 52952,
       "supply": 129,
       "sellPrice": 52222,
@@ -5369,7 +5369,7 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1455.05009,
+      "arrivalLs": 1455.152474,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53448,
@@ -5798,12 +5798,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3207.376014,
+      "arrivalLs": 3208.463933,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 53347,
-      "demand": 43,
-      "marketUpdatedAt": "2026-11-25T12:20:17.000Z"
+      "sellPrice": 53352,
+      "demand": 44,
+      "marketUpdatedAt": "2026-11-25T22:49:54.000Z"
     },
     {
       "id": "3703725056",
@@ -6019,7 +6019,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-25T20:49:35.000Z"
+      "marketUpdatedAt": "2026-11-25T22:49:39.000Z"
     },
     {
       "id": "3700076032",
