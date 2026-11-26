@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-26T01:31:00.000Z",
+  "generatedAt": "2026-11-26T02:30:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -2227,21 +2227,6 @@
       "marketUpdatedAt": "2023-04-05T21:01:37.000Z"
     },
     {
-      "id": "128732581",
-      "station": "Colonia Dream",
-      "system": "Ratraii",
-      "kind": "orbital",
-      "typeLabel": "Coriolis Starport",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 25.996135,
-      "buyPrice": 53764,
-      "supply": 15,
-      "sellPrice": 53061,
-      "demand": 1,
-      "marketUpdatedAt": "2026-11-25T18:40:50.000Z"
-    },
-    {
       "id": "3707139328",
       "station": "W2F-29V",
       "callsign": "W2F-29V",
@@ -2260,6 +2245,21 @@
       "marketUpdatedAt": "2026-07-09T19:15:12.000Z"
     },
     {
+      "id": "128732581",
+      "station": "Colonia Dream",
+      "system": "Ratraii",
+      "kind": "orbital",
+      "typeLabel": "Coriolis Starport",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 25.996135,
+      "buyPrice": 53764,
+      "supply": 15,
+      "sellPrice": 53061,
+      "demand": 1,
+      "marketUpdatedAt": "2026-11-25T18:40:50.000Z"
+    },
+    {
       "id": "3708485120",
       "station": "THX-84G",
       "callsign": "THX-84G",
@@ -2276,36 +2276,6 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-08-06T13:59:12.000Z"
-    },
-    {
-      "id": "3921625344",
-      "station": "Bullen Biochemical Centre",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1734.221827,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57468,
-      "demand": 272,
-      "marketUpdatedAt": "2026-11-21T19:15:13.000Z"
-    },
-    {
-      "id": "3921625600",
-      "station": "Biggs's Resolve",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1677.754853,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57444,
-      "demand": 87,
-      "marketUpdatedAt": "2026-11-01T22:58:57.000Z"
     },
     {
       "id": "3920540672",
@@ -2368,6 +2338,36 @@
       "marketUpdatedAt": "2026-11-01T19:01:14.000Z"
     },
     {
+      "id": "3921625344",
+      "station": "Bullen Biochemical Centre",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1734.221827,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57468,
+      "demand": 272,
+      "marketUpdatedAt": "2026-11-21T19:15:13.000Z"
+    },
+    {
+      "id": "3921625600",
+      "station": "Biggs's Resolve",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1677.754853,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57444,
+      "demand": 87,
+      "marketUpdatedAt": "2026-11-01T22:58:57.000Z"
+    },
+    {
       "id": "3921626624",
       "station": "Qian Dock",
       "system": "Ratraii",
@@ -2390,7 +2390,7 @@
       "typeLabel": "Outpost",
       "maxPad": "M",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 910.825499,
+      "arrivalLs": 910.581375,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57674,
@@ -3076,21 +3076,6 @@
       "marketUpdatedAt": "2026-11-06T15:45:14.000Z"
     },
     {
-      "id": "3922073088",
-      "station": "Lange Biological Site",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 10803.457615,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57439,
-      "demand": 259,
-      "marketUpdatedAt": "2026-11-11T09:27:06.000Z"
-    },
-    {
       "id": "3922588928",
       "station": "Nwachukwu Genetics Lab",
       "system": "Ratraii",
@@ -3122,6 +3107,21 @@
       "sellPrice": 2565,
       "demand": 1,
       "marketUpdatedAt": "2026-07-23T20:47:54.000Z"
+    },
+    {
+      "id": "3922073088",
+      "station": "Lange Biological Site",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 10803.457615,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57439,
+      "demand": 259,
+      "marketUpdatedAt": "2026-11-11T09:27:06.000Z"
     },
     {
       "id": "3707717632",
@@ -4583,12 +4583,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 353.453848,
+      "arrivalLs": 353.50463,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57700,
       "demand": 5245,
-      "marketUpdatedAt": "2026-11-25T21:56:21.000Z"
+      "marketUpdatedAt": "2026-11-26T02:09:29.000Z"
     },
     {
       "id": "3700547328",
@@ -5369,12 +5369,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1455.152474,
+      "arrivalLs": 1455.789211,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53448,
       "demand": 84,
-      "marketUpdatedAt": "2026-11-25T22:00:16.000Z"
+      "marketUpdatedAt": "2026-11-26T02:19:27.000Z"
     },
     {
       "id": "3703992064",
@@ -7115,12 +7115,12 @@
       "typeLabel": "Outpost",
       "maxPad": "M",
       "distanceLy": 36.3891322418177,
-      "arrivalLs": 1796.23314,
+      "arrivalLs": 1797.601663,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 51292,
       "demand": 9999,
-      "marketUpdatedAt": "2026-11-25T19:44:05.000Z"
+      "marketUpdatedAt": "2026-11-26T02:23:59.000Z"
     },
     {
       "id": "3702127872",
@@ -7175,6 +7175,51 @@
       "sellPrice": 2565,
       "demand": 507,
       "marketUpdatedAt": "2026-08-22T15:59:29.000Z"
+    },
+    {
+      "id": "3920836864",
+      "station": "Almeida-Vega Industrial Holdings",
+      "system": "Carcosa",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "S",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 1753.405126,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53692,
+      "demand": 14,
+      "marketUpdatedAt": "2026-10-21T02:40:08.000Z"
+    },
+    {
+      "id": "3920839424",
+      "station": "Babu Chemical Works",
+      "system": "Carcosa",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "S",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 1896.474837,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53767,
+      "demand": 4,
+      "marketUpdatedAt": "2024-09-01T15:03:22.000Z"
+    },
+    {
+      "id": "3920834048",
+      "station": "Nxasana Biological Forum",
+      "system": "Carcosa",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "S",
+      "distanceLy": 36.3891322418177,
+      "arrivalLs": 1746.6006,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53692,
+      "demand": 239,
+      "marketUpdatedAt": "2026-10-21T02:31:20.000Z"
     },
     {
       "id": "3920830464",
@@ -7238,51 +7283,6 @@
       "sellPrice": 60496,
       "demand": 3066,
       "marketUpdatedAt": "2024-01-25T16:51:30.000Z"
-    },
-    {
-      "id": "3920836864",
-      "station": "Almeida-Vega Industrial Holdings",
-      "system": "Carcosa",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "S",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 1753.405126,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53692,
-      "demand": 14,
-      "marketUpdatedAt": "2026-10-21T02:40:08.000Z"
-    },
-    {
-      "id": "3920839424",
-      "station": "Babu Chemical Works",
-      "system": "Carcosa",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "S",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 1896.474837,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53767,
-      "demand": 4,
-      "marketUpdatedAt": "2024-09-01T15:03:22.000Z"
-    },
-    {
-      "id": "3920834048",
-      "station": "Nxasana Biological Forum",
-      "system": "Carcosa",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "S",
-      "distanceLy": 36.3891322418177,
-      "arrivalLs": 1746.6006,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53692,
-      "demand": 239,
-      "marketUpdatedAt": "2026-10-21T02:31:20.000Z"
     },
     {
       "id": "3703332352",
