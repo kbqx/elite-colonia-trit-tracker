@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-27T07:01:00.000Z",
+  "generatedAt": "2026-11-27T07:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1551.837565,
+      "arrivalLs": 1552.539744,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60307,
-      "demand": 6600,
-      "marketUpdatedAt": "2026-11-27T06:04:48.000Z"
+      "demand": 6601,
+      "marketUpdatedAt": "2026-11-27T07:23:23.000Z"
     },
     {
       "id": "3700353792",
@@ -2252,12 +2252,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 26.053778,
+      "arrivalLs": 26.040024,
       "buyPrice": 53764,
-      "supply": 37,
+      "supply": 6,
       "sellPrice": 53061,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T06:24:50.000Z"
+      "marketUpdatedAt": "2026-11-27T07:21:38.000Z"
     },
     {
       "id": "3707139328",
@@ -2326,51 +2326,6 @@
       "marketUpdatedAt": "2026-11-10T18:41:16.000Z"
     },
     {
-      "id": "3921627136",
-      "station": "Madan Garrison",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1248.687652,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57444,
-      "demand": 87,
-      "marketUpdatedAt": "2026-09-26T07:28:47.000Z"
-    },
-    {
-      "id": "3921627392",
-      "station": "Zoungrana Command Garrison",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "M",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1317.166672,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57430,
-      "demand": 60,
-      "marketUpdatedAt": "2026-11-01T19:01:14.000Z"
-    },
-    {
-      "id": "3921625344",
-      "station": "Bullen Biochemical Centre",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1734.221827,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57468,
-      "demand": 272,
-      "marketUpdatedAt": "2026-11-21T19:15:13.000Z"
-    },
-    {
       "id": "3921625600",
       "station": "Biggs's Resolve",
       "system": "Ratraii",
@@ -2432,6 +2387,51 @@
       "sellPrice": 30079,
       "demand": 2001,
       "marketUpdatedAt": "2021-02-16T02:14:53.000Z"
+    },
+    {
+      "id": "3921627136",
+      "station": "Madan Garrison",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1248.687652,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57444,
+      "demand": 87,
+      "marketUpdatedAt": "2026-09-26T07:28:47.000Z"
+    },
+    {
+      "id": "3921627392",
+      "station": "Zoungrana Command Garrison",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "M",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1317.166672,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57430,
+      "demand": 60,
+      "marketUpdatedAt": "2026-11-01T19:01:14.000Z"
+    },
+    {
+      "id": "3921625344",
+      "station": "Bullen Biochemical Centre",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1734.221827,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57468,
+      "demand": 272,
+      "marketUpdatedAt": "2026-11-21T19:15:13.000Z"
     },
     {
       "id": "3920540416",
@@ -2908,6 +2908,21 @@
       "marketUpdatedAt": "2026-11-01T23:08:28.000Z"
     },
     {
+      "id": "3921625856",
+      "station": "Florianz Defence Installation",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1704.051384,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-10-23T02:49:20.000Z"
+    },
+    {
       "id": "3921626112",
       "station": "Gonchar Biological Lab",
       "system": "Ratraii",
@@ -2972,21 +2987,6 @@
       "sellPrice": 72407,
       "demand": 780,
       "marketUpdatedAt": "2023-03-11T16:02:44.000Z"
-    },
-    {
-      "id": "3921625856",
-      "station": "Florianz Defence Installation",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1704.051384,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-10-23T02:49:20.000Z"
     },
     {
       "id": "3705304320",
@@ -3455,7 +3455,7 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 10.2365097964345,
-      "arrivalLs": 2424.328476,
+      "arrivalLs": 2424.316914,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53804,
@@ -5765,7 +5765,7 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3205.468291,
+      "arrivalLs": 3191.087562,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 77406,
@@ -6037,7 +6037,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-27T05:28:48.000Z"
+      "marketUpdatedAt": "2026-11-27T07:28:58.000Z"
     },
     {
       "id": "3700076032",
@@ -7397,7 +7397,7 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 41.1664044041072,
-      "arrivalLs": 163.467027,
+      "arrivalLs": 163.467013,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53714,
