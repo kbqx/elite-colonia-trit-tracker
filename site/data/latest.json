@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-27T15:01:00.000Z",
+  "generatedAt": "2026-11-27T16:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -53,12 +53,12 @@
       "typeLabel": "Squadron Carrier",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1513.857587,
+      "arrivalLs": 1513.858393,
       "buyPrice": 124510,
-      "supply": 19175,
+      "supply": 18455,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-27T14:20:27.000Z"
+      "marketUpdatedAt": "2026-11-27T15:16:27.000Z"
     },
     {
       "id": "3700010240",
@@ -953,12 +953,12 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 2545.266964,
+      "arrivalLs": 2539.936368,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 56470,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-22T23:38:40.000Z"
+      "sellPrice": 60682,
+      "demand": 777,
+      "marketUpdatedAt": "2026-11-27T14:54:00.000Z"
     },
     {
       "id": "128959193",
@@ -968,12 +968,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 3745.893205,
+      "arrivalLs": 3738.04923,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 54011,
       "demand": 6423,
-      "marketUpdatedAt": "2026-11-21T05:01:29.000Z"
+      "marketUpdatedAt": "2026-11-27T15:20:16.000Z"
     },
     {
       "id": "128667761",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1552.150745,
+      "arrivalLs": 1551.88092,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60309,
       "demand": 6609,
-      "marketUpdatedAt": "2026-11-27T14:29:12.000Z"
+      "marketUpdatedAt": "2026-11-27T15:27:50.000Z"
     },
     {
       "id": "3700353792",
@@ -1171,6 +1171,36 @@
       "marketUpdatedAt": "2026-08-20T16:12:03.000Z"
     },
     {
+      "id": "3810704896",
+      "station": "Barthwal Synthetics Plant",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 2529.423363,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56470,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-22T04:59:24.000Z"
+    },
+    {
+      "id": "3810705152",
+      "station": "Arias Industrial Installation",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 2532.425162,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53781,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-04T19:39:41.000Z"
+    },
+    {
       "id": "3810706688",
       "station": "Dragomanov Analysis Centre",
       "system": "Colonia",
@@ -1274,36 +1304,6 @@
       "sellPrice": 100357,
       "demand": 301,
       "marketUpdatedAt": "2025-03-22T19:35:15.000Z"
-    },
-    {
-      "id": "3810704896",
-      "station": "Barthwal Synthetics Plant",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 2529.423363,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56470,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-22T04:59:24.000Z"
-    },
-    {
-      "id": "3810705152",
-      "station": "Arias Industrial Installation",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 2532.425162,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53781,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-04T19:39:41.000Z"
     },
     {
       "id": "3707507712",
@@ -1680,8 +1680,8 @@
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 100446,
-      "demand": 5131,
-      "marketUpdatedAt": "2026-11-27T14:25:34.000Z"
+      "demand": 4411,
+      "marketUpdatedAt": "2026-11-27T15:22:27.000Z"
     },
     {
       "id": "3704732160",
@@ -2641,6 +2641,51 @@
       "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
     },
     {
+      "id": "3920541440",
+      "station": "Wallis Munitions Complex",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 898.661578,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
+    },
+    {
+      "id": "3920541952",
+      "station": "Cukkemane Honour",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1191.101412,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-11-18T14:40:21.000Z"
+    },
+    {
+      "id": "3920542208",
+      "station": "Rymill Munitions Stockade",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1253.105091,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57444,
+      "demand": 87,
+      "marketUpdatedAt": "2026-10-28T17:32:18.000Z"
+    },
+    {
       "id": "3922073344",
       "station": "Boumal Research Institution",
       "system": "Ratraii",
@@ -2834,51 +2879,6 @@
       "sellPrice": 80990,
       "demand": 800,
       "marketUpdatedAt": "2026-05-03T23:57:56.000Z"
-    },
-    {
-      "id": "3920541440",
-      "station": "Wallis Munitions Complex",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 898.661578,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
-    },
-    {
-      "id": "3920541952",
-      "station": "Cukkemane Honour",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1191.101412,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-11-18T14:40:21.000Z"
-    },
-    {
-      "id": "3920542208",
-      "station": "Rymill Munitions Stockade",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1253.105091,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57444,
-      "demand": 87,
-      "marketUpdatedAt": "2026-10-28T17:32:18.000Z"
     },
     {
       "id": "3920542464",
@@ -4583,12 +4583,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 353.519666,
+      "arrivalLs": 353.520081,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57700,
       "demand": 5245,
-      "marketUpdatedAt": "2026-11-27T06:16:37.000Z"
+      "marketUpdatedAt": "2026-11-27T15:30:01.000Z"
     },
     {
       "id": "3700547328",
@@ -5036,7 +5036,7 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 18.5187299611771,
-      "arrivalLs": 224.405757,
+      "arrivalLs": 224.399228,
       "buyPrice": 52919,
       "supply": 17,
       "sellPrice": 52222,
@@ -5246,12 +5246,12 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1455.844742,
+      "arrivalLs": 1455.089499,
       "buyPrice": 52952,
-      "supply": 91,
+      "supply": 68,
       "sellPrice": 52222,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T06:26:12.000Z"
+      "marketUpdatedAt": "2026-11-27T15:03:32.000Z"
     },
     {
       "id": "3714797824",
@@ -5387,12 +5387,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1460.058338,
+      "arrivalLs": 1460.120759,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53452,
       "demand": 85,
-      "marketUpdatedAt": "2026-11-27T12:21:36.000Z"
+      "marketUpdatedAt": "2026-11-27T15:14:56.000Z"
     },
     {
       "id": "3703992064",
@@ -6055,7 +6055,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-27T13:29:05.000Z"
+      "marketUpdatedAt": "2026-11-27T15:29:10.000Z"
     },
     {
       "id": "3700076032",
@@ -6440,12 +6440,12 @@
       "typeLabel": "Squadron Carrier",
       "maxPad": "L",
       "distanceLy": 30.153011484137,
-      "arrivalLs": 3734.622384,
+      "arrivalLs": 3729.88005,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 2565,
       "demand": 5972,
-      "marketUpdatedAt": "2026-11-26T22:40:26.000Z"
+      "marketUpdatedAt": "2026-11-27T15:10:15.000Z"
     },
     {
       "id": "128792290",
@@ -6734,12 +6734,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 34.1480290884408,
-      "arrivalLs": 1218.027897,
+      "arrivalLs": 1218.070079,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53353,
       "demand": 48,
-      "marketUpdatedAt": "2026-11-27T14:22:42.000Z"
+      "marketUpdatedAt": "2026-11-27T14:47:46.000Z"
     },
     {
       "id": "3707985920",
