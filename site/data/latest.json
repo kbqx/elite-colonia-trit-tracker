@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-27T21:01:00.000Z",
+  "generatedAt": "2026-11-27T21:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -2288,12 +2288,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 25.996056,
+      "arrivalLs": 25.985133,
       "buyPrice": 53764,
-      "supply": 33,
+      "supply": 6,
       "sellPrice": 53061,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T17:48:52.000Z"
+      "marketUpdatedAt": "2026-11-27T21:13:00.000Z"
     },
     {
       "id": "3707139328",
@@ -2659,36 +2659,6 @@
       "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
     },
     {
-      "id": "3920541440",
-      "station": "Wallis Munitions Complex",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 898.661578,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
-    },
-    {
-      "id": "3920541952",
-      "station": "Cukkemane Honour",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1191.101412,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-11-18T14:40:21.000Z"
-    },
-    {
       "id": "3920542208",
       "station": "Rymill Munitions Stockade",
       "system": "Ratraii",
@@ -2897,6 +2867,36 @@
       "sellPrice": 80990,
       "demand": 800,
       "marketUpdatedAt": "2026-05-03T23:57:56.000Z"
+    },
+    {
+      "id": "3920541440",
+      "station": "Wallis Munitions Complex",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 898.661578,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
+    },
+    {
+      "id": "3920541952",
+      "station": "Cukkemane Honour",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1191.101412,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-11-18T14:40:21.000Z"
     },
     {
       "id": "3920542464",
@@ -3115,21 +3115,6 @@
       "marketUpdatedAt": "2026-08-08T17:54:21.000Z"
     },
     {
-      "id": "3920541696",
-      "station": "Yamazaki Research Institution",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "S",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 860.439414,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57438,
-      "demand": 97,
-      "marketUpdatedAt": "2026-11-06T15:45:14.000Z"
-    },
-    {
       "id": "3922073088",
       "station": "Lange Biological Site",
       "system": "Ratraii",
@@ -3230,6 +3215,21 @@
       "sellPrice": 51294,
       "demand": 666,
       "marketUpdatedAt": "2025-03-28T02:44:52.000Z"
+    },
+    {
+      "id": "3920541696",
+      "station": "Yamazaki Research Institution",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "S",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 860.439414,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57438,
+      "demand": 97,
+      "marketUpdatedAt": "2026-11-06T15:45:14.000Z"
     },
     {
       "id": "3704540416",
@@ -6304,24 +6304,6 @@
       "marketUpdatedAt": "2026-06-10T18:33:03.000Z"
     },
     {
-      "id": "3700358656",
-      "station": "Q8Q-8HG",
-      "callsign": "Q8Q-8HG",
-      "dockingAccess": "None",
-      "carrierClass": "drake",
-      "system": "Union",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 29.257127203256,
-      "arrivalLs": 0,
-      "buyPrice": 51294,
-      "supply": 2767,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2026-04-29T20:30:34.000Z"
-    },
-    {
       "id": "3706342912",
       "station": "[SEPP] DSC \"ORINOCO\"",
       "callsign": "VHV-4VZ",
@@ -6338,6 +6320,24 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2025-11-01T23:32:51.000Z"
+    },
+    {
+      "id": "3700358656",
+      "station": "Q8Q-8HG",
+      "callsign": "Q8Q-8HG",
+      "dockingAccess": "None",
+      "carrierClass": "drake",
+      "system": "Union",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 29.257127203256,
+      "arrivalLs": 0,
+      "buyPrice": 51294,
+      "supply": 2767,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2026-04-29T20:30:34.000Z"
     },
     {
       "id": "3710009600",
