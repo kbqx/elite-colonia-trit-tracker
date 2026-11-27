@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-27T16:01:00.000Z",
+  "generatedAt": "2026-11-27T17:04:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -53,12 +53,12 @@
       "typeLabel": "Squadron Carrier",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1513.858393,
+      "arrivalLs": 1513.858883,
       "buyPrice": 124510,
-      "supply": 18455,
+      "supply": 14951,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-27T15:16:27.000Z"
+      "marketUpdatedAt": "2026-11-27T16:12:45.000Z"
     },
     {
       "id": "3700010240",
@@ -430,36 +430,6 @@
       "marketUpdatedAt": "2026-11-13T19:02:18.000Z"
     },
     {
-      "id": "3811460352",
-      "station": "Vinet Synthetics Hub",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3722.239449,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53781,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-21T23:08:08.000Z"
-    },
-    {
-      "id": "3811458560",
-      "station": "Flanagan Chemical Installation",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 3744.922737,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53781,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-04T05:26:28.000Z"
-    },
-    {
       "id": "3810711552",
       "station": "Hahm's Biochemicals",
       "system": "Colonia",
@@ -512,12 +482,12 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 3743.045252,
+      "arrivalLs": 3738.022609,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 56455,
-      "demand": 342,
-      "marketUpdatedAt": "2026-11-14T19:03:12.000Z"
+      "sellPrice": 60682,
+      "demand": 777,
+      "marketUpdatedAt": "2026-11-27T15:45:16.000Z"
     },
     {
       "id": "3702707200",
@@ -590,6 +560,36 @@
       "sellPrice": 2565,
       "demand": 270,
       "marketUpdatedAt": "2026-03-14T02:29:50.000Z"
+    },
+    {
+      "id": "3811460352",
+      "station": "Vinet Synthetics Hub",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3699.649703,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53781,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-27T15:34:17.000Z"
+    },
+    {
+      "id": "3811458560",
+      "station": "Flanagan Chemical Installation",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 3744.922737,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53781,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-04T05:26:28.000Z"
     },
     {
       "id": "3810703360",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1551.88092,
+      "arrivalLs": 1552.183782,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60309,
-      "demand": 6609,
-      "marketUpdatedAt": "2026-11-27T15:27:50.000Z"
+      "demand": 6610,
+      "marketUpdatedAt": "2026-11-27T16:16:48.000Z"
     },
     {
       "id": "3700353792",
@@ -1680,8 +1680,8 @@
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 100446,
-      "demand": 4411,
-      "marketUpdatedAt": "2026-11-27T15:22:27.000Z"
+      "demand": 2075,
+      "marketUpdatedAt": "2026-11-27T16:04:14.000Z"
     },
     {
       "id": "3704732160",
@@ -2270,12 +2270,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 25.981705,
+      "arrivalLs": 26.045934,
       "buyPrice": 53764,
-      "supply": 7,
+      "supply": 28,
       "sellPrice": 53061,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T09:26:05.000Z"
+      "marketUpdatedAt": "2026-11-27T16:14:10.000Z"
     },
     {
       "id": "3707139328",
@@ -2411,7 +2411,7 @@
       "typeLabel": "Settlement",
       "maxPad": "M",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 1750.420649,
+      "arrivalLs": 1750.558975,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 51014,
@@ -3479,24 +3479,6 @@
       "sellPrice": 53804,
       "demand": 39,
       "marketUpdatedAt": "2026-11-27T13:01:14.000Z"
-    },
-    {
-      "id": "3700887040",
-      "station": "T8K-B0Z",
-      "callsign": "T8K-B0Z",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Deriso",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 10.2365097964345,
-      "arrivalLs": 2081.310758,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 100446,
-      "demand": 3000,
-      "marketUpdatedAt": "2026-11-26T23:23:05.000Z"
     },
     {
       "id": "3709873152",
@@ -5246,12 +5228,12 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1455.089499,
+      "arrivalLs": 1455.825838,
       "buyPrice": 52952,
-      "supply": 68,
+      "supply": 78,
       "sellPrice": 52222,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T15:03:32.000Z"
+      "marketUpdatedAt": "2026-11-27T15:59:56.000Z"
     },
     {
       "id": "3714797824",
@@ -5387,12 +5369,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1460.120759,
+      "arrivalLs": 1460.127555,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53452,
       "demand": 85,
-      "marketUpdatedAt": "2026-11-27T15:14:56.000Z"
+      "marketUpdatedAt": "2026-11-27T15:48:33.000Z"
     },
     {
       "id": "3703992064",
