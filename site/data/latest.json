@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-27T11:01:00.000Z",
+  "generatedAt": "2026-11-27T12:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -983,12 +983,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1551.571814,
+      "arrivalLs": 1551.639358,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60308,
       "demand": 6604,
-      "marketUpdatedAt": "2026-11-27T10:19:08.000Z"
+      "marketUpdatedAt": "2026-11-27T10:31:09.000Z"
     },
     {
       "id": "3700353792",
@@ -2623,6 +2623,39 @@
       "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
     },
     {
+      "id": "3922073344",
+      "station": "Boumal Research Institution",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1744.824356,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57439,
+      "demand": 259,
+      "marketUpdatedAt": "2026-11-11T09:42:51.000Z"
+    },
+    {
+      "id": "3708568064",
+      "station": "N5K-W4Z",
+      "callsign": "N5K-W4Z",
+      "dockingAccess": null,
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 689.06266,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 51294,
+      "demand": 1872,
+      "marketUpdatedAt": "2026-03-09T14:27:22.000Z"
+    },
+    {
       "id": "3920541440",
       "station": "Wallis Munitions Complex",
       "system": "Ratraii",
@@ -2666,21 +2699,6 @@
       "sellPrice": 57444,
       "demand": 87,
       "marketUpdatedAt": "2026-10-28T17:32:18.000Z"
-    },
-    {
-      "id": "3922073344",
-      "station": "Boumal Research Institution",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1744.824356,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57439,
-      "demand": 259,
-      "marketUpdatedAt": "2026-11-11T09:42:51.000Z"
     },
     {
       "id": "3702714880",
@@ -2753,24 +2771,6 @@
       "sellPrice": 2565,
       "demand": 4211,
       "marketUpdatedAt": "2026-11-22T13:56:20.000Z"
-    },
-    {
-      "id": "3708568064",
-      "station": "N5K-W4Z",
-      "callsign": "N5K-W4Z",
-      "dockingAccess": null,
-      "carrierClass": "drake",
-      "system": "Ratraii",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 689.06266,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 51294,
-      "demand": 1872,
-      "marketUpdatedAt": "2026-03-09T14:27:22.000Z"
     },
     {
       "id": "3709730304",
@@ -5765,7 +5765,7 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3191.087562,
+      "arrivalLs": 3190.84701,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 77406,
@@ -6037,7 +6037,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-27T09:28:59.000Z"
+      "marketUpdatedAt": "2026-11-27T11:29:05.000Z"
     },
     {
       "id": "3700076032",
