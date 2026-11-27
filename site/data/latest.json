@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-27T22:01:00.000Z",
+  "generatedAt": "2026-11-27T22:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -4288,6 +4288,24 @@
       "marketUpdatedAt": "2026-11-27T12:37:08.000Z"
     },
     {
+      "id": "3710823936",
+      "station": "VBK-B6L",
+      "callsign": "VBK-B6L",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Tir",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 16.1253936482958,
+      "arrivalLs": 0,
+      "buyPrice": 154117,
+      "supply": 3807,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2025-10-27T07:58:47.000Z"
+    },
+    {
       "id": "3700596736",
       "station": "T0T-60H",
       "callsign": "T0T-60H",
@@ -4322,24 +4340,6 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2026-02-05T15:27:31.000Z"
-    },
-    {
-      "id": "3710823936",
-      "station": "VBK-B6L",
-      "callsign": "VBK-B6L",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Tir",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 16.1253936482958,
-      "arrivalLs": 0,
-      "buyPrice": 154117,
-      "supply": 3807,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2025-10-27T07:58:47.000Z"
     },
     {
       "id": "3701221632",
@@ -4532,7 +4532,7 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 147.432172,
+      "arrivalLs": 147.522359,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 51294,
@@ -4565,12 +4565,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 353.465284,
+      "arrivalLs": 353.459144,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57700,
       "demand": 5245,
-      "marketUpdatedAt": "2026-11-27T20:06:22.000Z"
+      "marketUpdatedAt": "2026-11-27T21:05:53.000Z"
     },
     {
       "id": "3700547328",
@@ -4688,12 +4688,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 16.298635151831,
-      "arrivalLs": 3664.592169,
+      "arrivalLs": 3664.593347,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53481,
       "demand": 5,
-      "marketUpdatedAt": "2026-11-27T05:22:12.000Z"
+      "marketUpdatedAt": "2026-11-27T21:32:44.000Z"
     },
     {
       "id": "3716477184",
@@ -4706,12 +4706,12 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 16.3047455227765,
-      "arrivalLs": 5261.566837,
+      "arrivalLs": 5261.427718,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 46174,
       "demand": 2161,
-      "marketUpdatedAt": "2026-11-27T14:29:24.000Z"
+      "marketUpdatedAt": "2026-11-27T18:46:03.000Z"
     },
     {
       "id": "3703158784",
@@ -5018,12 +5018,12 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 18.5187299611771,
-      "arrivalLs": 224.456703,
+      "arrivalLs": 224.603304,
       "buyPrice": 52919,
-      "supply": 78,
+      "supply": 13,
       "sellPrice": 52222,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T16:58:02.000Z"
+      "marketUpdatedAt": "2026-11-27T21:01:24.000Z"
     },
     {
       "id": "3703429120",
