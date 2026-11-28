@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-28T00:01:00.000Z",
+  "generatedAt": "2026-11-28T00:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -748,6 +748,24 @@
       "marketUpdatedAt": "2025-07-26T03:30:30.000Z"
     },
     {
+      "id": "3707594496",
+      "station": "H0N-G5T",
+      "callsign": "H0N-G5T",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 1020.640092,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 77406,
+      "demand": 500,
+      "marketUpdatedAt": "2026-11-27T23:48:09.000Z"
+    },
+    {
       "id": "3711839488",
       "station": "V0G-B5Y",
       "callsign": "V0G-B5Y",
@@ -1001,12 +1019,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1553.575079,
+      "arrivalLs": 1553.564913,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 60309,
-      "demand": 6613,
-      "marketUpdatedAt": "2026-11-27T23:07:30.000Z"
+      "sellPrice": 60310,
+      "demand": 6615,
+      "marketUpdatedAt": "2026-11-27T23:51:07.000Z"
     },
     {
       "id": "3700353792",
@@ -2252,12 +2270,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 25.991786,
+      "arrivalLs": 26.02551,
       "buyPrice": 53764,
-      "supply": 4,
+      "supply": 8,
       "sellPrice": 53061,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T22:27:01.000Z"
+      "marketUpdatedAt": "2026-11-27T23:55:47.000Z"
     },
     {
       "id": "3707139328",
@@ -2393,12 +2411,12 @@
       "typeLabel": "Settlement",
       "maxPad": "M",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 1750.726779,
+      "arrivalLs": 1751.078743,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 51014,
       "demand": 27,
-      "marketUpdatedAt": "2026-11-27T18:10:03.000Z"
+      "marketUpdatedAt": "2026-11-27T23:55:52.000Z"
     },
     {
       "id": "128867659",
@@ -4514,7 +4532,7 @@
       "typeLabel": "Drake-Class Carrier",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 147.524132,
+      "arrivalLs": 147.528894,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 51294,
@@ -4547,7 +4565,7 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 353.459144,
+      "arrivalLs": 353.481203,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57700,
@@ -5000,12 +5018,12 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 18.5187299611771,
-      "arrivalLs": 224.603304,
+      "arrivalLs": 224.615125,
       "buyPrice": 52919,
-      "supply": 13,
+      "supply": 25,
       "sellPrice": 52222,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T21:01:24.000Z"
+      "marketUpdatedAt": "2026-11-27T22:42:52.000Z"
     },
     {
       "id": "3703429120",
@@ -6004,24 +6022,6 @@
       "marketUpdatedAt": "2026-11-27T23:29:21.000Z"
     },
     {
-      "id": "3709174528",
-      "station": "AZASTELIAN FOB",
-      "callsign": "T4Q-1HM",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Magellan",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 24.6587253193469,
-      "arrivalLs": 0,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 51294,
-      "demand": 6,
-      "marketUpdatedAt": "2025-11-14T00:00:01.000Z"
-    },
-    {
       "id": "3700076032",
       "station": "X9W-67V",
       "callsign": "X9W-67V",
@@ -6038,6 +6038,24 @@
       "sellPrice": 45874,
       "demand": 807,
       "marketUpdatedAt": "2021-03-25T12:31:08.000Z"
+    },
+    {
+      "id": "3709174528",
+      "station": "AZASTELIAN FOB",
+      "callsign": "T4Q-1HM",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Magellan",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 24.6587253193469,
+      "arrivalLs": 0,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 51294,
+      "demand": 6,
+      "marketUpdatedAt": "2025-11-14T00:00:01.000Z"
     },
     {
       "id": "3701578496",
@@ -6644,12 +6662,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 34.1480290884408,
-      "arrivalLs": 1218.641846,
+      "arrivalLs": 1218.9483,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53353,
       "demand": 48,
-      "marketUpdatedAt": "2026-11-27T14:47:46.000Z"
+      "marketUpdatedAt": "2026-11-27T22:47:45.000Z"
     },
     {
       "id": "3707985920",
