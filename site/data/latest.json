@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-28T02:01:00.000Z",
+  "generatedAt": "2026-11-28T02:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -974,7 +974,7 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1012.201713,
+      "arrivalLs": 1010.192647,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 61575,
@@ -1019,12 +1019,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1552.876273,
+      "arrivalLs": 1552.590614,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 60308,
-      "demand": 6607,
-      "marketUpdatedAt": "2026-11-28T01:13:01.000Z"
+      "sellPrice": 60309,
+      "demand": 6609,
+      "marketUpdatedAt": "2026-11-28T02:28:03.000Z"
     },
     {
       "id": "3700353792",
@@ -2270,12 +2270,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 26.056524,
+      "arrivalLs": 26.057579,
       "buyPrice": 53764,
-      "supply": 13,
+      "supply": 14,
       "sellPrice": 53061,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-28T01:11:41.000Z"
+      "marketUpdatedAt": "2026-11-28T01:43:20.000Z"
     },
     {
       "id": "3707139328",
@@ -2656,21 +2656,6 @@
       "marketUpdatedAt": "2026-11-20T20:09:38.000Z"
     },
     {
-      "id": "3920541952",
-      "station": "Cukkemane Honour",
-      "system": "Ratraii",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 1191.101412,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 57464,
-      "demand": 90,
-      "marketUpdatedAt": "2026-11-18T14:40:21.000Z"
-    },
-    {
       "id": "3920542208",
       "station": "Rymill Munitions Stockade",
       "system": "Ratraii",
@@ -2879,6 +2864,21 @@
       "sellPrice": 80990,
       "demand": 800,
       "marketUpdatedAt": "2026-05-03T23:57:56.000Z"
+    },
+    {
+      "id": "3920541952",
+      "station": "Cukkemane Honour",
+      "system": "Ratraii",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 1191.101412,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 57464,
+      "demand": 90,
+      "marketUpdatedAt": "2026-11-18T14:40:21.000Z"
     },
     {
       "id": "3920542464",
@@ -6022,24 +6022,6 @@
       "marketUpdatedAt": "2026-11-28T01:29:22.000Z"
     },
     {
-      "id": "3709174528",
-      "station": "AZASTELIAN FOB",
-      "callsign": "T4Q-1HM",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Magellan",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 24.6587253193469,
-      "arrivalLs": 0,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 51294,
-      "demand": 6,
-      "marketUpdatedAt": "2025-11-14T00:00:01.000Z"
-    },
-    {
       "id": "3700076032",
       "station": "X9W-67V",
       "callsign": "X9W-67V",
@@ -6056,6 +6038,24 @@
       "sellPrice": 45874,
       "demand": 807,
       "marketUpdatedAt": "2021-03-25T12:31:08.000Z"
+    },
+    {
+      "id": "3709174528",
+      "station": "AZASTELIAN FOB",
+      "callsign": "T4Q-1HM",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Magellan",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 24.6587253193469,
+      "arrivalLs": 0,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 51294,
+      "demand": 6,
+      "marketUpdatedAt": "2025-11-14T00:00:01.000Z"
     },
     {
       "id": "3701578496",
