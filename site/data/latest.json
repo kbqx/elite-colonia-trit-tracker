@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-27T23:31:00.000Z",
+  "generatedAt": "2026-11-28T00:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -1001,12 +1001,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1552.986378,
+      "arrivalLs": 1553.575079,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60309,
       "demand": 6613,
-      "marketUpdatedAt": "2026-11-27T22:13:29.000Z"
+      "marketUpdatedAt": "2026-11-27T23:07:30.000Z"
     },
     {
       "id": "3700353792",
@@ -5780,12 +5780,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3197.71198,
+      "arrivalLs": 3199.756471,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 53352,
-      "demand": 44,
-      "marketUpdatedAt": "2026-11-27T12:13:32.000Z"
+      "sellPrice": 53357,
+      "demand": 45,
+      "marketUpdatedAt": "2026-11-27T23:15:12.000Z"
     },
     {
       "id": "3703725056",
@@ -6001,25 +6001,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-27T21:29:15.000Z"
-    },
-    {
-      "id": "3700076032",
-      "station": "X9W-67V",
-      "callsign": "X9W-67V",
-      "dockingAccess": null,
-      "carrierClass": "drake",
-      "system": "Magellan",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 24.6587253193469,
-      "arrivalLs": 0,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 45874,
-      "demand": 807,
-      "marketUpdatedAt": "2021-03-25T12:31:08.000Z"
+      "marketUpdatedAt": "2026-11-27T23:29:21.000Z"
     },
     {
       "id": "3709174528",
@@ -6038,6 +6020,24 @@
       "sellPrice": 51294,
       "demand": 6,
       "marketUpdatedAt": "2025-11-14T00:00:01.000Z"
+    },
+    {
+      "id": "3700076032",
+      "station": "X9W-67V",
+      "callsign": "X9W-67V",
+      "dockingAccess": null,
+      "carrierClass": "drake",
+      "system": "Magellan",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 24.6587253193469,
+      "arrivalLs": 0,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 45874,
+      "demand": 807,
+      "marketUpdatedAt": "2021-03-25T12:31:08.000Z"
     },
     {
       "id": "3701578496",
@@ -7325,7 +7325,7 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 41.1664044041072,
-      "arrivalLs": 163.467013,
+      "arrivalLs": 163.466916,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53714,
