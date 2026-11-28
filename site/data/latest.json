@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-28T01:01:00.000Z",
+  "generatedAt": "2026-11-28T01:31:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -997,42 +997,6 @@
       "marketUpdatedAt": "2026-11-27T17:49:18.000Z"
     },
     {
-      "id": "3704908288",
-      "station": "ERIN GO BRAGH",
-      "callsign": "VNN-2VF",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 1010.470651,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 62507,
-      "demand": 1899,
-      "marketUpdatedAt": "2026-10-25T22:57:14.000Z"
-    },
-    {
-      "id": "3706128896",
-      "station": "MOTHER OF ALL DINGYS",
-      "callsign": "V5N-44T",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 12.95966,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 52229,
-      "demand": 1046,
-      "marketUpdatedAt": "2026-11-23T22:57:30.000Z"
-    },
-    {
       "id": "128959193",
       "station": "Holloway Biology Centre",
       "system": "Colonia",
@@ -1055,12 +1019,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1553.332543,
+      "arrivalLs": 1552.876273,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 60310,
-      "demand": 6615,
-      "marketUpdatedAt": "2026-11-28T00:27:05.000Z"
+      "sellPrice": 60308,
+      "demand": 6607,
+      "marketUpdatedAt": "2026-11-28T01:13:01.000Z"
     },
     {
       "id": "3700353792",
@@ -1097,6 +1061,42 @@
       "sellPrice": 53168,
       "demand": 5000,
       "marketUpdatedAt": "2025-04-09T22:30:06.000Z"
+    },
+    {
+      "id": "3704908288",
+      "station": "ERIN GO BRAGH",
+      "callsign": "VNN-2VF",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 1010.470651,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 62507,
+      "demand": 1899,
+      "marketUpdatedAt": "2026-10-25T22:57:14.000Z"
+    },
+    {
+      "id": "3706128896",
+      "station": "MOTHER OF ALL DINGYS",
+      "callsign": "V5N-44T",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 12.95966,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 52229,
+      "demand": 1046,
+      "marketUpdatedAt": "2026-11-23T22:57:30.000Z"
     },
     {
       "id": "3707010304",
@@ -1207,6 +1207,51 @@
       "marketUpdatedAt": "2026-08-20T16:12:03.000Z"
     },
     {
+      "id": "3810704896",
+      "station": "Barthwal Synthetics Plant",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 2529.423363,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 56470,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-22T04:59:24.000Z"
+    },
+    {
+      "id": "3810705152",
+      "station": "Arias Industrial Installation",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 2532.425162,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 53781,
+      "demand": 359,
+      "marketUpdatedAt": "2026-11-04T19:39:41.000Z"
+    },
+    {
+      "id": "3810706688",
+      "station": "Dragomanov Analysis Centre",
+      "system": "Colonia",
+      "kind": "planetary",
+      "typeLabel": "Settlement",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 2532.383526,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 61838,
+      "demand": 1136,
+      "marketUpdatedAt": "2026-11-24T22:50:43.000Z"
+    },
+    {
       "id": "3701642496",
       "station": "SPACE KORBO [PBSF]",
       "callsign": "K5H-78W",
@@ -1295,51 +1340,6 @@
       "sellPrice": 100357,
       "demand": 301,
       "marketUpdatedAt": "2025-03-22T19:35:15.000Z"
-    },
-    {
-      "id": "3810704896",
-      "station": "Barthwal Synthetics Plant",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 2529.423363,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 56470,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-22T04:59:24.000Z"
-    },
-    {
-      "id": "3810705152",
-      "station": "Arias Industrial Installation",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 2532.425162,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 53781,
-      "demand": 359,
-      "marketUpdatedAt": "2026-11-04T19:39:41.000Z"
-    },
-    {
-      "id": "3810706688",
-      "station": "Dragomanov Analysis Centre",
-      "system": "Colonia",
-      "kind": "planetary",
-      "typeLabel": "Settlement",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 2532.383526,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 61838,
-      "demand": 1136,
-      "marketUpdatedAt": "2026-11-24T22:50:43.000Z"
     },
     {
       "id": "3707507712",
@@ -2270,12 +2270,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 26.02551,
+      "arrivalLs": 26.056524,
       "buyPrice": 53764,
-      "supply": 8,
+      "supply": 13,
       "sellPrice": 53061,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-27T23:55:47.000Z"
+      "marketUpdatedAt": "2026-11-28T01:11:41.000Z"
     },
     {
       "id": "3707139328",
@@ -4565,12 +4565,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 353.481203,
+      "arrivalLs": 353.525453,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57700,
       "demand": 5245,
-      "marketUpdatedAt": "2026-11-27T21:05:53.000Z"
+      "marketUpdatedAt": "2026-11-28T01:12:31.000Z"
     },
     {
       "id": "3700547328",
@@ -4688,12 +4688,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 16.298635151831,
-      "arrivalLs": 3664.593347,
+      "arrivalLs": 3664.595682,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53481,
       "demand": 5,
-      "marketUpdatedAt": "2026-11-27T21:32:44.000Z"
+      "marketUpdatedAt": "2026-11-28T00:40:04.000Z"
     },
     {
       "id": "3716477184",
@@ -5798,12 +5798,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3199.756471,
+      "arrivalLs": 3200.51483,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53357,
       "demand": 45,
-      "marketUpdatedAt": "2026-11-27T23:15:12.000Z"
+      "marketUpdatedAt": "2026-11-28T01:26:17.000Z"
     },
     {
       "id": "3703725056",
@@ -6022,24 +6022,6 @@
       "marketUpdatedAt": "2026-11-27T23:29:21.000Z"
     },
     {
-      "id": "3700076032",
-      "station": "X9W-67V",
-      "callsign": "X9W-67V",
-      "dockingAccess": null,
-      "carrierClass": "drake",
-      "system": "Magellan",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 24.6587253193469,
-      "arrivalLs": 0,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 45874,
-      "demand": 807,
-      "marketUpdatedAt": "2021-03-25T12:31:08.000Z"
-    },
-    {
       "id": "3709174528",
       "station": "AZASTELIAN FOB",
       "callsign": "T4Q-1HM",
@@ -6056,6 +6038,24 @@
       "sellPrice": 51294,
       "demand": 6,
       "marketUpdatedAt": "2025-11-14T00:00:01.000Z"
+    },
+    {
+      "id": "3700076032",
+      "station": "X9W-67V",
+      "callsign": "X9W-67V",
+      "dockingAccess": null,
+      "carrierClass": "drake",
+      "system": "Magellan",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 24.6587253193469,
+      "arrivalLs": 0,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 45874,
+      "demand": 807,
+      "marketUpdatedAt": "2021-03-25T12:31:08.000Z"
     },
     {
       "id": "3701578496",
@@ -6101,12 +6101,12 @@
       "typeLabel": "Outpost",
       "maxPad": "M",
       "distanceLy": 25.8159047391332,
-      "arrivalLs": 1045.824722,
-      "buyPrice": 50354,
-      "supply": 254,
-      "sellPrice": 49735,
+      "arrivalLs": 1045.962777,
+      "buyPrice": 53880,
+      "supply": 906,
+      "sellPrice": 53217,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-25T06:31:11.000Z"
+      "marketUpdatedAt": "2026-11-28T00:33:48.000Z"
     },
     {
       "id": "3715395328",
@@ -6139,7 +6139,7 @@
       "supply": 0,
       "sellPrice": 54028,
       "demand": 1347,
-      "marketUpdatedAt": "2026-11-27T07:30:02.000Z"
+      "marketUpdatedAt": "2026-11-28T00:44:28.000Z"
     },
     {
       "id": "3701709312",
@@ -6662,12 +6662,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 34.1480290884408,
-      "arrivalLs": 1218.9483,
+      "arrivalLs": 1219.342014,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53353,
       "demand": 48,
-      "marketUpdatedAt": "2026-11-27T22:47:45.000Z"
+      "marketUpdatedAt": "2026-11-28T01:05:32.000Z"
     },
     {
       "id": "3707985920",
