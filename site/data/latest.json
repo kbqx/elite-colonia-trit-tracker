@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-28T14:01:00.000Z",
+  "generatedAt": "2026-11-28T15:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -530,12 +530,12 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 3737.637341,
+      "arrivalLs": 3736.59437,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60682,
       "demand": 777,
-      "marketUpdatedAt": "2026-11-27T21:50:02.000Z"
+      "marketUpdatedAt": "2026-11-28T14:06:54.000Z"
     },
     {
       "id": "3702707200",
@@ -1019,12 +1019,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1553.362186,
+      "arrivalLs": 1553.967587,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60310,
       "demand": 6615,
-      "marketUpdatedAt": "2026-11-28T13:27:12.000Z"
+      "marketUpdatedAt": "2026-11-28T14:08:20.000Z"
     },
     {
       "id": "3700353792",
@@ -2270,7 +2270,7 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 26.027466,
+      "arrivalLs": 26.013062,
       "buyPrice": 53764,
       "supply": 50,
       "sellPrice": 53061,
@@ -2641,6 +2641,24 @@
       "marketUpdatedAt": "2026-04-20T19:48:35.000Z"
     },
     {
+      "id": "3708568064",
+      "station": "N5K-W4Z",
+      "callsign": "N5K-W4Z",
+      "dockingAccess": null,
+      "carrierClass": "drake",
+      "system": "Ratraii",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 8.88143472714291,
+      "arrivalLs": 689.06266,
+      "buyPrice": null,
+      "supply": 0,
+      "sellPrice": 51294,
+      "demand": 1872,
+      "marketUpdatedAt": "2026-03-09T14:27:22.000Z"
+    },
+    {
       "id": "3920541440",
       "station": "Wallis Munitions Complex",
       "system": "Ratraii",
@@ -2771,24 +2789,6 @@
       "sellPrice": 2565,
       "demand": 4211,
       "marketUpdatedAt": "2026-11-22T13:56:20.000Z"
-    },
-    {
-      "id": "3708568064",
-      "station": "N5K-W4Z",
-      "callsign": "N5K-W4Z",
-      "dockingAccess": null,
-      "carrierClass": "drake",
-      "system": "Ratraii",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 8.88143472714291,
-      "arrivalLs": 689.06266,
-      "buyPrice": null,
-      "supply": 0,
-      "sellPrice": 51294,
-      "demand": 1872,
-      "marketUpdatedAt": "2026-03-09T14:27:22.000Z"
     },
     {
       "id": "3709730304",
@@ -3473,7 +3473,7 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 10.2365097964345,
-      "arrivalLs": 2423.85468,
+      "arrivalLs": 2423.784145,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53747,
@@ -4688,12 +4688,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 16.298635151831,
-      "arrivalLs": 3664.598188,
+      "arrivalLs": 3664.6051,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53481,
       "demand": 5,
-      "marketUpdatedAt": "2026-11-28T00:40:04.000Z"
+      "marketUpdatedAt": "2026-11-28T12:12:34.000Z"
     },
     {
       "id": "3716477184",
@@ -5018,7 +5018,7 @@
       "typeLabel": "Asteroid base",
       "maxPad": "L",
       "distanceLy": 18.5187299611771,
-      "arrivalLs": 224.48237,
+      "arrivalLs": 224.522499,
       "buyPrice": 52919,
       "supply": 46,
       "sellPrice": 52222,
@@ -5798,12 +5798,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 22.2922045301155,
-      "arrivalLs": 3200.51483,
+      "arrivalLs": 3204.958678,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53357,
       "demand": 45,
-      "marketUpdatedAt": "2026-11-28T01:26:17.000Z"
+      "marketUpdatedAt": "2026-11-28T13:12:28.000Z"
     },
     {
       "id": "3703725056",
@@ -6662,7 +6662,7 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 34.1480290884408,
-      "arrivalLs": 1220.731311,
+      "arrivalLs": 1220.750487,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53353,
