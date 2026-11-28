@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-28T12:01:00.000Z",
+  "generatedAt": "2026-11-28T13:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -617,12 +617,12 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1503.671257,
+      "arrivalLs": 1495.196024,
       "buyPrice": null,
       "supply": 0,
-      "sellPrice": 56712,
-      "demand": 537,
-      "marketUpdatedAt": "2026-11-25T02:42:28.000Z"
+      "sellPrice": 60682,
+      "demand": 1163,
+      "marketUpdatedAt": "2026-11-28T11:33:08.000Z"
     },
     {
       "id": "3810704128",
@@ -632,12 +632,12 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1499.140578,
+      "arrivalLs": 1495.15408,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53781,
       "demand": 162,
-      "marketUpdatedAt": "2026-11-22T20:11:27.000Z"
+      "marketUpdatedAt": "2026-11-28T11:41:13.000Z"
     },
     {
       "id": "3810701568",
@@ -791,7 +791,7 @@
       "typeLabel": "Settlement",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 3716.535217,
+      "arrivalLs": 3712.767445,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57525,
@@ -1019,12 +1019,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1554.069598,
+      "arrivalLs": 1553.337475,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60309,
-      "demand": 6612,
-      "marketUpdatedAt": "2026-11-28T11:08:32.000Z"
+      "demand": 6613,
+      "marketUpdatedAt": "2026-11-28T12:29:32.000Z"
     },
     {
       "id": "3700353792",
