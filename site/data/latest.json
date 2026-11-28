@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-28T11:01:00.000Z",
+  "generatedAt": "2026-11-28T12:01:00.000Z",
   "source": "spansh",
   "referenceSystem": "Colonia",
   "commodity": "Tritium",
@@ -61,24 +61,6 @@
       "marketUpdatedAt": "2026-11-28T06:17:21.000Z"
     },
     {
-      "id": "3708269312",
-      "station": "dsv mirandas rest",
-      "callsign": "QZJ-62F",
-      "dockingAccess": "All",
-      "carrierClass": "drake",
-      "system": "Colonia",
-      "kind": "carrier",
-      "typeLabel": "Drake-Class Carrier",
-      "maxPad": "L",
-      "distanceLy": 0,
-      "arrivalLs": 0,
-      "buyPrice": 300126,
-      "supply": 12358,
-      "sellPrice": null,
-      "demand": 0,
-      "marketUpdatedAt": "2026-09-25T17:08:33.000Z"
-    },
-    {
       "id": "3700010240",
       "station": "QBB-L9H",
       "callsign": "QBB-L9H",
@@ -113,6 +95,24 @@
       "sellPrice": null,
       "demand": 0,
       "marketUpdatedAt": "2024-05-31T21:24:40.000Z"
+    },
+    {
+      "id": "3708269312",
+      "station": "dsv mirandas rest",
+      "callsign": "QZJ-62F",
+      "dockingAccess": "All",
+      "carrierClass": "drake",
+      "system": "Colonia",
+      "kind": "carrier",
+      "typeLabel": "Drake-Class Carrier",
+      "maxPad": "L",
+      "distanceLy": 0,
+      "arrivalLs": 0,
+      "buyPrice": 300126,
+      "supply": 12358,
+      "sellPrice": null,
+      "demand": 0,
+      "marketUpdatedAt": "2026-09-25T17:08:33.000Z"
     },
     {
       "id": "3709281792",
@@ -184,7 +184,7 @@
       "supply": 21044,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-28T10:11:01.000Z"
+      "marketUpdatedAt": "2026-11-28T10:50:02.000Z"
     },
     {
       "id": "3702851584",
@@ -1019,12 +1019,12 @@
       "typeLabel": "Orbis Starport",
       "maxPad": "L",
       "distanceLy": 0,
-      "arrivalLs": 1554.279353,
+      "arrivalLs": 1554.069598,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 60309,
       "demand": 6612,
-      "marketUpdatedAt": "2026-11-28T10:20:37.000Z"
+      "marketUpdatedAt": "2026-11-28T11:08:32.000Z"
     },
     {
       "id": "3700353792",
@@ -2270,12 +2270,12 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 8.88143472714291,
-      "arrivalLs": 26.030161,
+      "arrivalLs": 26.031126,
       "buyPrice": 53764,
-      "supply": 39,
+      "supply": 44,
       "sellPrice": 53061,
       "demand": 1,
-      "marketUpdatedAt": "2026-11-28T09:10:55.000Z"
+      "marketUpdatedAt": "2026-11-28T10:47:54.000Z"
     },
     {
       "id": "3707139328",
@@ -3473,12 +3473,12 @@
       "typeLabel": "Planetary Outpost",
       "maxPad": "L",
       "distanceLy": 10.2365097964345,
-      "arrivalLs": 2423.920444,
+      "arrivalLs": 2423.85468,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53747,
       "demand": 36,
-      "marketUpdatedAt": "2026-11-28T07:41:59.000Z"
+      "marketUpdatedAt": "2026-11-28T10:41:34.000Z"
     },
     {
       "id": "3709873152",
@@ -4565,7 +4565,7 @@
       "typeLabel": "Coriolis Starport",
       "maxPad": "L",
       "distanceLy": 16.1253936482958,
-      "arrivalLs": 353.510464,
+      "arrivalLs": 353.525016,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 57700,
@@ -5354,12 +5354,12 @@
       "typeLabel": "Planetary Port",
       "maxPad": "L",
       "distanceLy": 19.6307963175848,
-      "arrivalLs": 1459.288879,
+      "arrivalLs": 1459.045786,
       "buyPrice": null,
       "supply": 0,
       "sellPrice": 53455,
       "demand": 86,
-      "marketUpdatedAt": "2026-11-28T09:09:19.000Z"
+      "marketUpdatedAt": "2026-11-28T11:25:14.000Z"
     },
     {
       "id": "3703992064",
@@ -6019,7 +6019,7 @@
       "supply": 21188,
       "sellPrice": null,
       "demand": 0,
-      "marketUpdatedAt": "2026-11-28T09:29:33.000Z"
+      "marketUpdatedAt": "2026-11-28T11:29:38.000Z"
     },
     {
       "id": "3700076032",
